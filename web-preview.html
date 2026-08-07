@@ -942,7 +942,7 @@
     .cart-anchor.driver { left:27.2%; bottom:37.8%; width:8.2%; height:31%; z-index:4; }
     .cart-anchor.cart-1 { left:52.2%; bottom:36.2%; width:8.2%; height:34%; }
     .cart-anchor.cart-2 { left:68.0%; bottom:36.0%; width:7.8%; height:33%; }
-    .cart-anchor.cart-3 { left:83.7%; bottom:40.2%; width:9.5%; height:38%; }
+    .cart-anchor.cart-3 { left:83.7%; bottom:46.0%; width:9.5%; height:38%; }
     .cart-anchor::after {
       content:"";
       position:absolute;
@@ -995,7 +995,30 @@
     .cart-anchor.driver .passenger-img-3d { animation:hero-blink-hop 4.8s ease-in-out infinite; }
     .cart-anchor.cart-1 .passenger-img-3d { animation:giraffe-happy-sway 3.6s ease-in-out infinite; }
     .cart-anchor.cart-2 .passenger-img-3d { animation:sheep-flag-wave 2.7s ease-in-out infinite; }
-    .cart-anchor.cart-3 .passenger-img-3d { animation:monkey-playful-bounce 3.1s ease-in-out infinite; }
+    .cart-anchor.cart-3 .passenger-img-3d { animation:monkey-stand-blink-bounce 4.4s ease-in-out infinite; }
+    .monkey-figure {
+      position:relative;
+      width:100%;
+      height:100%;
+      transform-origin:50% 92%;
+      filter:drop-shadow(0 10px 12px rgba(43,64,49,.18));
+    }
+    .monkey-base {
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .monkey-blink {
+      position:absolute;
+      width:28%;
+      left:35.7%;
+      top:23.2%;
+      opacity:0;
+      pointer-events:none;
+      animation:monkey-eye-blink 4.4s steps(1,end) infinite;
+      transform:rotate(-1deg);
+    }
     .cart-anchor:hover .passenger-img-3d,
     .cart-anchor.is-hovering .passenger-img-3d {
       animation:passenger-hover-hello .9s ease-in-out 1;
@@ -1095,6 +1118,17 @@
       52% { transform:translateY(-8px) rotate(10deg) scale(1.07); }
       70% { transform:translateY(1px) rotate(-6deg) scale(1.02); }
       86% { transform:translateY(-4px) rotate(3deg) scale(1.04); }
+    }
+    @keyframes monkey-stand-blink-bounce {
+      0%,100% { transform:translateY(0) rotate(0) scale(1); }
+      24% { transform:translateY(-8px) rotate(-4deg) scale(1.06); }
+      42% { transform:translateY(1px) rotate(3deg) scale(1.01); }
+      62% { transform:translateY(-6px) rotate(4deg) scale(1.05); }
+      80% { transform:translateY(0) rotate(-2deg) scale(1.02); }
+    }
+    @keyframes monkey-eye-blink {
+      0%, 18%, 22%, 54%, 58%, 100% { opacity:0; }
+      19%, 21%, 55%, 57% { opacity:1; }
     }
     @keyframes monkey-idle-ride {
       0%,100% { transform:translateY(0) rotate(0) scale(1); }
@@ -1208,7 +1242,10 @@
               <img class="passenger-img-3d sheep" src="assets/cutouts/sheep-trim.png" alt="">
             </div>
             <div class="cart-anchor cart-3" data-mascot="monkey">
-              <img class="passenger-img-3d monkey" src="assets/cutouts/monkey-trim.png" alt="">
+              <div class="monkey-figure passenger-img-3d monkey">
+                <img class="monkey-base" src="assets/cutouts/monkey-trim.png" alt="">
+                <img class="monkey-blink" src="assets/monkey_blink.png" alt="">
+              </div>
             </div>
             <span class="hello-bubble"></span>
           </div>
