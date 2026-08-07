@@ -1,17 +1,16 @@
 from pathlib import Path
 import argparse
-import win32com.client as win32
 
 
 DEFAULT_SUBJECT = "【疫情訊息】本週重點與教育訓練連結"
 DEFAULT_TO = "inq36@ntuh.gov.tw"
-CID_MONKEY = "monkey-sticker@ntuh-cdc"
+CID_TRAIN = "email-train-preview@ntuh-cdc"
 
 
 def build_mail_html(base_dir: Path) -> str:
     html_path = base_dir / "email-preview.html"
     html = html_path.read_text(encoding="utf-8")
-    html = html.replace('src="assets/monkey-sticker.gif"', f'src="cid:{CID_MONKEY}"')
+    html = html.replace('src="assets/email-train-preview.jpg"', f'src="cid:{CID_TRAIN}"')
     return html
 
 
@@ -37,16 +36,23 @@ def main() -> None:
     args = parser.parse_args()
 
     base_dir = Path(__file__).resolve().parents[1]
-    image_path = base_dir / "assets" / "monkey-sticker.gif"
+    image_path = base_dir / "assets" / "email-train-preview.jpg"
     if not image_path.exists():
         raise FileNotFoundError(image_path)
+
+    try:
+        import win32com.client as win32
+    except ModuleNotFoundError as exc:
+        raise SystemExit(
+            "Missing pywin32. Install it in this Python environment with: python -m pip install pywin32"
+        ) from exc
 
     outlook = win32.Dispatch("outlook.application")
     mail = outlook.CreateItem(0)
     mail.Subject = args.subject
     mail.To = args.to
     mail.HTMLBody = build_mail_html(base_dir)
-    attach_inline_image(mail, image_path, CID_MONKEY)
+    attach_inline_image(mail, image_path, CID_TRAIN)
 
     if args.send:
         mail.Send()
