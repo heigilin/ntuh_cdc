@@ -718,6 +718,26 @@
       color:#315144;
       font-weight:800;
     }
+    .bottom-actions {
+      display:flex;
+      justify-content:center;
+      padding:28px 0 0;
+    }
+    .bottom-actions button {
+      min-height:46px;
+      padding:0 24px;
+      border-radius:999px;
+      border:1px solid rgba(47,111,93,.2);
+      background:#2f6f5d;
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(47,111,93,.16);
+    }
+    .bottom-actions button:hover {
+      transform:translateY(-1px);
+      box-shadow:0 14px 26px rgba(47,111,93,.2);
+    }
     .footer {
       padding:30px 24px 46px;
       text-align:center;
@@ -1243,7 +1263,6 @@
             <button class="active" data-tab="respiratory">呼吸道</button>
             <button data-tab="foodborne">腸道食媒</button>
             <button data-tab="vectorborne">病媒蚊</button>
-            <button data-tab="all">回到總覽</button>
           </div>
         </div>
         <div class="character-stage" aria-hidden="true">
@@ -1380,6 +1399,9 @@
           <a href="https://ntuhgovtw.sharepoint.com/sites/intra.ifc/SitePages/Home.aspx">院內 SharePoint 歷史紀錄</a>
         </div>
       </section>
+      <div class="bottom-actions">
+        <button data-tab="all" type="button">回到總覽</button>
+      </div>
     </main>
 
     <footer class="footer">
