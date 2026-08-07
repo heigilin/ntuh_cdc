@@ -631,7 +631,31 @@
       font-size:13px;
       font-weight:800;
     }
-    .card h3 { margin:12px 0 10px; font-size:28px; line-height:1.25; }
+    .card-title-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 10px;
+      align-items:baseline;
+      margin:4px 0 8px;
+    }
+    .disease-title,
+    .card h3 {
+      margin:0;
+      color:#203f31;
+      font-size:24px;
+      line-height:1.3;
+      font-weight:900;
+    }
+    .date-tag {
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eef8e8;
+      color:#416d42;
+      font-size:13px;
+      font-weight:800;
+    }
+    .card h3 { margin:0 0 10px; }
     .card p { color:#3f5748; line-height:1.75; }
     .more {
       display:grid;
@@ -840,7 +864,7 @@
       .nav { justify-content:flex-start; overflow:auto; }
       .section-head { display:block; }
       .section-head h2 { font-size:22px; }
-      .card h3 { font-size:25px; }
+      .disease-title, .card h3 { font-size:23px; }
     }
     @media (max-width:520px) {
       .hero-inner {
@@ -871,20 +895,18 @@
       .section-head h2 { font-size:20px; line-height:1.3; }
       .section-head p { font-size:14px; }
       .card { min-height:0; padding:17px; }
-      .card h3 { font-size:24px; }
+      .disease-title, .card h3 { font-size:22px; }
       .card p { font-size:15px; line-height:1.7; }
       .resource-row a { border-radius:8px; width:100%; justify-content:center; text-align:center; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        animation-duration:.001ms !important;
-        animation-iteration-count:1 !important;
         scroll-behavior:auto !important;
-        transition-duration:.001ms !important;
       }
       .particle { display:none; }
-      .story-train { animation:train-drive 42s linear infinite !important; }
-      .passenger, .hand, .wheel, .hello-bubble, .flower, .train-unit, .passenger-img-3d, .train-rider { animation-duration:8s !important; opacity:.95; }
+      .story-train { animation-duration:42s !important; }
+      .train-rider, .passenger-img-3d, .flower { animation-duration:7s !important; opacity:.95; }
+      .more { transition-duration:.12s !important; }
     }
     
     /* Train 3D Images */
@@ -967,8 +989,7 @@
     .cart-anchor.driver .passenger-img-3d { animation:hero-blink-hop 4.8s ease-in-out infinite; }
     .cart-anchor.cart-1 .passenger-img-3d { animation:giraffe-happy-sway 3.6s ease-in-out infinite; }
     .cart-anchor.cart-2 .passenger-img-3d { animation:sheep-flag-wave 2.7s ease-in-out infinite; }
-    .cart-anchor.cart-3 .passenger-img-3d { animation:monkey-cheer-wave 3.2s ease-in-out infinite; }
-    .cart-anchor.cart-3 .monkey-stack { animation:monkey-idle-ride 3.8s ease-in-out infinite; }
+    .cart-anchor.cart-3 .passenger-img-3d { animation:monkey-gentle-ride 4.2s ease-in-out infinite; }
     .cart-anchor:hover .passenger-img-3d,
     .cart-anchor.is-hovering .passenger-img-3d {
       animation:passenger-hover-hello .9s ease-in-out 1;
@@ -989,56 +1010,6 @@
     .passenger-img-3d.action-clap { animation-name:passenger-clap; }
     .passenger-img-3d.action-wash { animation-name:passenger-wash; }
     .passenger-img-3d.action-catch { animation-name:passenger-catch; }
-    .monkey-stack {
-      position:relative;
-      width:125%;
-      height:150%;
-      transform-origin:50% 86%;
-      filter:drop-shadow(0 10px 12px rgba(43,64,49,.18));
-      will-change:transform;
-    }
-    .monkey-layer {
-      position:absolute;
-      object-fit:contain;
-      pointer-events:none;
-      user-select:none;
-    }
-    .monkey-leg {
-      z-index:1;
-      width:54%;
-      left:23%;
-      bottom:0;
-    }
-    .monkey-body {
-      z-index:2;
-      width:86%;
-      left:7%;
-      bottom:9%;
-    }
-    .monkey-arm {
-      z-index:4;
-      width:98%;
-      left:1%;
-      top:38%;
-      transform-origin:42% 16%;
-      animation:monkey-arm-scratch 6.6s ease-in-out infinite;
-      will-change:transform;
-    }
-    .monkey-eye {
-      z-index:5;
-      width:43%;
-      left:28.5%;
-      top:32%;
-      opacity:0;
-      animation:monkey-blink 5.4s steps(1,end) infinite;
-      will-change:opacity;
-    }
-    .cart-anchor.cart-3:hover .monkey-stack,
-    .cart-anchor.cart-3.is-hovering .monkey-stack {
-      animation:passenger-hover-hello .9s ease-in-out 1;
-      transform:translateY(-12px) scale(1.16);
-      filter:drop-shadow(0 18px 20px rgba(43,64,49,.24)) brightness(1.08) saturate(1.08);
-    }
     
     /* 3D Train Passenger Animations */
     @keyframes sway {
@@ -1104,6 +1075,12 @@
       36% { transform:translateY(0) rotate(11deg); }
       54% { transform:translateY(-5px) rotate(-7deg) scale(1.04); }
       72% { transform:translateY(0) rotate(7deg); }
+    }
+    @keyframes monkey-gentle-ride {
+      0%,100% { transform:translateY(0) rotate(0) scale(1); }
+      28% { transform:translateY(-4px) rotate(-3deg) scale(1.03); }
+      52% { transform:translateY(1px) rotate(2deg); }
+      72% { transform:translateY(-2px) rotate(-1deg) scale(1.01); }
     }
     @keyframes monkey-idle-ride {
       0%,100% { transform:translateY(0) rotate(0) scale(1); }
@@ -1217,12 +1194,7 @@
               <img class="passenger-img-3d sheep" src="assets/cutouts/sheep-trim.png" alt="">
             </div>
             <div class="cart-anchor cart-3" data-mascot="monkey">
-              <div class="monkey-stack passenger-img-3d monkey" aria-hidden="true">
-                <img class="monkey-layer monkey-leg" src="assets/monkey_parts/legs.png" alt="">
-                <img class="monkey-layer monkey-body" src="assets/monkey_parts/body.png" alt="">
-                <img class="monkey-layer monkey-arm" src="assets/monkey_parts/arms.png" alt="">
-                <img class="monkey-layer monkey-eye" src="assets/monkey_parts/eyes.png" alt="">
-              </div>
+              <img class="passenger-img-3d monkey" src="assets/cutouts/monkey-trim.png" alt="">
             </div>
             <span class="hello-bubble"></span>
           </div>
@@ -1238,7 +1210,7 @@
         </div>
         <div class="cards">
           <article class="card">
-            <span class="tag">新冠肺炎｜2026-08-04</span>
+            <div class="card-title-row"><span class="disease-title">新冠肺炎</span><span class="date-tag">2026-08-04</span></div>
             <h3>疫情上升且處流行期</h3>
             <p>第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。醫療照護機構、人潮擁擠室內場所建議自主佩戴口罩。</p>
             <div class="more"><div>
@@ -1251,7 +1223,7 @@
             <div class="resource-row"><a data-resource="education" data-topic="新冠肺炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：新冠肺炎（待確認）</a><a data-resource="km" data-topic="新冠肺炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：新冠肺炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9">CDC 原文</a></div>
           </article>
           <article class="card">
-            <span class="tag">肺炎鏈球菌｜2026-07-28</span>
+            <div class="card-title-row"><span class="disease-title">肺炎鏈球菌</span><span class="date-tag">2026-07-28</span></div>
             <h3>成人公費疫苗升級</h3>
             <p>2026-08-10起成人公費肺炎鏈球菌疫苗增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。</p>
             <div class="more"><div>
@@ -1273,7 +1245,7 @@
         </div>
         <div class="cards">
           <article class="card">
-            <span class="tag">傷寒｜2026-08-06</span>
+            <div class="card-title-row"><span class="disease-title">傷寒</span><span class="date-tag">2026-08-06</span></div>
             <h3>今年首例本土病例</h3>
             <p>國內公布2026年首例本土傷寒確定病例，個案已出院返家休養；接觸者採檢目前陰性。醫療院所發現疑似個案需於24小時內通報。</p>
             <div class="more"><div>
@@ -1295,7 +1267,7 @@
         </div>
         <div class="cards">
           <article class="card">
-            <span class="tag">登革熱｜2026-08-04</span>
+            <div class="card-title-row"><span class="disease-title">登革熱</span><span class="date-tag">2026-08-04</span></div>
             <h3>境外移入與群聚風險</h3>
             <p>7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有疑似症狀，應主動告知旅遊史並就醫。</p>
             <div class="more"><div>
@@ -1309,7 +1281,7 @@
             <div class="resource-row"><a data-resource="education" data-topic="登革熱" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：登革熱（待確認）</a><a data-resource="km" data-topic="登革熱" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：登革熱（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9">CDC 原文</a></div>
           </article>
           <article class="card">
-            <span class="tag">日本腦炎｜2026-07-28</span>
+            <div class="card-title-row"><span class="disease-title">日本腦炎</span><span class="date-tag">2026-07-28</span></div>
             <h3>今年首例死亡病例</h3>
             <p>國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。</p>
             <div class="more"><div>
