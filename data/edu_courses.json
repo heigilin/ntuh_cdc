@@ -1,0 +1,7 @@
+{
+  "fallback": {
+    "name": "臺大醫院教育訓練管理系統",
+    "url": "https://edu.ntuh.gov.tw/index/login?next=%2F"
+  },
+  "courses": []
+}

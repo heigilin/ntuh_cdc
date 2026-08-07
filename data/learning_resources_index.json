@@ -1,0 +1,66 @@
+{
+  "version": "2026-08-07",
+  "fallbacks": {
+    "education": {
+      "name": "臺大醫院教育訓練管理系統",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F"
+    },
+    "km": {
+      "name": "KM系統感染管制手冊目錄",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531"
+    }
+  },
+  "education_courses": [
+    {
+      "id": "edu-covid",
+      "name": "新冠肺炎感染管制教育課程（待確認）",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+      "topics": ["新冠肺炎", "COVID-19"],
+      "keywords": ["新冠", "COVID", "SARS-CoV-2", "呼吸道", "口罩"],
+      "enabled": true
+    },
+    {
+      "id": "edu-dengue",
+      "name": "登革熱與病媒蚊防治教育課程（待確認）",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+      "topics": ["登革熱", "病媒蚊"],
+      "keywords": ["登革熱", "病媒蚊", "孳生源", "防蚊"],
+      "enabled": true
+    },
+    {
+      "id": "edu-enteric",
+      "name": "腸道與食媒傳染病感染管制課程（待確認）",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+      "topics": ["傷寒", "腸道傳染病"],
+      "keywords": ["傷寒", "沙門氏菌", "腸道", "食媒", "手部衛生"],
+      "enabled": true
+    }
+  ],
+  "km_documents": [
+    {
+      "id": "km-covid",
+      "name": "新冠肺炎感染管制手冊（待確認）",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+      "topics": ["新冠肺炎", "COVID-19"],
+      "keywords": ["新冠", "COVID", "SARS-CoV-2", "呼吸道", "個人防護裝備"],
+      "enabled": true
+    },
+    {
+      "id": "km-dengue",
+      "name": "登革熱與病媒蚊防治文件（待確認）",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+      "topics": ["登革熱", "病媒蚊"],
+      "keywords": ["登革熱", "病媒蚊", "孳生源", "防蚊"],
+      "enabled": true
+    },
+    {
+      "id": "km-enteric",
+      "name": "腸道與食媒傳染病感染管制文件（待確認）",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+      "topics": ["傷寒", "腸道傳染病"],
+      "keywords": ["傷寒", "沙門氏菌", "腸道", "食媒", "飲食衛生"],
+      "enabled": true
+    }
+  ]
+}
+

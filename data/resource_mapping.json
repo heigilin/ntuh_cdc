@@ -1,0 +1,148 @@
+{
+  "version": "2026-08-07",
+  "updated_at": "2026-08-07T17:00:00+08:00",
+  "fallbacks": {
+    "education": {
+      "id": "edu-fallback",
+      "name": "臺大醫院教育訓練管理系統",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+      "note": "找不到主題課程時使用；Direct Link 待院內課程盤點後補入。"
+    },
+    "km": {
+      "id": "km-fallback",
+      "name": "KM系統感染管制手冊目錄",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+      "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊",
+      "note": "找不到主題文件時使用。"
+    }
+  },
+  "topics": [
+    {
+      "topic": "新冠",
+      "aliases": ["新冠肺炎", "COVID-19", "COVID", "SARS-CoV-2", "冠狀病毒"],
+      "transmission": "呼吸道傳染病",
+      "education": [
+        {
+          "id": "edu-covid",
+          "name": "新冠肺炎感染管制教育課程（待確認）",
+          "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+          "keywords": ["新冠", "COVID", "呼吸道", "口罩", "隔離", "個人防護裝備"],
+          "enabled": true
+        }
+      ],
+      "km": [
+        {
+          "id": "km-covid",
+          "name": "新冠肺炎感染管制手冊（待確認）",
+          "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "keywords": ["新冠", "COVID", "呼吸道", "隔離", "個人防護裝備"],
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "topic": "流感",
+      "aliases": ["類流感", "influenza"],
+      "transmission": "呼吸道傳染病",
+      "education": [],
+      "km": []
+    },
+    {
+      "topic": "肺炎鏈球菌",
+      "aliases": ["侵襲性肺炎鏈球菌", "IPD"],
+      "transmission": "呼吸道傳染病",
+      "education": [
+        {
+          "id": "edu-ipd",
+          "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
+          "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+          "keywords": ["肺炎鏈球菌", "IPD", "高風險", "疫苗"],
+          "enabled": true
+        }
+      ],
+      "km": []
+    },
+    {
+      "topic": "傷寒",
+      "aliases": ["沙門氏菌", "腸道傳染病", "食媒"],
+      "transmission": "腸道與食媒傳染病",
+      "education": [
+        {
+          "id": "edu-enteric",
+          "name": "腸道與食媒傳染病感染管制課程（待確認）",
+          "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+          "keywords": ["傷寒", "沙門氏菌", "腸道", "食媒", "手部衛生"],
+          "enabled": true
+        }
+      ],
+      "km": [
+        {
+          "id": "km-enteric",
+          "name": "腸道與食媒傳染病感染管制文件（待確認）",
+          "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "keywords": ["傷寒", "沙門氏菌", "腸道", "食媒", "飲食衛生"],
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "topic": "登革熱",
+      "aliases": ["病媒蚊", "防蚊", "孳生源"],
+      "transmission": "病媒傳染病",
+      "education": [
+        {
+          "id": "edu-dengue",
+          "name": "登革熱與病媒蚊防治教育課程（待確認）",
+          "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+          "keywords": ["登革熱", "病媒蚊", "孳生源", "防蚊"],
+          "enabled": true
+        }
+      ],
+      "km": [
+        {
+          "id": "km-dengue",
+          "name": "登革熱與病媒蚊防治文件（待確認）",
+          "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "keywords": ["登革熱", "病媒蚊", "孳生源", "防蚊"],
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "topic": "日本腦炎",
+      "aliases": ["三斑家蚊", "水稻田", "豬舍"],
+      "transmission": "病媒傳染病",
+      "education": [],
+      "km": []
+    },
+    {
+      "topic": "腸病毒",
+      "aliases": ["手足口病", "疱疹性咽峽炎"],
+      "transmission": "腸道與接觸傳染病",
+      "education": [],
+      "km": []
+    },
+    {
+      "topic": "M痘",
+      "aliases": ["Mpox"],
+      "transmission": "接觸傳染病",
+      "education": [],
+      "km": []
+    },
+    {
+      "topic": "類鼻疽",
+      "aliases": ["melioidosis"],
+      "transmission": "環境與接觸傳染病",
+      "education": [],
+      "km": []
+    },
+    {
+      "topic": "伊波拉",
+      "aliases": ["Ebola"],
+      "transmission": "第一類與高嚴重度傳染病",
+      "education": [],
+      "km": []
+    }
+  ]
+}
+

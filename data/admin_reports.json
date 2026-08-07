@@ -1,0 +1,453 @@
+{
+  "schema_version": "2026-08-admin-draft-v1",
+  "safety_policy": {
+    "mode": "preview_edit_archive_only",
+    "allowed_actions": [
+      "login",
+      "load_preview",
+      "edit_content",
+      "override_links",
+      "save_draft",
+      "acquire_edit_lock",
+      "release_edit_lock"
+    ],
+    "forbidden_actions": [
+      "send_email",
+      "publish_web",
+      "deploy_sharepoint",
+      "auto_archive_external"
+    ]
+  },
+  "reports": [
+    {
+      "id": "cdc-weekly-2026-08-07",
+      "period_label": "2026-08-07",
+      "status": "edited",
+      "workflow_state": "已編輯草稿",
+      "issue_range": {
+        "from": "2026-07-24",
+        "to": "2026-08-07"
+      },
+      "subject": "疫情訊息- 國內出現今年首例本土傷寒確定病例；國內出現今年首例日本腦炎死亡病例；國內新冠疫情上升且處流行期；國內持續新增登革熱境外移入病例；成人公費肺炎鏈球菌疫苗自2026年8月10日起全",
+      "created_at": "2026-08-07T17:03:34+08:00",
+      "updated_at": "2026-08-07T17:19:22+08:00",
+      "version": 2,
+      "last_modified_by": {
+        "id": "admin_a",
+        "display_name": "Admin_A",
+        "role": "owner",
+        "permissions": [
+          "preview",
+          "edit_content",
+          "override_links",
+          "save_draft"
+        ]
+      },
+      "last_saved_at": "2026-08-07T17:19:22+08:00",
+      "edit_lock": {
+        "locked_by": "",
+        "display_name": "",
+        "locked_at": "",
+        "expires_at": ""
+      },
+      "reviewer": "Admin_A",
+      "preview": {
+        "web": "output/issues/cdc-weekly-2026-08-07/web.html",
+        "email": "output/issues/cdc-weekly-2026-08-07/email.html"
+      },
+      "sections": [
+        {
+          "id": "respiratory",
+          "label": "呼吸道傳染病與高風險族群保護",
+          "items": [
+            {
+              "id": "respiratory-45472",
+              "section": "respiratory",
+              "disease": "國內新冠疫情上升且處流行期 呼籲尚未接種疫苗的民眾儘快接種 並落實勤洗手、戴口罩等自我防護措施",
+              "title": "國內新冠疫情上升且處流行期 呼籲尚未接種疫苗的民眾儘快接種 並落實勤洗手、戴口罩等自我防護措施",
+              "date": "2026-08-04",
+              "summary": "疾管署資料顯示，國內新冠疫情持續上升且處流行期，籲請民眾不可掉以輕心，做好自我防護措施，落實勤洗手；出入醫療照護機構、搭乘大眾運輸、至人潮擁擠室內場所時，自主戴口罩；出現發燒或有呼吸道症狀，建議儘量在家休息，避免不必要的外出，外出時記得佩戴口罩；尚未接種疫苗儘快接種；另具重症風險因子的民眾如出現疑似症狀應儘速就醫，以利醫師及早診治並開立抗病毒藥物，降低感染後引發併發重症或死亡之風險。\n依據疾管署監測資料顯示，國內新冠肺炎疫情上升，第30週(7/26-8/1)新冠門急診就診計18,990人次，較上週( 7/19-7/",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-covid",
+                  "name": "新冠肺炎感染管制教育課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "口罩",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                },
+                "km": {
+                  "id": "km-covid",
+                  "name": "新冠肺炎感染管制手冊（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            },
+            {
+              "id": "respiratory-89915",
+              "section": "respiratory",
+              "disease": "成人公費肺炎鏈球菌疫苗自2026年8月10日起全面升級為20價或21價新型疫苗 接種「1劑搞定」",
+              "title": "成人公費肺炎鏈球菌疫苗自2026年8月10日起全面升級為20價或21價新型疫苗 接種「1劑搞定」",
+              "date": "2026-07-28",
+              "summary": "疾管署資料顯示，成人公費肺炎鏈球菌疫苗已於115年1月15日起提供65歲以上長者、55-64歲原住民及19-64歲侵襲性肺炎鏈球菌感染症(IPD)高風險對象等公費對象接種1劑PCV20，取代原本2劑疫苗(PCV13+PPV23)接種，並自115年8月10日起增加提供PCV21供符合接種資格民眾選擇，以兩種「一劑搞定」的新疫苗(PCV20或PCV21）全面取代舊型疫苗，接種1劑即可完整獲得保護力。全面升級為新疫苗，可提高疫苗接種完成率，降低IPD發生及導致嚴重併發症或死亡之風險，尚未完整接種公費對象(估計約317萬人",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-ipd",
+                  "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "肺炎鏈球菌",
+                    "IPD",
+                    "高風險",
+                    "疫苗"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "肺炎鏈球菌"
+                },
+                "km": {
+                  "id": "km-fallback",
+                  "name": "KM系統感染管制手冊目錄",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊",
+                  "note": "找不到主題文件時使用。",
+                  "matched": "fallback",
+                  "topic": "肺炎鏈球菌"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            },
+            {
+              "id": "respiratory-560",
+              "section": "respiratory",
+              "disease": "新冠疫情持續升溫 尚未接種本季新冠疫苗民眾請儘速接種獲得保護力 如有疑似症狀請儘速就醫",
+              "title": "新冠疫情持續升溫 尚未接種本季新冠疫苗民眾請儘速接種獲得保護力 如有疑似症狀請儘速就醫",
+              "date": "2026-07-28",
+              "summary": "疾管署資料顯示，國內新冠疫情持續呈上升趨勢，已進入流行期，且適逢暑假旅遊旺季，疾病傳播風險提高，呼籲民眾除做好勤洗手、戴口罩、打疫苗等自我防護外，出入醫療照護機構以及於人潮聚集且無法保持適當距離或通風不良之場所、與年長者或免疫低下者密切接觸時，建議自主佩戴口罩，出現發燒或有呼吸道症狀建議盡量在家休息，避免不必要外出，另具重症風險因子的民眾如出現疑似症狀應儘速就醫，以利醫師及早診治並開立抗病毒藥物，降低感染後引發併發症或導致死亡之風險。\n依據疾管署監測資料顯示，國內新冠肺炎疫情上升， 第29週(7/19-7/25)新",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/HqTIUKC58EK9fO9AVWU3Cg?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-covid",
+                  "name": "新冠肺炎感染管制教育課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "口罩",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                },
+                "km": {
+                  "id": "km-covid",
+                  "name": "新冠肺炎感染管制手冊（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            },
+            {
+              "id": "respiratory-45092",
+              "section": "respiratory",
+              "disease": "新冠疫苗充足 已協助增加配送量提供臺北市政府衛生局撥配轄區合約醫療院所提供民眾接種",
+              "title": "新冠疫苗充足 已協助增加配送量提供臺北市政府衛生局撥配轄區合約醫療院所提供民眾接種",
+              "date": "2026-07-26",
+              "summary": "疾管署資料顯示，隨著疫情上升趨勢，民眾接種疫苗的意願也明顯提高，目前新冠疫苗充足，為提供民眾接種新冠疫苗，提升免疫保護力，疾管署持續每週依各地方政府衛生局提報轄區接種需求進行疫苗撥配，針對「媒體報導北市診所爆沒疫苗」一事，說明如下：\n一、新冠疫苗須依冷鏈管理規範保存，疫苗平時於-50°C至-15°C冷凍保存，配送前須先由冷凍環境移至2°C至8°C冷藏條件保存，並依冷鏈管理規範完成後續配送作業。因應新冠疫苗配送前須先進行解凍，疾管署定期每週請各縣市衛生局評估轄內新冠疫苗需求量，依需求由疫苗冷鏈物流端依排程進行配送，疫",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/jjjZ92M6bSeLe0m_jmppdQ?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-covid",
+                  "name": "新冠肺炎感染管制教育課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "口罩",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                },
+                "km": {
+                  "id": "km-covid",
+                  "name": "新冠肺炎感染管制手冊（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            },
+            {
+              "id": "respiratory-13961",
+              "section": "respiratory",
+              "disease": "新冠疫苗擴大全民接種延長至9月28日 尚有約44萬劑提供全民免費接種",
+              "title": "新冠疫苗擴大全民接種延長至9月28日 尚有約44萬劑提供全民免費接種",
+              "date": "2026-07-25",
+              "summary": "疾管署資料顯示，考量國內新冠疫情已進入流行期，且依資料顯示，本土重症病例仍以65歲以上長者及具慢性病史者為多，其中9成以上都未接種本季新冠疫苗，為保障國人健康，經諮詢衛生福利部傳染病防治諮詢會預防接種組(ACIP)委員，決定將公費新冠疫苗擴大提供滿6個月以上尚未接種民眾，接種措施延長至今年9月28日止，呼籲尚未接種本季新冠疫苗民眾，趕快完成接種，獲得免疫保護以應對此波疫情。\n疾管署資料顯示，目前提供之新冠疫苗對現在流行之變異株仍具保護力。截至今(2026)年7月24日，本季新冠疫苗接種累計約174萬人次，65歲以上",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/oBrpeEYHlg6CZ32oiSW_1Q?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-covid",
+                  "name": "新冠肺炎感染管制教育課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "口罩",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                },
+                "km": {
+                  "id": "km-covid",
+                  "name": "新冠肺炎感染管制手冊（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "新冠",
+                    "COVID",
+                    "呼吸道",
+                    "隔離",
+                    "個人防護裝備"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "新冠"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            }
+          ]
+        },
+        {
+          "id": "foodborne",
+          "label": "腸道與食媒傳染病",
+          "items": [
+            {
+              "id": "foodborne-85103",
+              "section": "foodborne",
+              "disease": "國內出現今年首例本土傷寒確定病例 籲請民眾注意飲食及手部衛生",
+              "title": "國內出現今年首例本土傷寒確定病例 籲請民眾注意飲食及手部衛生",
+              "date": "2026-08-06",
+              "summary": "疾管署資料顯示，我國今(2026)年首例本土傷寒確定病例，為中部70多歲女性，具慢性病史，近期無國內外旅遊史，於7月中旬出現發燒及腹瀉等症狀，因症狀未改善，就醫後住院治療，經採檢送驗確診，個案目前已出院返家休養。另經調查計有同住家人3名與相關接觸者42名，其中1人有腹瀉症狀，衛生單位已完成3名同住家人及1名有症狀接觸者採檢送驗，4人檢驗結果均為陰性，並同時衛教接觸者進行健康監測，以及落實飲食與手部衛生。\n依疾管署統計資料顯示，國內今年累計4例傷寒確定病例，其中1例本土病例及3例境外移入，本土病例數與2022-202",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/oK_5RuMcEfhPiXKxOXcUGg?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-enteric",
+                  "name": "腸道與食媒傳染病感染管制課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "傷寒",
+                    "沙門氏菌",
+                    "腸道",
+                    "食媒",
+                    "手部衛生"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "傷寒"
+                },
+                "km": {
+                  "id": "km-enteric",
+                  "name": "腸道與食媒傳染病感染管制文件（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "傷寒",
+                    "沙門氏菌",
+                    "腸道",
+                    "食媒",
+                    "飲食衛生"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "傷寒"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            }
+          ]
+        },
+        {
+          "id": "vectorborne",
+          "label": "病媒蚊傳染病",
+          "items": [
+            {
+              "id": "vectorborne-21151",
+              "section": "vectorborne",
+              "disease": "國內出現今年首例日本腦炎死亡病例 籲請民眾提高警覺 加強防蚊及預防接種",
+              "title": "國內出現今年首例日本腦炎死亡病例 籲請民眾提高警覺 加強防蚊及預防接種",
+              "date": "2026-07-28",
+              "summary": "疾管署資料顯示，國內新增２例日本腦炎病例，案１為桃園市桃園區70多歲女性，具慢性病史，7月中旬出現無力、嗜睡及發燒等症狀，即至醫院急診就醫並收治住院，經醫院通報採檢確認為日本腦炎，後續因病況惡化於7月下旬不幸過世，為今(2026)年首例日本腦炎死亡病例，同住者無疑似症狀，個案住家附近有水稻田、溪流、豬舍及鴿舍等高風險場域。案2為桃園市大園區50多歲男性，7月中旬出現發燒及頭痛等症狀，2日後因昏倒至醫院就醫，後經醫院通報採檢確認為日本腦炎，目前住院治療中。衛生單位已展開相關調查並針對個案居住地周邊高風險場域懸掛誘蚊燈",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-fallback",
+                  "name": "臺大醫院教育訓練管理系統",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "note": "找不到主題課程時使用；Direct Link 待院內課程盤點後補入。",
+                  "matched": "fallback",
+                  "topic": "日本腦炎"
+                },
+                "km": {
+                  "id": "km-fallback",
+                  "name": "KM系統感染管制手冊目錄",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊",
+                  "note": "找不到主題文件時使用。",
+                  "matched": "fallback",
+                  "topic": "日本腦炎"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            },
+            {
+              "id": "vectorborne-53284",
+              "section": "vectorborne",
+              "disease": "國內持續新增登革熱境外移入病例 請民眾出國期間落實防蚊措施 返國後如有不適症請儘速就醫",
+              "title": "國內持續新增登革熱境外移入病例 請民眾出國期間落實防蚊措施 返國後如有不適症請儘速就醫",
+              "date": "2026-08-04",
+              "summary": "疾管署資料顯示，國際間登革熱等蚊媒傳染病疫情持續，東南亞鄰近國家登革熱疫情上升，境外感染風險提高，且依據氣象預測顯示，聖嬰現象未來數月可能進一步增強，由於聖嬰現象利於登革熱傳播，又適逢暑假旅遊旺季，呼籲民眾出國期間落實防蚊措施，返國後14天內如出現不適症狀儘速就醫，並告知醫師旅遊史，以利醫師判斷。\n疾管署資料顯示，國內上週(7/28-8/3)新增8例登革熱境外移入病例，其中3例為一起柬埔寨境外群聚感染事件。該起群聚個案年齡介於10多歲至30多歲，為2男1女，今(2026)年7月中旬一同赴柬埔寨進行交流活動，7月下旬",
+              "details": [],
+              "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+              "suggested_links": {
+                "education": {
+                  "id": "edu-dengue",
+                  "name": "登革熱與病媒蚊防治教育課程（待確認）",
+                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "keywords": [
+                    "登革熱",
+                    "病媒蚊",
+                    "孳生源",
+                    "防蚊"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "登革熱"
+                },
+                "km": {
+                  "id": "km-dengue",
+                  "name": "登革熱與病媒蚊防治文件（待確認）",
+                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+                  "keywords": [
+                    "登革熱",
+                    "病媒蚊",
+                    "孳生源",
+                    "防蚊"
+                  ],
+                  "enabled": true,
+                  "matched": "topic",
+                  "topic": "登革熱"
+                }
+              },
+              "link_override": {},
+              "severity_basis": ""
+            }
+          ]
+        }
+      ],
+      "link_overrides": [],
+      "audit_log": [
+        {
+          "at": "2026-08-07T17:03:34+08:00",
+          "actor": "system",
+          "action": "import_generated_issue_as_draft",
+          "note": "Imported from output\\current_issue.generated.json. No publishing or sending was triggered."
+        },
+        {
+          "at": "2026-08-07T17:11:09+08:00",
+          "actor": "Admin_A",
+          "action": "acquire_edit_lock",
+          "note": "開始編輯此期草稿。"
+        },
+        {
+          "at": "2026-08-07T17:11:24+08:00",
+          "actor": "Admin_A",
+          "action": "release_edit_lock",
+          "note": "結束編輯鎖定。"
+        },
+        {
+          "at": "2026-08-07T17:19:22+08:00",
+          "actor": "Admin_A",
+          "action": "acquire_edit_lock",
+          "note": "開始編輯此期草稿。"
+        },
+        {
+          "at": "2026-08-07T17:19:22+08:00",
+          "actor": "Admin_A",
+          "action": "save_draft",
+          "note": "疾病內文、課程/KM 連結覆寫 1 筆。Saved locally only. No email, publishing, or deployment was triggered."
+        },
+        {
+          "at": "2026-08-07T17:19:22+08:00",
+          "actor": "Admin_A",
+          "action": "release_edit_lock",
+          "note": "結束編輯鎖定。"
+        }
+      ]
+    }
+  ]
+}

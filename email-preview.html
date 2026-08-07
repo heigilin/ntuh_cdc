@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>疫情訊息 Email Preview</title>
+  <style>
+    body { margin:0; background:#eef7f1; color:#21342b; font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif; }
+    .preheader { display:none; max-height:0; overflow:hidden; opacity:0; }
+    .wrap { max-width:760px; margin:0 auto; padding:24px 12px; }
+    .mail { overflow:hidden; border-radius:8px; background:#fffdf7; box-shadow:0 18px 42px rgba(31,79,58,.16); border:1px solid #dfe9dc; }
+    .hero { position:relative; padding:24px 28px 0; background:linear-gradient(135deg,#fff7d8 0%,#dff2e4 48%,#cdebf8 100%); }
+    .hero table { width:100%; border-collapse:collapse; }
+    .hero h1 { margin:0 0 10px; font-size:28px; line-height:1.25; letter-spacing:0; color:#22472f; }
+    .hero p { margin:0; font-size:15px; line-height:1.7; color:#355244; }
+    .visual-stack { width:150px; text-align:right; }
+    .character { width:112px; border-radius:999px; border:5px solid rgba(255,255,255,.92); box-shadow:0 10px 24px rgba(44,102,67,.18); animation:mail-float 4.8s ease-in-out infinite; }
+    .pet { width:74px; margin-top:-24px; margin-right:70px; display:block; filter:drop-shadow(0 8px 14px rgba(44,102,67,.18)); animation:mail-helper 3.4s ease-in-out infinite; }
+    .mail-train-scene { position:relative; height:148px; margin:8px -28px 0; overflow:visible; background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(213,239,179,.5) 58%, rgba(117,185,80,.88) 100%); }
+    .mail-train { position:absolute; left:0; bottom:0; width:430px; aspect-ratio:2295 / 944; transform:translateX(780px); animation:mail-train-drive 18s linear infinite; animation-delay:-7s; }
+    .mail-train img { display:block; }
+    .mail-train-base { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; filter:drop-shadow(0 10px 14px rgba(55,79,47,.2)); }
+    .mail-cart { position:absolute; transform:translateX(-50%); transform-origin:50% 100%; display:flex; align-items:flex-end; justify-content:center; }
+    .mail-cart img { width:100%; height:100%; object-fit:contain; transform-origin:bottom center; filter:drop-shadow(0 6px 8px rgba(43,64,49,.18)); }
+    .mail-cart.driver { left:27.2%; bottom:37.8%; width:8.2%; height:31%; }
+    .mail-cart.cart-1 { left:52.2%; bottom:36.2%; width:8.2%; height:34%; }
+    .mail-cart.cart-2 { left:68.0%; bottom:36.0%; width:7.8%; height:33%; }
+    .mail-cart.cart-3 { left:83.7%; bottom:43.4%; width:6.3%; height:29%; }
+    .mail-cart.driver img { animation:mail-hop 3.4s ease-in-out infinite; }
+    .mail-cart.cart-1 img { animation:mail-sway 3.2s ease-in-out infinite; }
+    .mail-cart.cart-2 img { animation:mail-wave 2.8s ease-in-out infinite; }
+    .mail-cart.cart-3 img { animation:mail-monkey 3s ease-in-out infinite; }
+    .badge { display:inline-block; margin:0 0 12px; padding:7px 12px; border-radius:999px; background:#fff; color:#47754e; font-weight:700; font-size:13px; }
+    .hero .nav { padding:14px 0 0; background:transparent; border:0; }
+    .mail > .nav { display:none; }
+    .nav { padding:16px 24px; background:#f8fbf0; border-top:1px solid rgba(53,82,68,.1); border-bottom:1px solid rgba(53,82,68,.1); }
+    .nav a { display:inline-block; margin:4px 6px 4px 0; padding:9px 12px; border-radius:999px; background:#2f6f5d; color:#fff; text-decoration:none; font-size:13px; font-weight:700; }
+    .nav a.secondary { background:#f3c85f; color:#31402f; }
+    .content { padding:22px 24px 10px; }
+    .section-title { margin:18px 0 12px; font-size:19px; color:#264f3a; }
+    .card { margin:0 0 16px; padding:18px; border:1px solid #dce9d7; border-radius:8px; background:#ffffff; }
+    .meta { font-size:12px; color:#6c7d70; margin-bottom:8px; }
+    .card h3 { margin:0 0 8px; font-size:18px; color:#1f3f31; }
+    .summary { margin:0 0 12px; font-size:15px; line-height:1.75; }
+    details { border-top:1px dashed #cbdcc8; padding-top:10px; }
+    summary { cursor:pointer; color:#2f6f5d; font-weight:700; }
+    li { margin:6px 0; line-height:1.65; }
+    .links a { display:inline-block; margin:8px 8px 0 0; color:#1f5f88; font-weight:700; text-decoration:none; }
+    .footer { padding:22px 24px 28px; background:#fbf7e8; color:#405145; line-height:1.8; text-align:center; }
+    @media (max-width:560px) {
+      .hero h1 { font-size:23px; }
+      .visual-stack { width:112px; }
+      .character { width:86px; }
+      .pet { width:58px; margin-right:52px; margin-top:-18px; }
+      .mail-train-scene { height:118px; margin-left:-18px; margin-right:-18px; }
+      .mail-train { width:360px; animation-duration:16s; }
+      .hero, .content, .footer { padding-left:18px; padding-right:18px; }
+    }
+    @keyframes mail-float { 50% { transform:translateY(-8px) rotate(1deg); } }
+    @keyframes mail-helper { 50% { transform:translateY(7px) rotate(-4deg); } }
+    @keyframes mail-train-drive {
+      0% { transform:translateX(780px); }
+      100% { transform:translateX(-480px); }
+    }
+    @keyframes mail-hop {
+      0%,100% { transform:translateY(0) scale(1); }
+      45% { transform:translateY(-7px) scale(1.05,.96); }
+      65% { transform:translateY(1px) scale(.98,1.04); }
+    }
+    @keyframes mail-sway {
+      0%,100% { transform:rotate(0); }
+      30% { transform:rotate(-8deg) translateY(-4px); }
+      64% { transform:rotate(7deg) translateY(-2px); }
+    }
+    @keyframes mail-wave {
+      0%,100% { transform:rotate(0) translateY(0); }
+      28% { transform:rotate(-7deg) translateY(-5px); }
+      58% { transform:rotate(8deg) translateY(-2px); }
+    }
+    @keyframes mail-monkey {
+      0%,100% { transform:translateY(0) rotate(0); }
+      24% { transform:translateY(-9px) rotate(-8deg); }
+      52% { transform:translateY(-4px) rotate(9deg); }
+      76% { transform:translateY(-7px) rotate(-5deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="preheader">近兩週 CDC 新聞稿重點：新冠疫情上升、首例本土傷寒、登革熱境外移入、日本腦炎死亡病例與肺炎鏈球菌疫苗政策。</div>
+  <div class="wrap">
+    <article class="mail">
+      <header class="hero">
+        <table role="presentation">
+          <tr>
+            <td>
+              <span class="badge">2026/07/24 - 2026/08/07</span>
+              <h1>疫情訊息週報</h1>
+              <p>最近有哪些疫情要注意？幫你把近兩週重點整理好了，花一分鐘看完風險提醒、通報重點和院內感染管制資源。</p>
+            </td>
+            <td align="right" width="150">
+              <div class="visual-stack">
+                <img class="character" src="assets/新增資料夾/character-green.png" alt="防疫週報角色">
+                <img class="pet" src="assets/mascot-helper.png" alt="防疫小助手寵物">
+              </div>
+            </td>
+          </tr>
+        </table>
+        <nav class="nav" aria-label="週報導覽">
+          <a href="web-preview.html">疫情主網頁</a>
+          <a href="#respiratory">呼吸道</a>
+          <a href="#foodborne">腸道食媒</a>
+          <a href="#vectorborne">病媒蚊</a>
+          <a class="secondary" href="https://ntuhgovtw.sharepoint.com/sites/intra.ifc/SitePages/Home.aspx">歷史紀錄</a>
+        </nav>
+        <div class="mail-train-scene" aria-hidden="true">
+          <div class="mail-train">
+            <img class="mail-train-base" src="assets/cutouts/T-stage.png" alt="">
+            <span class="mail-cart driver"><img src="assets/cutouts/Q-bee-trim.png" alt=""></span>
+            <span class="mail-cart cart-1"><img src="assets/cutouts/giraffe-trim.png" alt=""></span>
+            <span class="mail-cart cart-2"><img src="assets/cutouts/sheep-trim.png" alt=""></span>
+            <span class="mail-cart cart-3"><img src="assets/cutouts/monkey-trim.png" alt=""></span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <h2 class="section-title" id="respiratory">呼吸道傳染病與高風險族群保護</h2>
+        <section class="card">
+          <div class="meta">嚴重度優先：流行期、重症與死亡病例增加｜來源日期：2026-08-04</div>
+          <h3>新冠肺炎</h3>
+          <p class="summary">國內新冠疫情上升且處流行期，第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。建議醫療照護機構、人潮擁擠室內場所自主佩戴口罩，出現症狀儘速就醫。</p>
+          <details>
+            <summary>展開更多內容 Read More</summary>
+            <ul>
+              <li>重症病例以65歲以上及慢性病史者為多，近4週本土病例變異株以PQ.16.1.1為主。</li>
+              <li>公費新冠疫苗擴大接種延長至2026-09-28，高風險者如有疑似症狀由醫師評估抗病毒藥物。</li>
+            </ul>
+          </details>
+          <p class="links"><a data-resource="education" data-topic="新冠肺炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：新冠肺炎（待確認）</a><a data-resource="km" data-topic="新冠肺炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：新冠肺炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9">CDC 原文</a></p>
+        </section>
+
+        <section class="card">
+          <div class="meta">高風險族群預防政策更新｜來源日期：2026-07-28</div>
+          <h3>侵襲性肺炎鏈球菌感染症預防</h3>
+          <p class="summary">成人公費肺炎鏈球菌疫苗自2026-08-10起增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。</p>
+          <details>
+            <summary>展開更多內容 Read More</summary>
+            <ul>
+              <li>適用65歲以上長者、55-64歲原住民、19-64歲IPD高風險對象。</li>
+              <li>已完整接種舊制或新制疫苗者，無需重複接種。</li>
+            </ul>
+          </details>
+          <p class="links"><a data-resource="education" data-topic="肺炎鏈球菌" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：肺炎鏈球菌（待確認）</a><a data-resource="km" data-topic="肺炎鏈球菌" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：肺炎鏈球菌（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9">CDC 原文</a></p>
+        </section>
+
+        <h2 class="section-title" id="foodborne">腸道與食媒傳染病</h2>
+        <section class="card">
+          <div class="meta">第二類法定傳染病；今年首例本土病例｜來源日期：2026-08-06</div>
+          <h3>傷寒</h3>
+          <p class="summary">國內公布2026年首例本土傷寒確定病例，個案已出院返家休養；接觸者採檢目前陰性。民眾應注意飲食與手部衛生，醫療院所發現疑似個案需於24小時內通報。</p>
+          <details>
+            <summary>展開更多內容 Read More</summary>
+            <ul>
+              <li>今年累計4例傷寒確定病例，包含1例本土與3例境外移入。</li>
+              <li>飲用水應煮沸或使用瓶裝水，食品充分加熱，烹調避免生熟食交叉污染。</li>
+            </ul>
+          </details>
+          <p class="links"><a data-resource="education" data-topic="傷寒" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：傷寒（待確認）</a><a data-resource="km" data-topic="傷寒" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：傷寒（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/oK_5RuMcEfhPiXKxOXcUGg?typeid=9">CDC 原文</a></p>
+        </section>
+
+        <h2 class="section-title" id="vectorborne">病媒蚊傳染病</h2>
+        <section class="card">
+          <div class="meta">境外移入持續增加；暑假旅遊與降雨提高風險｜來源日期：2026-08-04</div>
+          <h3>登革熱</h3>
+          <p class="summary">7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有疑似症狀，應主動告知旅遊史並就醫。</p>
+          <details>
+            <summary>展開更多內容 Read More</summary>
+            <ul>
+              <li>截至2026-08-03累計111例，7例本土、104例境外移入。</li>
+              <li>社區與校園應落實巡、倒、清、刷，雨後再次巡檢積水容器。</li>
+            </ul>
+          </details>
+          <p class="links"><a data-resource="education" data-topic="登革熱" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：登革熱（待確認）</a><a data-resource="km" data-topic="登革熱" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：登革熱（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9">CDC 原文</a></p>
+        </section>
+
+        <section class="card">
+          <div class="meta">今年首例死亡病例；流行季高峰後仍需警覺｜來源日期：2026-07-28</div>
+          <h3>日本腦炎</h3>
+          <p class="summary">國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。</p>
+          <details>
+            <summary>展開更多內容 Read More</summary>
+            <ul>
+              <li>2026年累計10例確定病例，其中1例死亡。</li>
+              <li>高風險環境活動時穿著淺色長袖衣褲，並使用合格防蚊藥劑；適齡幼童依時程接種日本腦炎疫苗。</li>
+            </ul>
+          </details>
+          <p class="links"><a data-resource="education" data-topic="日本腦炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：日本腦炎（待確認）</a><a data-resource="km" data-topic="日本腦炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：日本腦炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9">CDC 原文</a></p>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>資料來源：疾病管制署</div>
+        <div>~臺大醫院感染管制中心關心您~</div>
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
+

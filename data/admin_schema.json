@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ntuh.local/schemas/cdc-weekly-admin-draft.schema.json",
+  "title": "CDC Weekly Admin Draft Store",
+  "type": "object",
+  "required": ["schema_version", "safety_policy", "reports"],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "safety_policy": {
+      "type": "object",
+      "required": ["mode", "allowed_actions", "forbidden_actions"],
+      "properties": {
+        "mode": {
+          "const": "preview_edit_archive_only"
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "enum": ["login", "load_preview", "edit_content", "override_links", "save_draft", "acquire_edit_lock", "release_edit_lock"]
+          }
+        },
+        "forbidden_actions": {
+          "type": "array",
+          "items": {
+            "enum": ["send_email", "publish_web", "deploy_sharepoint", "auto_archive_external"]
+          }
+        }
+      }
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/report"
+      }
+    }
+  },
+  "$defs": {
+    "report": {
+      "type": "object",
+      "required": ["id", "status", "workflow_state", "subject", "preview", "sections", "version", "edit_lock"],
+      "properties": {
+        "id": { "type": "string" },
+        "period_label": { "type": "string" },
+        "status": {
+          "enum": ["draft", "edited", "pending_review", "archived_local"]
+        },
+        "workflow_state": { "type": "string" },
+        "issue_range": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          }
+        },
+        "subject": { "type": "string" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "version": { "type": "integer", "minimum": 1 },
+        "last_modified_by": { "$ref": "#/$defs/admin_user_ref" },
+        "last_saved_at": { "type": "string" },
+        "edit_lock": { "$ref": "#/$defs/edit_lock" },
+        "reviewer": { "type": "string" },
+        "preview": {
+          "type": "object",
+          "required": ["web", "email"],
+          "properties": {
+            "web": { "type": "string" },
+            "email": { "type": "string" }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/section" }
+        },
+        "link_overrides": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/link_override_row" }
+        },
+        "audit_log": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/audit_entry" }
+        }
+      },
+      "not": {
+        "required": ["publish_targets"]
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": ["id", "label", "items"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/news_item" }
+        }
+      }
+    },
+    "news_item": {
+      "type": "object",
+      "required": ["id", "disease", "title", "summary", "suggested_links"],
+      "properties": {
+        "id": { "type": "string" },
+        "section": { "type": "string" },
+        "disease": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "summary": { "type": "string" },
+        "details": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "source_url": { "type": "string" },
+        "severity_basis": { "type": "string" },
+        "suggested_links": {
+          "type": "object",
+          "required": ["education", "km"],
+          "properties": {
+            "education": { "$ref": "#/$defs/resource_link" },
+            "km": { "$ref": "#/$defs/resource_link" }
+          }
+        },
+        "link_override": {
+          "type": "object",
+          "properties": {
+            "education": { "$ref": "#/$defs/resource_link" },
+            "km": { "$ref": "#/$defs/resource_link" }
+          }
+        }
+      }
+    },
+    "resource_link": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "topic": { "type": "string" },
+        "matched": {
+          "enum": ["topic", "fallback", "admin_override"]
+        },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "link_override_row": {
+      "type": "object",
+      "required": ["item_id", "links"],
+      "properties": {
+        "item_id": { "type": "string" },
+        "disease": { "type": "string" },
+        "links": {
+          "type": "object",
+          "properties": {
+            "education": { "$ref": "#/$defs/resource_link" },
+            "km": { "$ref": "#/$defs/resource_link" }
+          }
+        }
+      }
+    },
+    "audit_entry": {
+      "type": "object",
+      "required": ["at", "actor", "action", "note"],
+      "properties": {
+        "at": { "type": "string" },
+        "actor": { "type": "string" },
+        "action": {
+          "enum": ["created_draft_record", "import_generated_issue_as_draft", "acquire_edit_lock", "release_edit_lock", "save_draft"]
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "admin_user_ref": {
+      "type": "object",
+      "required": ["id", "display_name"],
+      "properties": {
+        "id": { "type": "string" },
+        "display_name": { "type": "string" },
+        "role": { "type": "string" },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "enum": ["preview", "edit_content", "override_links", "save_draft"]
+          }
+        }
+      }
+    },
+    "edit_lock": {
+      "type": "object",
+      "required": ["locked_by", "display_name", "locked_at", "expires_at"],
+      "properties": {
+        "locked_by": { "type": "string" },
+        "display_name": { "type": "string" },
+        "locked_at": { "type": "string" },
+        "expires_at": { "type": "string" }
+      }
+    }
+  }
+}

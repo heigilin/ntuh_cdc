@@ -1,0 +1,2 @@
+# The admin portal currently uses only the Python standard library.
+# Keep this file so small hosting platforms can detect the Python app.

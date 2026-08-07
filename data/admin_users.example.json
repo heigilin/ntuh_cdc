@@ -1,0 +1,23 @@
+{
+  "schema_version": "2026-08-admin-users-v1",
+  "auth_mode": "local_passcode_prototype",
+  "deployment_note": "Copy this file to data/admin_users.json and replace passcode_sha256 values before deployment. Prefer hospital SSO/AD for production.",
+  "users": [
+    {
+      "id": "admin_a",
+      "display_name": "Admin_A",
+      "role": "owner",
+      "passcode_sha256": "REPLACE_WITH_SHA256",
+      "enabled": true,
+      "permissions": ["preview", "edit_content", "override_links", "save_draft"]
+    },
+    {
+      "id": "admin_b",
+      "display_name": "Admin_B",
+      "role": "owner",
+      "passcode_sha256": "REPLACE_WITH_SHA256",
+      "enabled": true,
+      "permissions": ["preview", "edit_content", "override_links", "save_draft"]
+    }
+  ]
+}

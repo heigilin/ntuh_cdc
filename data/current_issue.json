@@ -1,0 +1,173 @@
+{
+  "generated_at": "2026-08-07T12:00:00+08:00",
+  "issue_range": {
+    "from": "2026-07-24",
+    "to": "2026-08-07"
+  },
+  "subject": "疫情訊息- 新冠疫情上升；首例本土傷寒；登革熱境外移入與蚊媒風險；首例日本腦炎死亡；肺炎鏈球菌成人公費疫苗升級",
+  "source_policy": {
+    "source": "衛生福利部疾病管制署新聞稿",
+    "excluded": "澄清專區，以及標題或分類含疫苗/藥物且屬澄清新聞者",
+    "rewrite": "個人發言一律轉為機關客觀敘述"
+  },
+  "resources": {
+    "education": {
+      "label": "臺大醫院教育訓練管理系統",
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+      "login_note": "TODO: deploy phase should append SSO/login redirect parameters after server credentials are provided."
+    },
+    "km": {
+      "label": "KM系統感染管制手冊目錄（未命中主題文件時使用）",
+      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+      "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊"
+    }
+  },
+  "sections": [
+    {
+      "id": "respiratory",
+      "label": "呼吸道傳染病與高風險族群保護",
+      "priority": 1,
+      "items": [
+        {
+          "disease": "新冠肺炎",
+          "severity_basis": "疫情處流行期，門急診就診人次上升，新增本土重症與死亡病例。",
+          "summary": "國內新冠疫情上升且處流行期，第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。建議醫療照護機構、人潮擁擠室內場所自主佩戴口罩，出現症狀儘速就醫，高風險者由醫師評估抗病毒藥物。",
+          "details": [
+            "2025年10月起累計265例新冠併發重症本土病例，其中28例死亡；重症病例以65歲以上及慢性病史者為多。",
+            "近4週本土病例變異株以PQ.16.1.1為主，全球陽性率呈上升趨勢。",
+            "公費新冠疫苗擴大接種延長至2026-09-28，未接種者及高風險族群可依政策儘速安排。"
+          ],
+          "source_title": "國內新冠疫情上升且處流行期 呼籲尚未接種疫苗的民眾儘快接種 並落實勤洗手、戴口罩等自我防護措施",
+          "source_date": "2026-08-04",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9",
+          "education_course": {
+            "name": "新冠肺炎（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "新冠肺炎"
+          },
+          "km_document": {
+            "name": "新冠肺炎（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "新冠肺炎"
+          }
+        },
+        {
+          "disease": "侵襲性肺炎鏈球菌感染症預防",
+          "severity_basis": "高齡與免疫風險族群重症預防政策更新。",
+          "summary": "成人公費肺炎鏈球菌疫苗自2026-08-10起增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。",
+          "details": [
+            "適用對象包含65歲以上長者、55-64歲原住民、19-64歲IPD高風險對象。",
+            "已完整接種13價或15價加23價、20價或21價者，代表已完成肺鏈疫苗接種，無需再接種新疫苗。"
+          ],
+          "source_title": "成人公費肺炎鏈球菌疫苗自2026年8月10日起全面升級為20價或21價新型疫苗 接種「1劑搞定」",
+          "source_date": "2026-07-28",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
+          "education_course": {
+            "name": "肺炎鏈球菌（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "肺炎鏈球菌"
+          },
+          "km_document": {
+            "name": "肺炎鏈球菌（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "肺炎鏈球菌"
+          }
+        }
+      ]
+    },
+    {
+      "id": "foodborne",
+      "label": "腸道與食媒傳染病",
+      "priority": 2,
+      "items": [
+        {
+          "disease": "傷寒",
+          "severity_basis": "第二類法定傳染病，出現今年首例本土病例。",
+          "summary": "國內公布2026年首例本土傷寒確定病例，個案為中部70多歲女性，已出院返家休養；接觸者採檢目前陰性。民眾應注意飲食與手部衛生，醫療院所發現疑似個案需於24小時內通報。",
+          "details": [
+            "今年累計4例傷寒確定病例，包含1例本土與3例境外移入。",
+            "傷寒主要經受污染食品或飲水傳播，症狀包含持續性發燒、頭痛、倦怠、腹痛、腹瀉等。",
+            "飲用水應煮沸或使用瓶裝水，食品充分加熱，烹調過程避免生熟食交叉污染。"
+          ],
+          "source_title": "國內出現今年首例本土傷寒確定病例 籲請民眾注意飲食及手部衛生",
+          "source_date": "2026-08-06",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/oK_5RuMcEfhPiXKxOXcUGg?typeid=9",
+          "education_course": {
+            "name": "傷寒（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "傷寒"
+          },
+          "km_document": {
+            "name": "傷寒（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "傷寒"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vectorborne",
+      "label": "病媒蚊傳染病",
+      "priority": 3,
+      "items": [
+        {
+          "disease": "登革熱",
+          "severity_basis": "境外移入持續增加，暑假旅遊與午後降雨提高病媒風險。",
+          "summary": "7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，應主動告知旅遊史並就醫。",
+          "details": [
+            "截至2026-08-03累計111例登革熱確定病例，7例本土、104例境外移入。",
+            "境外移入以印尼、越南、馬爾地夫等東南亞及南亞國家為主。",
+            "社區與校園應落實巡、倒、清、刷，雨後再次巡檢積水容器。"
+          ],
+          "source_title": "國內持續新增登革熱境外移入病例 請民眾出國期間落實防蚊措施 返國後如有不適症請儘速就醫",
+          "source_date": "2026-08-04",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "education_course": {
+            "name": "登革熱（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "登革熱"
+          },
+          "km_document": {
+            "name": "登革熱（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "登革熱"
+          }
+        },
+        {
+          "disease": "日本腦炎",
+          "severity_basis": "出現今年首例死亡病例，屬需高度警覺之病媒傳染病。",
+          "summary": "國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，6至7月高峰，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。",
+          "details": [
+            "2026年累計10例確定病例，其中1例死亡。",
+            "病媒蚊常孳生於水稻田、池塘、灌溉溝渠及溪流等處。",
+            "高風險環境活動時穿著淺色長袖衣褲，並使用合格防蚊藥劑；適齡幼童依時程接種日本腦炎疫苗。"
+          ],
+          "source_title": "國內出現今年首例日本腦炎死亡病例 籲請民眾提高警覺 加強防蚊及預防接種",
+          "source_date": "2026-07-28",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9",
+          "education_course": {
+            "name": "日本腦炎（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "日本腦炎"
+          },
+          "km_document": {
+            "name": "日本腦炎（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "日本腦炎"
+          }
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>疫情週報管理者審核入口</title>
+  <style>
+    :root {
+      --ink: #153f32;
+      --muted: #5f756c;
+      --line: #d7e6dc;
+      --paper: #fffdf6;
+      --panel: #f7fbf4;
+      --green: #2e8068;
+      --green-dark: #17604d;
+      --gold: #f5c64f;
+      --blue: #cdebf2;
+      --danger: #9c3d2f;
+      font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(245, 198, 79, .18), transparent 34rem),
+        linear-gradient(135deg, #f8f3dc 0%, #e4f4f4 45%, #fffdf6 100%);
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 22px 28px;
+      border-bottom: 1px solid rgba(21, 63, 50, .12);
+      background: rgba(255, 253, 246, .82);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(24px, 3vw, 36px);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .safety {
+      display: grid;
+      gap: 4px;
+      justify-items: end;
+      text-align: right;
+      color: var(--danger);
+      font-weight: 800;
+    }
+
+    .safety small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .login-box {
+      display: grid;
+      gap: 8px;
+      min-width: min(420px, 100%);
+    }
+
+    .login-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .login-row input {
+      min-height: 38px;
+      padding: 8px 10px;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr) 390px;
+      min-height: 0;
+    }
+
+    aside, .preview, .editor {
+      min-width: 0;
+      padding: 20px;
+    }
+
+    aside {
+      border-right: 1px solid var(--line);
+      background: rgba(247, 251, 244, .72);
+    }
+
+    .preview {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+    }
+
+    .editor {
+      border-left: 1px solid var(--line);
+      background: rgba(255, 253, 246, .84);
+      overflow: auto;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .ghost {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .report-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .report-card {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+      text-align: left;
+      padding: 14px;
+      background: rgba(255, 253, 246, .95);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+    }
+
+    .report-card.active {
+      border-color: var(--green);
+      box-shadow: 0 10px 28px rgba(46, 128, 104, .14);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e7f3ec;
+      color: var(--green-dark);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .badge.warn {
+      background: #fff4cf;
+      color: #7b5b00;
+    }
+
+    .badge.danger {
+      background: #ffe4de;
+      color: var(--danger);
+    }
+
+    .toolbar, .tabs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .primary, .secondary, .tab {
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+    }
+
+    .secondary, .tab {
+      background: #fffdf6;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .tab.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .subject-box {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      background: rgba(255, 253, 246, .86);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--ink);
+      background: white;
+      outline-color: var(--green);
+    }
+
+    textarea {
+      min-height: 108px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .frame-wrap {
+      min-height: 620px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 620px;
+      border: 0;
+      background: white;
+    }
+
+    .item-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .item-button {
+      width: 100%;
+      padding: 12px;
+      text-align: left;
+      color: var(--ink);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .item-button.active {
+      border-color: var(--green);
+      background: #edf7f1;
+    }
+
+    .editor-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .link-card {
+      display: grid;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+    }
+
+    .link-card h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .link-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .resource-results {
+      display: grid;
+      gap: 8px;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    .resource-option {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf6;
+      text-align: left;
+      color: var(--ink);
+    }
+
+    .resource-option strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .empty {
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .7);
+    }
+
+    .save-row {
+      position: sticky;
+      bottom: 0;
+      display: grid;
+      gap: 8px;
+      padding-top: 12px;
+      background: linear-gradient(transparent, rgba(255, 253, 246, .96) 20%);
+    }
+
+    .status-line {
+      min-height: 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hint {
+      padding: 10px 12px;
+      border: 1px solid #f1deb0;
+      border-radius: 8px;
+      background: #fff8df;
+      color: #6a5300;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .top-save {
+      width: 100%;
+      margin: 12px 0;
+    }
+
+    .editor-scroll {
+      display: grid;
+      gap: 14px;
+    }
+
+    .audit-log {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .audit-row {
+      display: grid;
+      gap: 4px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .76);
+    }
+
+    .user-admin {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .user-form {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .78);
+    }
+
+    .perm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .perm-grid label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    .perm-grid input {
+      width: auto;
+    }
+
+    @media (max-width: 1180px) {
+      .shell {
+        grid-template-columns: 250px minmax(0, 1fr);
+      }
+
+      .editor {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 760px) {
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      .safety {
+        justify-items: start;
+        text-align: left;
+      }
+
+      .login-row {
+        grid-template-columns: 1fr;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      aside, .editor {
+        border: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .frame-wrap, iframe {
+        min-height: 560px;
+      }
+
+      .link-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>疫情週報管理者審核入口</h1>
+        <p class="subtitle">管理者可檢視每期 CDC 產生草稿、修正摘要與資源連結，並將結果存成本地草稿。</p>
+      </div>
+      <div class="safety">
+        <span>預覽、編輯、存檔限定</span>
+        <small>本入口沒有寄信、發布或上架功能</small>
+      </div>
+      <div class="login-box">
+        <div class="login-row">
+          <input id="adminIdInput" placeholder="院內帳號 / 管理者代號" autocomplete="username">
+          <input id="passcodeInput" type="password" placeholder="通行碼" autocomplete="current-password">
+          <button class="secondary" id="loginButton" type="button">登入</button>
+        </div>
+        <small class="ghost" id="loginStatus">請使用已建立的管理者帳號登入。正式部署建議改接院內帳號。</small>
+      </div>
+    </header>
+
+    <div class="shell">
+      <aside>
+        <div class="section-title">
+          <h2>歷期草稿</h2>
+          <span class="badge warn">待人工確認</span>
+        </div>
+        <div class="toolbar">
+          <button class="secondary" id="refreshReports" type="button">重新整理</button>
+          <button class="secondary" id="importGenerated" type="button">匯入最新產生稿</button>
+        </div>
+        <div class="report-list" id="reportList"></div>
+      </aside>
+
+      <main class="preview">
+        <div class="subject-box">
+          <label>
+            信件主旨
+            <input id="subjectInput" type="text" autocomplete="off">
+          </label>
+          <div class="toolbar">
+            <span class="badge" id="workflowBadge">草稿</span>
+            <span class="badge warn" id="lockBadge">尚未鎖定</span>
+            <span class="ghost" id="issueRange"></span>
+          </div>
+          <div class="toolbar">
+            <button class="secondary" id="acquireLock" type="button">開始編輯</button>
+            <button class="secondary" id="releaseLock" type="button">釋放編輯鎖</button>
+            <span class="ghost" id="lastModified">最後更新：尚無資料</span>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-preview="web" type="button">網頁版預覽</button>
+          <button class="tab" data-preview="email" type="button">信件版預覽</button>
+        </div>
+        <div class="frame-wrap">
+          <iframe id="previewFrame" title="疫情週報預覽"></iframe>
+        </div>
+      </main>
+
+      <section class="editor">
+        <div class="section-title">
+          <h2>內容與連結編輯</h2>
+          <span class="ghost" id="selectedLabel">尚未選取</span>
+        </div>
+        <label>
+          審核者
+          <input id="reviewerInput" type="text" placeholder="輸入姓名或代號" autocomplete="off">
+        </label>
+        <button class="primary top-save" id="saveDraftTop" type="button">儲存變更</button>
+        <div class="editor-panel" id="editorPanel">
+          <div class="empty">請先從左側疾病清單選擇一則內容。</div>
+        </div>
+        <div class="section-title">
+          <h2>疾病清單</h2>
+          <span class="ghost">選擇一則後可調整內文與連結</span>
+        </div>
+        <div class="item-list" id="itemList"></div>
+        <div class="save-row">
+          <button class="primary" id="saveDraft" type="button">儲存變更</button>
+          <div class="status-line" id="saveStatus"></div>
+        </div>
+        <div class="audit-log">
+          <div class="section-title">
+            <h2>修訂歷史</h2>
+            <span class="ghost">只記錄本地草稿操作</span>
+          </div>
+          <div id="auditLog"></div>
+        </div>
+        <div class="user-admin">
+          <div class="section-title">
+            <h2>管理者權限維護</h2>
+            <span class="ghost" id="userAdminStatus">owner 可維護登入者</span>
+          </div>
+          <div id="userAdminPanel" class="empty">請先以 owner 管理者登入。</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      reports: [],
+      report: null,
+      selected: null,
+      preview: 'web',
+      resources: [],
+      users: [],
+      editingUserId: '',
+      user: JSON.parse(localStorage.getItem('cdc_admin_user') || 'null'),
+      passcode: sessionStorage.getItem('cdc_admin_passcode') || ''
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        headers: { 'Content-Type': 'application/json' },
+        ...options
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || response.statusText);
+      return payload;
+    }
+
+    async function loadReports() {
+      const payload = await api('/api/reports');
+      state.reports = payload.reports;
+      renderReports();
+      if (!state.report && state.reports[0]) {
+        await loadReport(state.reports[0].id);
+      }
+    }
+
+    async function loadReport(id) {
+      const payload = await api(`/api/reports/${encodeURIComponent(id)}`);
+      state.report = payload.report;
+      state.selected = firstItem(state.report);
+      renderReports();
+      renderReport();
+      renderItemList();
+      renderEditor();
+    }
+
+    function firstItem(report) {
+      for (const section of report.sections || []) {
+        if (section.items && section.items[0]) return section.items[0];
+      }
+      return null;
+    }
+
+    function itemKey(item) {
+      return item ? item.id : '';
+    }
+
+    function currentItemRef() {
+      if (!state.report || !state.selected) return null;
+      for (const section of state.report.sections || []) {
+        const item = (section.items || []).find((candidate) => candidate.id === state.selected.id);
+        if (item) return item;
+      }
+      return null;
+    }
+
+    function renderReports() {
+      const list = $('#reportList');
+      list.innerHTML = state.reports.map((report) => `
+        <button class="report-card ${state.report?.id === report.id ? 'active' : ''}" data-report="${escapeHtml(report.id)}" type="button">
+          <strong>${escapeHtml(report.period_label)}</strong>
+          <span>${escapeHtml(report.subject)}</span>
+          <span class="badge">${escapeHtml(report.workflow_state || report.status)}</span>
+          ${report.edit_lock?.locked_by ? `<span class="badge warn">編輯中：${escapeHtml(report.edit_lock.display_name)}</span>` : ''}
+          <small class="ghost">最後更新：${escapeHtml(report.last_saved_at || report.updated_at || '')} ${report.last_modified_by?.display_name ? `by ${escapeHtml(report.last_modified_by.display_name)}` : ''}</small>
+          <small class="ghost">${escapeHtml(report.updated_at || '')}</small>
+        </button>
+      `).join('') || '<div class="empty">目前沒有草稿。</div>';
+      list.querySelectorAll('[data-report]').forEach((button) => {
+        button.addEventListener('click', () => loadReport(button.dataset.report));
+      });
+    }
+
+    function renderReport() {
+      const report = state.report;
+      if (!report) return;
+      $('#subjectInput').value = report.subject || '';
+      $('#reviewerInput').value = report.reviewer || '';
+      $('#workflowBadge').textContent = report.workflow_state || report.status || '草稿';
+      $('#issueRange').textContent = `${report.issue_range?.from || ''} - ${report.issue_range?.to || ''}`;
+      renderLockStatus();
+      renderAuditLog();
+      updateFrame();
+    }
+
+    function renderSession() {
+      if (state.user) {
+        $('#loginStatus').textContent = `已登入：${state.user.display_name}（${state.user.role || 'admin'}）`;
+        $('#adminIdInput').value = state.user.id;
+      } else {
+        $('#loginStatus').textContent = '請使用已建立的管理者帳號登入。正式部署建議改接院內帳號。';
+      }
+      $('#passcodeInput').value = state.passcode;
+      updateEditAvailability();
+    }
+
+    function currentLock() {
+      return state.report?.edit_lock || {};
+    }
+
+    function isLockedByOther() {
+      const lock = currentLock();
+      return Boolean(lock.locked_by && state.user?.id && lock.locked_by !== state.user.id);
+    }
+
+    function isEditable() {
+      const lock = currentLock();
+      return Boolean(state.user && lock.locked_by === state.user.id);
+    }
+
+    function renderLockStatus() {
+      const lock = currentLock();
+      const badge = $('#lockBadge');
+      if (!lock.locked_by) {
+        badge.textContent = '尚未鎖定';
+        badge.className = 'badge warn';
+      } else if (state.user?.id === lock.locked_by) {
+        badge.textContent = `目前由你編輯中`;
+        badge.className = 'badge';
+      } else {
+        badge.textContent = `目前由 ${lock.display_name || lock.locked_by} 編輯中`;
+        badge.className = 'badge danger';
+      }
+      const by = state.report?.last_modified_by?.display_name || 'system';
+      const at = state.report?.last_saved_at || state.report?.updated_at || '';
+      $('#lastModified').textContent = `最後更新：${at || '尚無資料'} by ${by}`;
+      updateEditAvailability();
+    }
+
+    function updateEditAvailability() {
+      const editable = isEditable();
+      ['subjectInput', 'reviewerInput', 'saveDraft', 'saveDraftTop', 'acquireLock', 'releaseLock'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = !state.user;
+      });
+      ['subjectInput', 'reviewerInput', 'saveDraft', 'saveDraftTop'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = !editable;
+      });
+    }
+
+    function updateFrame() {
+      const preview = state.report?.preview || {};
+      const src = state.preview === 'email' ? preview.email : preview.web;
+      $('#previewFrame').src = src ? `${src}?adminPreview=${Date.now()}` : 'about:blank';
+    }
+
+    function renderItemList() {
+      const list = $('#itemList');
+      if (!state.report) {
+        list.innerHTML = '';
+        return;
+      }
+      const buttons = [];
+      for (const section of state.report.sections || []) {
+        buttons.push(`<div class="ghost">${escapeHtml(section.label)}</div>`);
+        for (const item of section.items || []) {
+          buttons.push(`
+            <button class="item-button ${itemKey(item) === itemKey(state.selected) ? 'active' : ''}" data-item="${escapeHtml(item.id)}" type="button">
+              <strong>${escapeHtml(item.disease || item.title)}</strong>
+              <span>${escapeHtml(item.title)}</span>
+            </button>
+          `);
+        }
+      }
+      list.innerHTML = buttons.join('') || '<div class="empty">本期沒有內容。</div>';
+      list.querySelectorAll('[data-item]').forEach((button) => {
+        button.addEventListener('click', () => {
+          state.selected = findItem(button.dataset.item);
+          renderItemList();
+          renderEditor();
+        });
+      });
+    }
+
+    function findItem(id) {
+      for (const section of state.report.sections || []) {
+        const item = (section.items || []).find((candidate) => candidate.id === id);
+        if (item) return item;
+      }
+      return null;
+    }
+
+    function effectiveLink(item, kind) {
+      const link = item.link_override?.[kind] || item.suggested_links?.[kind] || {};
+      if (item.link_override?.[kind]) {
+        return { ...link, name: confirmedName(link.name) };
+      }
+      return { ...link, name: pendingName(link.name) };
+    }
+
+    function pendingName(name) {
+      return String(name || '')
+        .replace(/（待課程對照）/g, '（待確認）')
+        .replace(/（待文件對照）/g, '（待確認）');
+    }
+
+    function confirmedName(name) {
+      return pendingName(name).replace(/（待確認）/g, '');
+    }
+
+    function renderEditor() {
+      const item = currentItemRef();
+      const panel = $('#editorPanel');
+      if (!item) {
+        $('#selectedLabel').textContent = '尚未選取';
+        panel.innerHTML = '<div class="empty">請先從左側疾病清單選擇一則內容。</div>';
+        return;
+      }
+      const disabled = isEditable() ? '' : 'disabled';
+      $('#selectedLabel').textContent = item.disease || item.title;
+      const edu = effectiveLink(item, 'education');
+      const km = effectiveLink(item, 'km');
+      panel.innerHTML = `
+        ${!state.user ? '<div class="hint">請先用右上角管理者帳號登入；登入者可由 owner 在管理者權限維護區建立。</div>' : ''}
+        ${state.user && !currentLock().locked_by ? '<div class="hint">請先按「開始編輯」取得編輯鎖，避免覆蓋其他管理者修改。</div>' : ''}
+        ${renderLinkCard('education', '教育訓練課程', edu)}
+        ${renderLinkCard('km', 'KM 手冊文件', km)}
+        ${renderSourceLinkCard(item)}
+
+        <div class="link-card">
+          <h3>資源搜尋</h3>
+          <input id="resourceQuery" placeholder="輸入疾病、課程或文件關鍵字" ${disabled}>
+          <div class="resource-results" id="resourceResults"></div>
+        </div>
+
+        <div class="field-grid">
+          <label>疾病主題<input id="editDisease" value="${escapeHtml(item.disease || '')}" ${disabled}></label>
+          <label>標題<input id="editTitle" value="${escapeHtml(item.title || '')}" ${disabled}></label>
+          <label>重點摘要<textarea id="editSummary" ${disabled}>${escapeHtml(item.summary || '')}</textarea></label>
+          <label>嚴重度/排序依據<input id="editSeverity" value="${escapeHtml(item.severity_basis || '')}" ${disabled}></label>
+        </div>
+      `;
+      $('#editDisease').addEventListener('input', (event) => { item.disease = event.target.value; renderItemList(); });
+      $('#editTitle').addEventListener('input', (event) => { item.title = event.target.value; renderItemList(); });
+      $('#editSummary').addEventListener('input', (event) => { item.summary = event.target.value; });
+      $('#editSeverity').addEventListener('input', (event) => { item.severity_basis = event.target.value; });
+      $('#sourceUrl').addEventListener('input', (event) => { item.source_url = event.target.value; });
+      bindLinkInputs(item, 'education');
+      bindLinkInputs(item, 'km');
+      $('#resourceQuery').addEventListener('input', debounce(searchResources, 220));
+      searchResources();
+      updateEditAvailability();
+    }
+
+    function renderSourceLinkCard(item) {
+      return `
+        <div class="link-card">
+          <h3>網頁 / CDC 原文連結</h3>
+          <label>CDC 原文 URL<input id="sourceUrl" value="${escapeHtml(item.source_url || '')}" ${isEditable() ? '' : 'disabled'}></label>
+        </div>
+      `;
+    }
+
+    function renderLinkCard(kind, title, link) {
+      return `
+        <div class="link-card">
+          <h3>${escapeHtml(title)}</h3>
+          <label>顯示名稱<input id="${kind}Name" value="${escapeHtml(link.name || '')}" ${isEditable() ? '' : 'disabled'}></label>
+          <label>URL<input id="${kind}Url" value="${escapeHtml(link.url || '')}" ${isEditable() ? '' : 'disabled'}></label>
+          <div class="link-actions">
+            <button class="secondary" data-apply-suggestion="${kind}" type="button" ${isEditable() ? '' : 'disabled'}>還原建議</button>
+            <button class="secondary" data-suggest-now="${kind}" type="button" ${isEditable() ? '' : 'disabled'}>重新比對</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function bindLinkInputs(item, kind) {
+      const ensureOverride = () => {
+        item.link_override ||= {};
+        item.link_override[kind] ||= { ...(item.suggested_links?.[kind] || {}) };
+        item.link_override[kind].name = confirmedName(item.link_override[kind].name);
+        item.link_override[kind].matched = 'admin_override';
+        return item.link_override[kind];
+      };
+      $(`#${kind}Name`).addEventListener('input', (event) => { ensureOverride().name = event.target.value; });
+      $(`#${kind}Url`).addEventListener('input', (event) => { ensureOverride().url = event.target.value; });
+      document.querySelector(`[data-apply-suggestion="${kind}"]`).addEventListener('click', () => {
+        if (item.link_override) delete item.link_override[kind];
+        renderEditor();
+      });
+      document.querySelector(`[data-suggest-now="${kind}"]`).addEventListener('click', async () => {
+        const payload = await api('/api/suggest-links', {
+          method: 'POST',
+          body: JSON.stringify({ title: item.title, summary: item.summary })
+        });
+        item.suggested_links = {
+          education: payload.suggestion.education,
+          km: payload.suggestion.km
+        };
+        if (item.link_override) delete item.link_override[kind];
+        renderEditor();
+      });
+    }
+
+    function debounce(fn, delay) {
+      let timer;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), delay);
+      };
+    }
+
+    async function searchResources() {
+      const query = $('#resourceQuery')?.value || '';
+      const payload = await api(`/api/resources?q=${encodeURIComponent(query)}`);
+      state.resources = payload.resources;
+      const box = $('#resourceResults');
+      const item = currentItemRef();
+      if (!box || !item) return;
+      box.innerHTML = state.resources.map((resource) => `
+        <button class="resource-option" data-resource-id="${escapeHtml(resource.id)}" data-kind="${escapeHtml(resource.kind)}" type="button">
+          <strong>${escapeHtml(resource.name)}</strong>
+          <span>${escapeHtml(resource.topic)} / ${escapeHtml(resource.kind)} / ${escapeHtml(resource.url)}</span>
+        </button>
+      `).join('') || '<div class="empty">沒有符合的資源。</div>';
+      box.querySelectorAll('[data-resource-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!isEditable()) return;
+          const resource = state.resources.find((candidate) => candidate.id === button.dataset.resourceId && candidate.kind === button.dataset.kind);
+          if (!resource) return;
+          item.link_override ||= {};
+          item.link_override[resource.kind] = {
+            id: resource.id,
+            name: confirmedName(resource.name),
+            url: resource.url,
+            topic: resource.topic,
+            matched: 'admin_override'
+          };
+          renderEditor();
+        });
+      });
+    }
+
+    async function saveDraft() {
+      if (!state.report) return;
+      if (!state.user) {
+        $('#saveStatus').textContent = '請先登入管理者帳號。';
+        return;
+      }
+      if (isLockedByOther()) {
+        $('#saveStatus').textContent = `目前由 ${currentLock().display_name} 編輯中，無法覆蓋。`;
+        return;
+      }
+      if (!currentLock().locked_by) {
+        $('#saveStatus').textContent = '請先按「開始編輯」取得編輯鎖。';
+        return;
+      }
+      state.report.subject = $('#subjectInput').value;
+      state.report.reviewer = state.user.display_name;
+      $('#saveStatus').textContent = '儲存中...';
+      try {
+        const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            subject: state.report.subject,
+            reviewer: state.user.display_name,
+            admin_id: state.user.id,
+            passcode: state.passcode,
+            version: state.report.version,
+            sections: state.report.sections,
+            link_overrides: collectOverrides()
+          })
+        });
+        state.report = payload.report;
+        $('#saveStatus').textContent = `已儲存本地草稿：${new Date().toLocaleString('zh-TW')}`;
+        renderReport();
+        renderReports();
+        renderEditor();
+      } catch (error) {
+        $('#saveStatus').textContent = error.message === 'version_conflict'
+          ? '儲存失敗：版本已被其他管理者更新，請重新整理後再編輯。'
+          : `儲存失敗：${error.message}`;
+      }
+    }
+
+    function renderAuditLog() {
+      const box = $('#auditLog');
+      if (!box || !state.report) return;
+      const rows = [...(state.report.audit_log || [])].reverse();
+      box.innerHTML = rows.map((row) => `
+        <div class="audit-row">
+          <strong>${escapeHtml(row.action)} by ${escapeHtml(row.actor)}</strong>
+          <span>${escapeHtml(row.note)}</span>
+          <small class="ghost">${escapeHtml(row.at)}</small>
+        </div>
+      `).join('') || '<div class="empty">尚無修訂紀錄。</div>';
+    }
+
+    async function login() {
+      const adminId = $('#adminIdInput').value.trim();
+      const passcode = $('#passcodeInput').value;
+      const payload = await api('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ admin_id: adminId, passcode })
+      });
+      state.user = payload.user;
+      state.passcode = passcode;
+      localStorage.setItem('cdc_admin_user', JSON.stringify(state.user));
+      sessionStorage.setItem('cdc_admin_passcode', passcode);
+      renderSession();
+      renderLockStatus();
+      renderEditor();
+      await loadUsers();
+    }
+
+    async function loadUsers() {
+      const panel = $('#userAdminPanel');
+      if (!state.user) {
+        panel.innerHTML = '請先以 owner 管理者登入。';
+        return;
+      }
+      try {
+        const payload = await api(`/api/users?admin_id=${encodeURIComponent(state.user.id)}&passcode=${encodeURIComponent(state.passcode)}`);
+        state.users = payload.users;
+        renderUserAdmin(payload.can_manage);
+      } catch (error) {
+        panel.innerHTML = `載入權限失敗：${escapeHtml(error.message)}`;
+      }
+    }
+
+    function renderUserAdmin(canManage) {
+      const panel = $('#userAdminPanel');
+      $('#userAdminStatus').textContent = canManage ? '可新增、停用與調整權限' : '目前帳號不是 owner，僅可檢視';
+      const selected = state.users.find((user) => user.id === state.editingUserId) || {
+        id: '',
+        display_name: '',
+        role: 'editor',
+        enabled: true,
+        permissions: ['preview', 'edit_content', 'override_links', 'save_draft']
+      };
+      const disabled = canManage ? '' : 'disabled';
+      panel.className = 'user-form';
+      panel.innerHTML = `
+        <label>選擇既有管理者
+          <select id="userSelect" ${disabled}>
+            <option value="">新增管理者</option>
+            ${state.users.map((user) => `<option value="${escapeHtml(user.id)}" ${user.id === selected.id ? 'selected' : ''}>${escapeHtml(user.display_name)} / ${escapeHtml(user.id)} ${user.enabled ? '' : '（停用）'}</option>`).join('')}
+          </select>
+        </label>
+        <label>帳號 ID<input id="userId" value="${escapeHtml(selected.id)}" ${selected.id ? 'disabled' : disabled}></label>
+        <label>顯示名稱<input id="userDisplayName" value="${escapeHtml(selected.display_name)}" ${disabled}></label>
+        <label>角色
+          <select id="userRole" ${disabled}>
+            <option value="owner" ${selected.role === 'owner' ? 'selected' : ''}>owner</option>
+            <option value="editor" ${selected.role === 'editor' ? 'selected' : ''}>editor</option>
+          </select>
+        </label>
+        <label>新通行碼<input id="userPasscode" type="password" placeholder="${selected.id ? '留空則不變更' : '新增時必填'}" ${disabled}></label>
+        <label><input id="userEnabled" type="checkbox" ${selected.enabled !== false ? 'checked' : ''} ${disabled}> 啟用此管理者</label>
+        <div class="perm-grid">
+          ${permissionCheckbox('preview', '預覽', selected.permissions, disabled)}
+          ${permissionCheckbox('edit_content', '編輯內文', selected.permissions, disabled)}
+          ${permissionCheckbox('override_links', '調整課程/KM', selected.permissions, disabled)}
+          ${permissionCheckbox('save_draft', '草稿存檔', selected.permissions, disabled)}
+        </div>
+        <button class="secondary" id="saveUser" type="button" ${disabled}>儲存登入者權限</button>
+      `;
+      $('#userSelect').addEventListener('change', (event) => {
+        state.editingUserId = event.target.value;
+        renderUserAdmin(canManage);
+      });
+      $('#saveUser')?.addEventListener('click', saveUser);
+    }
+
+    function permissionCheckbox(value, label, permissions, disabled) {
+      return `<label><input class="permInput" type="checkbox" value="${value}" ${(permissions || []).includes(value) ? 'checked' : ''} ${disabled}> ${label}</label>`;
+    }
+
+    async function saveUser() {
+      const permissions = [...document.querySelectorAll('.permInput:checked')].map((input) => input.value);
+      const user = {
+        id: $('#userId').value.trim(),
+        display_name: $('#userDisplayName').value.trim(),
+        role: $('#userRole').value,
+        enabled: $('#userEnabled').checked,
+        permissions,
+        passcode: $('#userPasscode').value
+      };
+      try {
+        const payload = await api('/api/users', {
+          method: 'POST',
+          body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode, user })
+        });
+        state.users = payload.users;
+        state.editingUserId = payload.user.id;
+        renderUserAdmin(true);
+        $('#userAdminStatus').textContent = `已儲存：${payload.user.display_name}`;
+      } catch (error) {
+        $('#userAdminStatus').textContent = `儲存失敗：${error.message}`;
+      }
+    }
+
+    async function acquireLock() {
+      if (!state.report || !state.user) return;
+      const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}/lock`, {
+        method: 'POST',
+        body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode })
+      });
+      state.report = payload.report;
+      renderReport();
+      renderReports();
+      renderEditor();
+      $('#saveStatus').textContent = `已由 ${state.user.display_name} 取得編輯鎖。`;
+    }
+
+    async function releaseLock() {
+      if (!state.report || !state.user) return;
+      const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}/unlock`, {
+        method: 'POST',
+        body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode })
+      });
+      state.report = payload.report;
+      renderReport();
+      renderReports();
+      renderEditor();
+      $('#saveStatus').textContent = '已釋放編輯鎖。';
+    }
+
+    function collectOverrides() {
+      const rows = [];
+      for (const section of state.report.sections || []) {
+        for (const item of section.items || []) {
+          if (item.link_override && Object.keys(item.link_override).length) {
+            rows.push({ item_id: item.id, disease: item.disease, links: item.link_override });
+          }
+        }
+      }
+      return rows;
+    }
+
+    document.querySelectorAll('[data-preview]').forEach((button) => {
+      button.addEventListener('click', () => {
+        state.preview = button.dataset.preview;
+        document.querySelectorAll('[data-preview]').forEach((tab) => tab.classList.toggle('active', tab === button));
+        updateFrame();
+      });
+    });
+
+    $('#refreshReports').addEventListener('click', loadReports);
+    $('#loginButton').addEventListener('click', () => login().catch((error) => { $('#loginStatus').textContent = `登入失敗：${error.message}`; }));
+    $('#acquireLock').addEventListener('click', () => acquireLock().catch((error) => { $('#saveStatus').textContent = `鎖定失敗：${error.message}`; }));
+    $('#releaseLock').addEventListener('click', () => releaseLock().catch((error) => { $('#saveStatus').textContent = `釋放失敗：${error.message}`; }));
+    $('#saveDraft').addEventListener('click', saveDraft);
+    $('#saveDraftTop').addEventListener('click', saveDraft);
+    $('#subjectInput').addEventListener('input', (event) => { if (state.report) state.report.subject = event.target.value; });
+    $('#reviewerInput').addEventListener('input', (event) => { if (state.report) state.report.reviewer = event.target.value; });
+    $('#importGenerated').addEventListener('click', async () => {
+      $('#saveStatus').textContent = '匯入中...';
+      try {
+        const payload = await api('/api/import-generated', { method: 'POST', body: '{}' });
+        await loadReports();
+        await loadReport(payload.report.id);
+        $('#saveStatus').textContent = '已匯入最新產生稿為本地草稿。';
+      } catch (error) {
+        $('#saveStatus').textContent = `匯入失敗：${error.message}`;
+      }
+    });
+
+    renderSession();
+    if (state.user) loadUsers();
+    loadReports().catch((error) => {
+      $('#reportList').innerHTML = `<div class="empty">載入失敗：${escapeHtml(error.message)}</div>`;
+    });
+  </script>
+</body>
+</html>
