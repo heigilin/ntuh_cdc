@@ -939,7 +939,7 @@
       justify-content:center;
       pointer-events:none;
     }
-    .cart-anchor.driver { left:27.2%; bottom:37.8%; width:8.2%; height:31%; z-index:4; }
+    .cart-anchor.driver { left:27.2%; bottom:31.4%; width:8.8%; height:36%; z-index:4; }
     .cart-anchor.cart-1 { left:52.2%; bottom:36.2%; width:8.2%; height:34%; }
     .cart-anchor.cart-2 { left:68.0%; bottom:36.0%; width:7.8%; height:33%; }
     .cart-anchor.cart-3 { left:83.7%; bottom:46.0%; width:9.5%; height:38%; }
@@ -992,7 +992,7 @@
       will-change:transform, filter;
       transition:transform .22s ease, filter .22s ease;
     }
-    .cart-anchor.driver .passenger-img-3d { animation:hero-blink-hop 4.8s ease-in-out infinite; }
+    .cart-anchor.driver .passenger-img-3d { object-position:center bottom; animation:hero-blink-hop 4.8s ease-in-out infinite; }
     .cart-anchor.cart-1 .passenger-img-3d { animation:giraffe-happy-sway 3.6s ease-in-out infinite; }
     .cart-anchor.cart-2 .passenger-img-3d { animation:sheep-flag-wave 2.7s ease-in-out infinite; }
     .cart-anchor.cart-3 .passenger-img-3d { animation:monkey-stand-blink-bounce 4.4s ease-in-out infinite; }
@@ -1016,9 +1016,34 @@
       top:23.2%;
       opacity:0;
       pointer-events:none;
-      animation:monkey-eye-blink 4.4s steps(1,end) infinite;
+      animation:monkey-eye-cycle 3.8s steps(1,end) infinite;
       transform:rotate(-1deg);
+      z-index:3;
     }
+    .monkey-eye-mask {
+      position:absolute;
+      left:31.2%;
+      top:21.9%;
+      width:37.5%;
+      height:9%;
+      opacity:0;
+      pointer-events:none;
+      animation:monkey-eye-cycle 3.8s steps(1,end) infinite;
+      z-index:2;
+    }
+    .monkey-eye-mask::before,
+    .monkey-eye-mask::after {
+      content:"";
+      position:absolute;
+      top:8%;
+      width:37%;
+      height:82%;
+      border-radius:50%;
+      background:#d9b184;
+      box-shadow:inset 0 1px 4px rgba(103,68,38,.16);
+    }
+    .monkey-eye-mask::before { left:3%; transform:rotate(5deg); }
+    .monkey-eye-mask::after { right:3%; transform:rotate(-5deg); }
     .cart-anchor:hover .passenger-img-3d,
     .cart-anchor.is-hovering .passenger-img-3d {
       animation:passenger-hover-hello .9s ease-in-out 1;
@@ -1126,9 +1151,9 @@
       62% { transform:translateY(-6px) rotate(4deg) scale(1.05); }
       80% { transform:translateY(0) rotate(-2deg) scale(1.02); }
     }
-    @keyframes monkey-eye-blink {
-      0%, 18%, 22%, 54%, 58%, 100% { opacity:0; }
-      19%, 21%, 55%, 57% { opacity:1; }
+    @keyframes monkey-eye-cycle {
+      0%, 22%, 42%, 68%, 88%, 100% { opacity:0; }
+      23%, 41%, 69%, 87% { opacity:1; }
     }
     @keyframes monkey-idle-ride {
       0%,100% { transform:translateY(0) rotate(0) scale(1); }
@@ -1244,6 +1269,7 @@
             <div class="cart-anchor cart-3" data-mascot="monkey">
               <div class="monkey-figure passenger-img-3d monkey">
                 <img class="monkey-base" src="assets/cutouts/monkey-trim.png" alt="">
+                <span class="monkey-eye-mask" aria-hidden="true"></span>
                 <img class="monkey-blink" src="assets/monkey_blink.png" alt="">
               </div>
             </div>
