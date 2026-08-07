@@ -1,173 +1,393 @@
 {
-  "generated_at": "2026-08-07T12:00:00+08:00",
+  "generated_at": "2026-08-07T19:45:48+08:00",
   "issue_range": {
     "from": "2026-07-24",
     "to": "2026-08-07"
   },
-  "subject": "疫情訊息- 新冠疫情上升；首例本土傷寒；登革熱境外移入與蚊媒風險；首例日本腦炎死亡；肺炎鏈球菌成人公費疫苗升級",
+  "display_date": "2026-08-05",
+  "organization": "臺大醫院 感染管制中心",
+  "title": "疫情訊息",
+  "tags": [
+    "蚊媒",
+    "呼吸道",
+    "疫苗"
+  ],
+  "subject": "疫情訊息- 登革熱境外移入；日本腦炎首例死亡；新冠疫情流行期；肺鏈疫苗8/10升級",
   "source_policy": {
     "source": "衛生福利部疾病管制署新聞稿",
-    "excluded": "澄清專區，以及標題或分類含疫苗/藥物且屬澄清新聞者",
+    "excluded": "澄清專區，以及疫苗或藥物之澄清新聞",
     "rewrite": "個人發言一律轉為機關客觀敘述"
   },
   "resources": {
     "education": {
       "label": "臺大醫院教育訓練管理系統",
-      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-      "login_note": "TODO: deploy phase should append SSO/login redirect parameters after server credentials are provided."
+      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F"
     },
     "km": {
-      "label": "KM系統感染管制手冊目錄（未命中主題文件時使用）",
+      "label": "KM系統感染管制手冊目錄",
       "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
       "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊"
     }
   },
   "sections": [
     {
-      "id": "respiratory",
-      "label": "呼吸道傳染病與高風險族群保護",
-      "priority": 1,
+      "id": "highlights",
+      "label": "本期重點",
+      "priority": 0,
       "items": [
         {
-          "disease": "新冠肺炎",
-          "severity_basis": "疫情處流行期，門急診就診人次上升，新增本土重症與死亡病例。",
-          "summary": "國內新冠疫情上升且處流行期，第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。建議醫療照護機構、人潮擁擠室內場所自主佩戴口罩，出現症狀儘速就醫，高風險者由醫師評估抗病毒藥物。",
-          "details": [
-            "2025年10月起累計265例新冠併發重症本土病例，其中28例死亡；重症病例以65歲以上及慢性病史者為多。",
-            "近4週本土病例變異株以PQ.16.1.1為主，全球陽性率呈上升趨勢。",
-            "公費新冠疫苗擴大接種延長至2026-09-28，未接種者及高風險族群可依政策儘速安排。"
-          ],
-          "source_title": "國內新冠疫情上升且處流行期 呼籲尚未接種疫苗的民眾儘快接種 並落實勤洗手、戴口罩等自我防護措施",
-          "source_date": "2026-08-04",
-          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9",
-          "education_course": {
-            "name": "新冠肺炎（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-            "matched": "fallback",
-            "topic": "新冠肺炎"
-          },
-          "km_document": {
-            "name": "新冠肺炎（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-            "matched": "fallback",
-            "topic": "新冠肺炎"
-          }
+          "id": "focus-dengue",
+          "section": "highlights",
+          "disease": "登革熱境外移入持續新增",
+          "title": "出國落實防蚊，返國 14 天內有不適速就醫。",
+          "date": "2026-08-04",
+          "summary": "東南亞、南亞疫情上升，暑假旅遊與降雨後積水增加境外移入與社區病媒風險。",
+          "details": [],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "severity_basis": "境外移入持續新增，病媒風險增加。"
         },
         {
-          "disease": "侵襲性肺炎鏈球菌感染症預防",
-          "severity_basis": "高齡與免疫風險族群重症預防政策更新。",
-          "summary": "成人公費肺炎鏈球菌疫苗自2026-08-10起增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。",
-          "details": [
-            "適用對象包含65歲以上長者、55-64歲原住民、19-64歲IPD高風險對象。",
-            "已完整接種13價或15價加23價、20價或21價者，代表已完成肺鏈疫苗接種，無需再接種新疫苗。"
-          ],
-          "source_title": "成人公費肺炎鏈球菌疫苗自2026年8月10日起全面升級為20價或21價新型疫苗 接種「1劑搞定」",
-          "source_date": "2026-07-28",
-          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
-          "education_course": {
-            "name": "肺炎鏈球菌（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-            "matched": "fallback",
-            "topic": "肺炎鏈球菌"
-          },
-          "km_document": {
-            "name": "肺炎鏈球菌（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-            "matched": "fallback",
-            "topic": "肺炎鏈球菌"
-          }
-        }
-      ]
-    },
-    {
-      "id": "foodborne",
-      "label": "腸道與食媒傳染病",
-      "priority": 2,
-      "items": [
+          "id": "focus-je",
+          "section": "highlights",
+          "disease": "日本腦炎出現今年首例死亡",
+          "title": "高風險場域加強防蚊，適齡幼兒按時接種。",
+          "date": "2026-07-28",
+          "summary": "桃園新增病例含今年首例死亡，水稻田、豬舍、鴿舍周邊活動者須提高警覺。",
+          "details": [],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9",
+          "severity_basis": "今年首例死亡病例。"
+        },
         {
-          "disease": "傷寒",
-          "severity_basis": "第二類法定傳染病，出現今年首例本土病例。",
-          "summary": "國內公布2026年首例本土傷寒確定病例，個案為中部70多歲女性，已出院返家休養；接觸者採檢目前陰性。民眾應注意飲食與手部衛生，醫療院所發現疑似個案需於24小時內通報。",
-          "details": [
-            "今年累計4例傷寒確定病例，包含1例本土與3例境外移入。",
-            "傷寒主要經受污染食品或飲水傳播，症狀包含持續性發燒、頭痛、倦怠、腹痛、腹瀉等。",
-            "飲用水應煮沸或使用瓶裝水，食品充分加熱，烹調過程避免生熟食交叉污染。"
-          ],
-          "source_title": "國內出現今年首例本土傷寒確定病例 籲請民眾注意飲食及手部衛生",
-          "source_date": "2026-08-06",
-          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/oK_5RuMcEfhPiXKxOXcUGg?typeid=9",
-          "education_course": {
-            "name": "傷寒（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-            "matched": "fallback",
-            "topic": "傷寒"
-          },
-          "km_document": {
-            "name": "傷寒（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-            "matched": "fallback",
-            "topic": "傷寒"
-          }
+          "id": "focus-covid",
+          "section": "highlights",
+          "disease": "新冠疫情升溫、處流行期",
+          "title": "尚未接種者儘快打，落實勤洗手、戴口罩。",
+          "date": "2026-08-04",
+          "summary": "門急診就診人次上升，高齡與慢性病者仍是重症主要族群。",
+          "details": [],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9",
+          "severity_basis": "流行期且就診人次上升。"
+        },
+        {
+          "id": "focus-ipd",
+          "section": "highlights",
+          "disease": "公費肺鏈疫苗 8/10 起全面升級",
+          "title": "PCV20／PCV21 一劑搞定，符合資格帶健保卡去打。",
+          "date": "2026-07-28",
+          "summary": "65歲以上、55至64歲原住民及19至64歲IPD高風險對象，可依規則接種新制疫苗。",
+          "details": [],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
+          "severity_basis": "高風險族群重症預防政策更新。"
         }
       ]
     },
     {
       "id": "vectorborne",
-      "label": "病媒蚊傳染病",
+      "label": "蚊媒傳染病",
+      "priority": 1,
+      "items": [
+        {
+          "id": "vector-dengue",
+          "section": "vectorborne",
+          "disease": "登革熱",
+          "title": "登革熱｜出國防蚊，返國 14 天內有症狀速就醫",
+          "date": "2026-08-04",
+          "audience": "近期出國者，尤其前往東南亞、南亞。",
+          "actions": [
+            "出國穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR-3535 的防蚊液。",
+            "返國 14 天內若發燒、頭痛、後眼窩痛、肌肉關節痛，速就醫並主動告知旅遊史。",
+            "居家落實巡、倒、清、刷，清除積水容器，降雨後再巡檢一次。"
+          ],
+          "summary": "東南亞、南亞登革熱疫情持續上升，境外感染風險提高。暑假旅遊旺季，加上氣象預測聖嬰現象未來數月可能增強，有利登革熱傳播，境外移入風險加大。",
+          "details": [
+            "入境時如有發燒、頭痛、後眼窩痛、肌肉關節痛等疑似症狀，請主動告知機場檢疫人員。",
+            "清除盆栽底盤、廢棄輪胎、塑膠袋等可能積水容器；大型容器可聯繫清潔隊協助處理。",
+            "保留的儲水容器須定期刷洗器壁以去除蟲卵並倒置收納，降雨過後再次巡檢。",
+            "學校暑假仍需留意校園積水，長時間未使用的馬桶、水箱等易孳生孑孓，務必定期巡檢。",
+            "給醫療人員：落實詢問 TOCC，適時使用登革熱 NS1 快篩輔助診斷並及早通報。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "severity_basis": "境外移入持續增加，暑假旅遊與午後降雨提高病媒風險。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-登革熱",
+              "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "topic",
+              "topic": "登革熱"
+            },
+            "km": {
+              "id": "km-登革熱",
+              "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "topic",
+              "topic": "登革熱"
+            }
+          },
+          "education_course": {
+            "id": "edu-登革熱",
+            "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "topic",
+            "topic": "登革熱"
+          },
+          "km_document": {
+            "id": "km-登革熱",
+            "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "topic",
+            "topic": "登革熱"
+          },
+          "link_override": {}
+        },
+        {
+          "id": "vector-je",
+          "section": "vectorborne",
+          "disease": "日本腦炎",
+          "title": "日本腦炎｜高風險場域加強防蚊，適齡幼兒按時打疫苗",
+          "date": "2026-07-28",
+          "audience": "住家或活動地鄰近水稻田、豬舍、鴿舍者；家有適齡幼兒者。",
+          "actions": [
+            "避免清晨、傍晚在豬舍等高風險場所活動；必要時穿淺色長袖並塗防蚊液。",
+            "適齡幼兒按時接種：滿 15 個月第 1 劑、間隔 12 個月第 2 劑。",
+            "高風險環境成人可至旅遊醫學門診評估自費接種。"
+          ],
+          "summary": "桃園市新增 2 例，其中 1 例為 2026 年首例日本腦炎死亡病例；病例住家附近有水稻田、溪流、豬舍及鴿舍等高風險場域。",
+          "details": [
+            "臺灣每年 5 至 10 月為流行季，6 至 7 月為高峰；確定病例以 40 歲以上成人較多，各年齡層仍有感染風險。",
+            "大部分感染者無明顯症狀；有症狀者可出現頭痛、發燒，嚴重可能意識改變、全身無力、昏迷或死亡。",
+            "病媒蚊以三斑家蚊、環紋家蚊及白頭家蚊為主，常孳生於水稻田、池塘、灌溉溝渠及溪流。",
+            "接種疫苗是最有效預防方法；鄰近豬舍、水稻田等高風險環境成人，可至旅遊醫學門診評估自費接種。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9",
+          "severity_basis": "今年首例死亡病例，病媒高風險場域須提高警覺。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-日本腦炎",
+              "name": "臺大醫院教育訓練管理系統（待確認）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "fallback",
+              "topic": "日本腦炎"
+            },
+            "km": {
+              "id": "km-日本腦炎",
+              "name": "KM系統感染管制手冊目錄（待確認）",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "fallback",
+              "topic": "日本腦炎"
+            }
+          },
+          "education_course": {
+            "id": "edu-日本腦炎",
+            "name": "臺大醫院教育訓練管理系統（待確認）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "fallback",
+            "topic": "日本腦炎"
+          },
+          "km_document": {
+            "id": "km-日本腦炎",
+            "name": "KM系統感染管制手冊目錄（待確認）",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "fallback",
+            "topic": "日本腦炎"
+          },
+          "link_override": {}
+        }
+      ]
+    },
+    {
+      "id": "respiratory",
+      "label": "呼吸道傳染病",
+      "priority": 2,
+      "items": [
+        {
+          "id": "resp-covid",
+          "section": "respiratory",
+          "disease": "新冠 COVID-19",
+          "title": "新冠 COVID-19｜疫情處流行期，尚未接種者儘快接種",
+          "date": "2026-08-04",
+          "audience": "所有人，尤其 65 歲以上、慢性病等重症高風險者。",
+          "actions": [
+            "尚未接種本季疫苗者儘快接種，擴大接種延長至 9/28。",
+            "出入醫療機構、大眾運輸、擁擠室內場所自主戴口罩，勤洗手。",
+            "有症狀先快篩、儘速就醫；高風險者及早就醫以利開立抗病毒藥物。"
+          ],
+          "summary": "國內新冠疫情持續上升且處流行期，門急診就診人次增加；高齡與慢性病者仍是重症與死亡主要族群。",
+          "details": [
+            "2025 年 10 月起累計 265 例本土併發重症、其中 28 例死亡；重症以 65 歲以上長者及具慢性病史者為多，89.1% 未接種本季新冠疫苗。",
+            "近 4 週本土變異株以 PQ.16.1.1 為主；全球陽性率呈上升趨勢，中國、美國、英國持續上升。",
+            "全國庫存約 16.5 萬劑，7/30 已撥配 8 萬 550 劑，預計 8/6 再配送約 4.5 萬劑。",
+            "出現喉嚨痛、咳嗽、鼻塞、流鼻水、發燒、疲倦、頭痛及肌肉痠痛等症狀，可先用家用快篩後就醫，或至診所由醫師使用醫用快篩。",
+            "接種院所及公費藥劑資訊可查疾管署官網「流感新冠疫苗及流感藥劑地圖」。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9",
+          "severity_basis": "疫情處流行期，門急診就診人次上升，重症高風險者須優先保護。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-新冠 COVID-19",
+              "name": "總院-流感暨流行性呼吸道病原（167642）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "topic",
+              "topic": "新冠 COVID-19"
+            },
+            "km": {
+              "id": "km-新冠 COVID-19",
+              "name": "病毒類呼吸道感染症感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "topic",
+              "topic": "新冠 COVID-19"
+            }
+          },
+          "education_course": {
+            "id": "edu-新冠 COVID-19",
+            "name": "總院-流感暨流行性呼吸道病原（167642）",
+            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "matched": "topic",
+            "topic": "新冠 COVID-19"
+          },
+          "km_document": {
+            "id": "km-新冠 COVID-19",
+            "name": "病毒類呼吸道感染症感染管制措施",
+            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "matched": "topic",
+            "topic": "新冠 COVID-19"
+          },
+          "link_override": {}
+        }
+      ]
+    },
+    {
+      "id": "vaccine",
+      "label": "疫苗政策",
       "priority": 3,
       "items": [
         {
-          "disease": "登革熱",
-          "severity_basis": "境外移入持續增加，暑假旅遊與午後降雨提高病媒風險。",
-          "summary": "7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，應主動告知旅遊史並就醫。",
-          "details": [
-            "截至2026-08-03累計111例登革熱確定病例，7例本土、104例境外移入。",
-            "境外移入以印尼、越南、馬爾地夫等東南亞及南亞國家為主。",
-            "社區與校園應落實巡、倒、清、刷，雨後再次巡檢積水容器。"
+          "id": "vax-ipd",
+          "section": "vaccine",
+          "disease": "肺炎鏈球菌疫苗",
+          "title": "肺炎鏈球菌疫苗｜8/10 起一劑搞定，符合資格帶健保卡去打",
+          "date": "2026-07-28",
+          "audience": "65 歲以上長者、55 至 64 歲原住民、19 至 64 歲 IPD 高風險者。",
+          "actions": [
+            "8/10 起符合資格者可至合約院所接種 1 劑 PCV20 或 PCV21。",
+            "從未打過肺鏈疫苗者可直接接種；打過者依銜接規則接種。",
+            "帶健保卡；原住民帶身分註記戶籍證明；高風險者備診斷佐證資料。"
           ],
-          "source_title": "國內持續新增登革熱境外移入病例 請民眾出國期間落實防蚊措施 返國後如有不適症請儘速就醫",
-          "source_date": "2026-08-04",
-          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "summary": "今年 1/15 起以 PCV20 取代舊制；8/10 起增列 PCV21 供選擇，兩款新疫苗一劑即可完成新制保護。",
+          "details": [
+            "從未接種 13、15、20、21 或 23 價疫苗者，可直接接種 1 劑。",
+            "僅接種 23 價且間隔滿 1 年，或僅接種 13/15 價且符合間隔規則者，可接種新制疫苗。",
+            "曾為 19 至 64 歲高風險並完整接種 13 或 15 價及 23 價各 1 劑者，滿 65 歲且距前劑滿 5 年後再接種 1 劑。",
+            "已完成 13 或 15 價加 23 價各 1 劑、20 價或 21 價者，已完整保護，無需再打。",
+            "IPD 高風險對象包含脾臟功能缺損、免疫功能不全、人工耳植入、腦脊髓液滲漏、近一年接受免疫抑制劑或放射治療的惡性腫瘤者及器官移植者。",
+            "肺鏈疫苗可與流感、新冠疫苗同時接種於不同部位，無須間隔。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
+          "severity_basis": "高齡與免疫風險族群重症預防政策更新。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-肺炎鏈球菌疫苗",
+              "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "fallback",
+              "topic": "肺炎鏈球菌疫苗"
+            },
+            "km": {
+              "id": "km-肺炎鏈球菌疫苗",
+              "name": "KM系統感染管制手冊目錄（待確認）",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "fallback",
+              "topic": "肺炎鏈球菌疫苗"
+            }
+          },
           "education_course": {
-            "name": "登革熱（待確認）",
+            "id": "edu-肺炎鏈球菌疫苗",
+            "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
             "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
             "matched": "fallback",
-            "topic": "登革熱"
+            "topic": "肺炎鏈球菌疫苗"
           },
           "km_document": {
-            "name": "登革熱（待確認）",
+            "id": "km-肺炎鏈球菌疫苗",
+            "name": "KM系統感染管制手冊目錄（待確認）",
             "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
             "matched": "fallback",
-            "topic": "登革熱"
-          }
+            "topic": "肺炎鏈球菌疫苗"
+          },
+          "link_override": {}
+        }
+      ]
+    },
+    {
+      "id": "internal",
+      "label": "院內同仁專區",
+      "priority": 4,
+      "items": [
+        {
+          "id": "internal-vector",
+          "section": "internal",
+          "disease": "蚊媒傳染病（登革熱、日本腦炎）",
+          "title": "KM 與 TMS 連結",
+          "date": "2026-08-05",
+          "summary": "KM 系統《感染管制手冊—病媒蚊傳染病感染管制措施》；TMS 課程：總院-登革熱暨常見病媒蚊傳染病（179101）、總院-登革熱診斷與治療（154594）。",
+          "details": [
+            "以下為院內感染管制作業與教育訓練連結，一般民眾可略過。"
+          ],
+          "source_url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "severity_basis": "院內感染管制作業與教育訓練。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-dengue-179101",
+              "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "topic",
+              "topic": "登革熱"
+            },
+            "km": {
+              "id": "km-vectorborne",
+              "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "topic",
+              "topic": "病媒蚊"
+            }
+          },
+          "link_override": {}
         },
         {
-          "disease": "日本腦炎",
-          "severity_basis": "出現今年首例死亡病例，屬需高度警覺之病媒傳染病。",
-          "summary": "國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，6至7月高峰，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。",
+          "id": "internal-resp",
+          "section": "internal",
+          "disease": "病毒類呼吸道感染症（新冠）",
+          "title": "KM 與 TMS 連結",
+          "date": "2026-08-05",
+          "summary": "KM 系統《病毒類呼吸道感染症感染管制措施》、《病人之床位安排原則》；TMS 課程：總院-流感暨流行性呼吸道病原（167642）。",
           "details": [
-            "2026年累計10例確定病例，其中1例死亡。",
-            "病媒蚊常孳生於水稻田、池塘、灌溉溝渠及溪流等處。",
-            "高風險環境活動時穿著淺色長袖衣褲，並使用合格防蚊藥劑；適齡幼童依時程接種日本腦炎疫苗。"
+            "以下為院內感染管制作業與教育訓練連結，一般民眾可略過。"
           ],
-          "source_title": "國內出現今年首例日本腦炎死亡病例 籲請民眾提高警覺 加強防蚊及預防接種",
-          "source_date": "2026-07-28",
-          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9",
-          "education_course": {
-            "name": "日本腦炎（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-            "matched": "fallback",
-            "topic": "日本腦炎"
+          "source_url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "severity_basis": "院內感染管制作業與教育訓練。",
+          "suggested_links": {
+            "education": {
+              "id": "edu-resp-167642",
+              "name": "總院-流感暨流行性呼吸道病原（167642）",
+              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "matched": "topic",
+              "topic": "新冠"
+            },
+            "km": {
+              "id": "km-respiratory-virus",
+              "name": "病毒類呼吸道感染症感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "matched": "topic",
+              "topic": "新冠"
+            }
           },
-          "km_document": {
-            "name": "日本腦炎（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-            "matched": "fallback",
-            "topic": "日本腦炎"
-          }
+          "link_override": {}
         }
       ]
     }
+  ],
+  "signature": [
+    "資料來源：衛生福利部疾病管制署",
+    "～臺大醫院感染管制中心關心您～"
   ]
 }
-

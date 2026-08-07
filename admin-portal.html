@@ -837,13 +837,19 @@
         <div class="field-grid">
           <label>疾病主題<input id="editDisease" value="${escapeHtml(item.disease || '')}" ${disabled}></label>
           <label>標題<input id="editTitle" value="${escapeHtml(item.title || '')}" ${disabled}></label>
+          <label>哪些人要注意<textarea id="editAudience" ${disabled}>${escapeHtml(item.audience || '')}</textarea></label>
           <label>重點摘要<textarea id="editSummary" ${disabled}>${escapeHtml(item.summary || '')}</textarea></label>
+          <label>行動提醒（一行一點）<textarea id="editActions" ${disabled}>${escapeHtml((item.actions || []).join('\n'))}</textarea></label>
+          <label>更多內容（一行一段）<textarea id="editDetails" ${disabled}>${escapeHtml((item.details || []).join('\n'))}</textarea></label>
           <label>嚴重度/排序依據<input id="editSeverity" value="${escapeHtml(item.severity_basis || '')}" ${disabled}></label>
         </div>
       `;
       $('#editDisease').addEventListener('input', (event) => { item.disease = event.target.value; renderItemList(); });
       $('#editTitle').addEventListener('input', (event) => { item.title = event.target.value; renderItemList(); });
+      $('#editAudience').addEventListener('input', (event) => { item.audience = event.target.value; });
       $('#editSummary').addEventListener('input', (event) => { item.summary = event.target.value; });
+      $('#editActions').addEventListener('input', (event) => { item.actions = splitLines(event.target.value); });
+      $('#editDetails').addEventListener('input', (event) => { item.details = splitLines(event.target.value); });
       $('#editSeverity').addEventListener('input', (event) => { item.severity_basis = event.target.value; });
       $('#sourceUrl').addEventListener('input', (event) => { item.source_url = event.target.value; });
       bindLinkInputs(item, 'education');
@@ -910,6 +916,10 @@
         clearTimeout(timer);
         timer = setTimeout(() => fn(...args), delay);
       };
+    }
+
+    function splitLines(value) {
+      return String(value || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
     }
 
     async function searchResources() {

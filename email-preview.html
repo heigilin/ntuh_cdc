@@ -1,209 +1,67 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>疫情訊息 Email Preview</title>
-  <style>
-    body { margin:0; background:#eef7f1; color:#21342b; font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif; }
-    .preheader { display:none; max-height:0; overflow:hidden; opacity:0; }
-    .wrap { max-width:760px; margin:0 auto; padding:24px 12px; }
-    .mail { overflow:hidden; border-radius:8px; background:#fffdf7; box-shadow:0 18px 42px rgba(31,79,58,.16); border:1px solid #dfe9dc; }
-    .hero { position:relative; padding:24px 28px 0; background:linear-gradient(135deg,#fff7d8 0%,#dff2e4 48%,#cdebf8 100%); }
-    .hero table { width:100%; border-collapse:collapse; }
-    .hero h1 { margin:0 0 10px; font-size:28px; line-height:1.25; letter-spacing:0; color:#22472f; }
-    .hero p { margin:0; font-size:15px; line-height:1.7; color:#355244; }
-    .visual-stack { width:150px; text-align:right; }
-    .character { width:112px; border-radius:999px; border:5px solid rgba(255,255,255,.92); box-shadow:0 10px 24px rgba(44,102,67,.18); animation:mail-float 4.8s ease-in-out infinite; }
-    .pet { width:74px; margin-top:-24px; margin-right:70px; display:block; filter:drop-shadow(0 8px 14px rgba(44,102,67,.18)); animation:mail-helper 3.4s ease-in-out infinite; }
-    .mail-train-scene { position:relative; height:148px; margin:8px -28px 0; overflow:visible; background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(213,239,179,.5) 58%, rgba(117,185,80,.88) 100%); }
-    .mail-train { position:absolute; left:0; bottom:0; width:430px; aspect-ratio:2295 / 944; transform:translateX(780px); animation:mail-train-drive 18s linear infinite; animation-delay:-7s; }
-    .mail-train img { display:block; }
-    .mail-train-base { position:absolute; inset:0; width:100%; height:100%; object-fit:fill; filter:drop-shadow(0 10px 14px rgba(55,79,47,.2)); }
-    .mail-cart { position:absolute; transform:translateX(-50%); transform-origin:50% 100%; display:flex; align-items:flex-end; justify-content:center; }
-    .mail-cart img { width:100%; height:100%; object-fit:contain; transform-origin:bottom center; filter:drop-shadow(0 6px 8px rgba(43,64,49,.18)); }
-    .mail-cart.driver { left:27.2%; bottom:37.8%; width:8.2%; height:31%; }
-    .mail-cart.cart-1 { left:52.2%; bottom:36.2%; width:8.2%; height:34%; }
-    .mail-cart.cart-2 { left:68.0%; bottom:36.0%; width:7.8%; height:33%; }
-    .mail-cart.cart-3 { left:83.7%; bottom:43.4%; width:6.3%; height:29%; }
-    .mail-cart.driver img { animation:mail-hop 3.4s ease-in-out infinite; }
-    .mail-cart.cart-1 img { animation:mail-sway 3.2s ease-in-out infinite; }
-    .mail-cart.cart-2 img { animation:mail-wave 2.8s ease-in-out infinite; }
-    .mail-cart.cart-3 img { animation:mail-monkey 3s ease-in-out infinite; }
-    .badge { display:inline-block; margin:0 0 12px; padding:7px 12px; border-radius:999px; background:#fff; color:#47754e; font-weight:700; font-size:13px; }
-    .hero .nav { padding:14px 0 0; background:transparent; border:0; }
-    .mail > .nav { display:none; }
-    .nav { padding:16px 24px; background:#f8fbf0; border-top:1px solid rgba(53,82,68,.1); border-bottom:1px solid rgba(53,82,68,.1); }
-    .nav a { display:inline-block; margin:4px 6px 4px 0; padding:9px 12px; border-radius:999px; background:#2f6f5d; color:#fff; text-decoration:none; font-size:13px; font-weight:700; }
-    .nav a.secondary { background:#f3c85f; color:#31402f; }
-    .content { padding:22px 24px 10px; }
-    .section-title { margin:18px 0 12px; font-size:19px; color:#264f3a; }
-    .card { margin:0 0 16px; padding:18px; border:1px solid #dce9d7; border-radius:8px; background:#ffffff; }
-    .meta { font-size:12px; color:#6c7d70; margin-bottom:8px; }
-    .card h3 { margin:0 0 8px; font-size:18px; color:#1f3f31; }
-    .summary { margin:0 0 12px; font-size:15px; line-height:1.75; }
-    details { border-top:1px dashed #cbdcc8; padding-top:10px; }
-    summary { cursor:pointer; color:#2f6f5d; font-weight:700; }
-    li { margin:6px 0; line-height:1.65; }
-    .links a { display:inline-block; margin:8px 8px 0 0; color:#1f5f88; font-weight:700; text-decoration:none; }
-    .footer { padding:22px 24px 28px; background:#fbf7e8; color:#405145; line-height:1.8; text-align:center; }
-    @media (max-width:560px) {
-      .hero h1 { font-size:23px; }
-      .visual-stack { width:112px; }
-      .character { width:86px; }
-      .pet { width:58px; margin-right:52px; margin-top:-18px; }
-      .mail-train-scene { height:118px; margin-left:-18px; margin-right:-18px; }
-      .mail-train { width:360px; animation-duration:16s; }
-      .hero, .content, .footer { padding-left:18px; padding-right:18px; }
-    }
-    @keyframes mail-float { 50% { transform:translateY(-8px) rotate(1deg); } }
-    @keyframes mail-helper { 50% { transform:translateY(7px) rotate(-4deg); } }
-    @keyframes mail-train-drive {
-      0% { transform:translateX(780px); }
-      100% { transform:translateX(-480px); }
-    }
-    @keyframes mail-hop {
-      0%,100% { transform:translateY(0) scale(1); }
-      45% { transform:translateY(-7px) scale(1.05,.96); }
-      65% { transform:translateY(1px) scale(.98,1.04); }
-    }
-    @keyframes mail-sway {
-      0%,100% { transform:rotate(0); }
-      30% { transform:rotate(-8deg) translateY(-4px); }
-      64% { transform:rotate(7deg) translateY(-2px); }
-    }
-    @keyframes mail-wave {
-      0%,100% { transform:rotate(0) translateY(0); }
-      28% { transform:rotate(-7deg) translateY(-5px); }
-      58% { transform:rotate(8deg) translateY(-2px); }
-    }
-    @keyframes mail-monkey {
-      0%,100% { transform:translateY(0) rotate(0); }
-      24% { transform:translateY(-9px) rotate(-8deg); }
-      52% { transform:translateY(-4px) rotate(9deg); }
-      76% { transform:translateY(-7px) rotate(-5deg); }
-    }
-  </style>
-</head>
-<body>
-  <div class="preheader">近兩週 CDC 新聞稿重點：新冠疫情上升、首例本土傷寒、登革熱境外移入、日本腦炎死亡病例與肺炎鏈球菌疫苗政策。</div>
-  <div class="wrap">
-    <article class="mail">
-      <header class="hero">
-        <table role="presentation">
-          <tr>
-            <td>
-              <span class="badge">2026/07/24 - 2026/08/07</span>
-              <h1>疫情訊息週報</h1>
-              <p>最近有哪些疫情要注意？幫你把近兩週重點整理好了，花一分鐘看完風險提醒、通報重點和院內感染管制資源。</p>
-            </td>
-            <td align="right" width="150">
-              <div class="visual-stack">
-                <img class="character" src="assets/新增資料夾/character-green.png" alt="防疫週報角色">
-                <img class="pet" src="assets/mascot-helper.png" alt="防疫小助手寵物">
-              </div>
-            </td>
-          </tr>
-        </table>
-        <nav class="nav" aria-label="週報導覽">
-          <a href="web-preview.html">疫情主網頁</a>
-          <a href="#respiratory">呼吸道</a>
-          <a href="#foodborne">腸道食媒</a>
-          <a href="#vectorborne">病媒蚊</a>
-          <a class="secondary" href="https://ntuhgovtw.sharepoint.com/sites/intra.ifc/SitePages/Home.aspx">歷史紀錄</a>
-        </nav>
-        <div class="mail-train-scene" aria-hidden="true">
-          <div class="mail-train">
-            <img class="mail-train-base" src="assets/cutouts/T-stage.png" alt="">
-            <span class="mail-cart driver"><img src="assets/cutouts/Q-bee-trim.png" alt=""></span>
-            <span class="mail-cart cart-1"><img src="assets/cutouts/giraffe-trim.png" alt=""></span>
-            <span class="mail-cart cart-2"><img src="assets/cutouts/sheep-trim.png" alt=""></span>
-            <span class="mail-cart cart-3"><img src="assets/cutouts/monkey-trim.png" alt=""></span>
-          </div>
-        </div>
-      </header>
-
-      <main class="content">
-        <h2 class="section-title" id="respiratory">呼吸道傳染病與高風險族群保護</h2>
-        <section class="card">
-          <div class="meta">嚴重度優先：流行期、重症與死亡病例增加｜來源日期：2026-08-04</div>
-          <h3>新冠肺炎</h3>
-          <p class="summary">國內新冠疫情上升且處流行期，第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。建議醫療照護機構、人潮擁擠室內場所自主佩戴口罩，出現症狀儘速就醫。</p>
-          <details>
-            <summary>展開更多內容 Read More</summary>
-            <ul>
-              <li>重症病例以65歲以上及慢性病史者為多，近4週本土病例變異株以PQ.16.1.1為主。</li>
-              <li>公費新冠疫苗擴大接種延長至2026-09-28，高風險者如有疑似症狀由醫師評估抗病毒藥物。</li>
-            </ul>
-          </details>
-          <p class="links"><a data-resource="education" data-topic="新冠肺炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：新冠肺炎（待確認）</a><a data-resource="km" data-topic="新冠肺炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：新冠肺炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9">CDC 原文</a></p>
-        </section>
-
-        <section class="card">
-          <div class="meta">高風險族群預防政策更新｜來源日期：2026-07-28</div>
-          <h3>侵襲性肺炎鏈球菌感染症預防</h3>
-          <p class="summary">成人公費肺炎鏈球菌疫苗自2026-08-10起增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。</p>
-          <details>
-            <summary>展開更多內容 Read More</summary>
-            <ul>
-              <li>適用65歲以上長者、55-64歲原住民、19-64歲IPD高風險對象。</li>
-              <li>已完整接種舊制或新制疫苗者，無需重複接種。</li>
-            </ul>
-          </details>
-          <p class="links"><a data-resource="education" data-topic="肺炎鏈球菌" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：肺炎鏈球菌（待確認）</a><a data-resource="km" data-topic="肺炎鏈球菌" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：肺炎鏈球菌（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9">CDC 原文</a></p>
-        </section>
-
-        <h2 class="section-title" id="foodborne">腸道與食媒傳染病</h2>
-        <section class="card">
-          <div class="meta">第二類法定傳染病；今年首例本土病例｜來源日期：2026-08-06</div>
-          <h3>傷寒</h3>
-          <p class="summary">國內公布2026年首例本土傷寒確定病例，個案已出院返家休養；接觸者採檢目前陰性。民眾應注意飲食與手部衛生，醫療院所發現疑似個案需於24小時內通報。</p>
-          <details>
-            <summary>展開更多內容 Read More</summary>
-            <ul>
-              <li>今年累計4例傷寒確定病例，包含1例本土與3例境外移入。</li>
-              <li>飲用水應煮沸或使用瓶裝水，食品充分加熱，烹調避免生熟食交叉污染。</li>
-            </ul>
-          </details>
-          <p class="links"><a data-resource="education" data-topic="傷寒" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：傷寒（待確認）</a><a data-resource="km" data-topic="傷寒" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：傷寒（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/oK_5RuMcEfhPiXKxOXcUGg?typeid=9">CDC 原文</a></p>
-        </section>
-
-        <h2 class="section-title" id="vectorborne">病媒蚊傳染病</h2>
-        <section class="card">
-          <div class="meta">境外移入持續增加；暑假旅遊與降雨提高風險｜來源日期：2026-08-04</div>
-          <h3>登革熱</h3>
-          <p class="summary">7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有疑似症狀，應主動告知旅遊史並就醫。</p>
-          <details>
-            <summary>展開更多內容 Read More</summary>
-            <ul>
-              <li>截至2026-08-03累計111例，7例本土、104例境外移入。</li>
-              <li>社區與校園應落實巡、倒、清、刷，雨後再次巡檢積水容器。</li>
-            </ul>
-          </details>
-          <p class="links"><a data-resource="education" data-topic="登革熱" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：登革熱（待確認）</a><a data-resource="km" data-topic="登革熱" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：登革熱（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9">CDC 原文</a></p>
-        </section>
-
-        <section class="card">
-          <div class="meta">今年首例死亡病例；流行季高峰後仍需警覺｜來源日期：2026-07-28</div>
-          <h3>日本腦炎</h3>
-          <p class="summary">國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。</p>
-          <details>
-            <summary>展開更多內容 Read More</summary>
-            <ul>
-              <li>2026年累計10例確定病例，其中1例死亡。</li>
-              <li>高風險環境活動時穿著淺色長袖衣褲，並使用合格防蚊藥劑；適齡幼童依時程接種日本腦炎疫苗。</li>
-            </ul>
-          </details>
-          <p class="links"><a data-resource="education" data-topic="日本腦炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：日本腦炎（待確認）</a><a data-resource="km" data-topic="日本腦炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：日本腦炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9">CDC 原文</a></p>
-        </section>
-      </main>
-
-      <footer class="footer">
-        <div>資料來源：疾病管制署</div>
-        <div>~臺大醫院感染管制中心關心您~</div>
-      </footer>
-    </article>
-  </div>
-</body>
-</html>
-
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>疫情訊息- 登革熱境外移入；日本腦炎首例死亡；新冠疫情流行期；肺鏈疫苗8/10升級</title></head>
+<body style="margin:0;background:#f5f2df;font-family:Microsoft JhengHei,Arial,sans-serif;color:#143c30"><div style="display:none;max-height:0;overflow:hidden">登革熱、日本腦炎、新冠與肺鏈疫苗重點提醒。</div>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:20px"><table role="presentation" width="680" style="max-width:680px;width:100%;background:#fffdf7;border:1px solid #d9e8dd;border-radius:8px" cellspacing="0" cellpadding="0"><tr><td style="padding:28px">
+<p style="font-weight:800;margin:0 0 8px">臺大醫院 感染管制中心</p><p style="display:inline-block;background:#fff;border:1px solid #d9e8dd;border-radius:999px;padding:8px 14px;margin:0 0 12px">📅 2026-08-05</p><h1 style="font-size:38px;line-height:1.1;margin:8px 0">疫情訊息</h1><p style="font-size:17px;line-height:1.8;color:#31584d">這期幫大家把近期重點先整理好：出國防蚊、回國不舒服快就醫；新冠還在流行期，高風險同仁和家人記得把疫苗與口罩防護補上。</p><p><span>🦟 蚊媒</span><span>🫁 呼吸道</span><span>💉 疫苗</span></p>
+<h2 style="font-size:24px;color:#143c30">本期重點</h2><p style="line-height:1.8;margin:10px 0"><strong>登革熱境外移入持續新增</strong><br>出國落實防蚊，返國 14 天內有不適速就醫。</p><p style="line-height:1.8;margin:10px 0"><strong>日本腦炎出現今年首例死亡</strong><br>高風險場域加強防蚊，適齡幼兒按時接種。</p><p style="line-height:1.8;margin:10px 0"><strong>新冠疫情升溫、處流行期</strong><br>尚未接種者儘快打，落實勤洗手、戴口罩。</p><p style="line-height:1.8;margin:10px 0"><strong>公費肺鏈疫苗 8/10 起全面升級</strong><br>PCV20／PCV21 一劑搞定，符合資格帶健保卡去打。</p>
+<h2 style="font-size:24px;color:#143c30;margin:28px 0 12px">蚊媒傳染病</h2><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-08-04</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">登革熱｜出國防蚊，返國 14 天內有症狀速就醫</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">東南亞、南亞登革熱疫情持續上升，境外感染風險提高。暑假旅遊旺季，加上氣象預測聖嬰現象未來數月可能增強，有利登革熱傳播，境外移入風險加大。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong>近期出國者，尤其前往東南亞、南亞。</p>
+          <ul style="line-height:1.8;color:#31584d"><li>出國穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR-3535 的防蚊液。</li><li>返國 14 天內若發燒、頭痛、後眼窩痛、肌肉關節痛，速就醫並主動告知旅遊史。</li><li>居家落實巡、倒、清、刷，清除積水容器，降雨後再巡檢一次。</li></ul><p style="line-height:1.8;margin:8px 0;color:#31584d">入境時如有發燒、頭痛、後眼窩痛、肌肉關節痛等疑似症狀，請主動告知機場檢疫人員。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">清除盆栽底盤、廢棄輪胎、塑膠袋等可能積水容器；大型容器可聯繫清潔隊協助處理。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">保留的儲水容器須定期刷洗器壁以去除蟲卵並倒置收納，降雨過後再次巡檢。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">學校暑假仍需留意校園積水，長時間未使用的馬桶、水箱等易孳生孑孓，務必定期巡檢。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：總院-登革熱暨常見病媒蚊傳染病（179101）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：感染管制手冊—病媒蚊傳染病感染管制措施</a>
+      <a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-07-28</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">日本腦炎｜高風險場域加強防蚊，適齡幼兒按時打疫苗</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">桃園市新增 2 例，其中 1 例為 2026 年首例日本腦炎死亡病例；病例住家附近有水稻田、溪流、豬舍及鴿舍等高風險場域。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong>住家或活動地鄰近水稻田、豬舍、鴿舍者；家有適齡幼兒者。</p>
+          <ul style="line-height:1.8;color:#31584d"><li>避免清晨、傍晚在豬舍等高風險場所活動；必要時穿淺色長袖並塗防蚊液。</li><li>適齡幼兒按時接種：滿 15 個月第 1 劑、間隔 12 個月第 2 劑。</li><li>高風險環境成人可至旅遊醫學門診評估自費接種。</li></ul><p style="line-height:1.8;margin:8px 0;color:#31584d">臺灣每年 5 至 10 月為流行季，6 至 7 月為高峰；確定病例以 40 歲以上成人較多，各年齡層仍有感染風險。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">大部分感染者無明顯症狀；有症狀者可出現頭痛、發燒，嚴重可能意識改變、全身無力、昏迷或死亡。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">病媒蚊以三斑家蚊、環紋家蚊及白頭家蚊為主，常孳生於水稻田、池塘、灌溉溝渠及溪流。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">接種疫苗是最有效預防方法；鄰近豬舍、水稻田等高風險環境成人，可至旅遊醫學門診評估自費接種。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：臺大醫院教育訓練管理系統（待確認）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：KM系統感染管制手冊目錄（待確認）</a>
+      <a href="https://www.cdc.gov.tw/Bulletin/Detail/E9XcpC1Rx1SNvj-ksltbmA?typeid=9" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><h2 style="font-size:24px;color:#143c30;margin:28px 0 12px">呼吸道傳染病</h2><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-08-04</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">新冠 COVID-19｜疫情處流行期，尚未接種者儘快接種</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">國內新冠疫情持續上升且處流行期，門急診就診人次增加；高齡與慢性病者仍是重症與死亡主要族群。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong>所有人，尤其 65 歲以上、慢性病等重症高風險者。</p>
+          <ul style="line-height:1.8;color:#31584d"><li>尚未接種本季疫苗者儘快接種，擴大接種延長至 9/28。</li><li>出入醫療機構、大眾運輸、擁擠室內場所自主戴口罩，勤洗手。</li><li>有症狀先快篩、儘速就醫；高風險者及早就醫以利開立抗病毒藥物。</li></ul><p style="line-height:1.8;margin:8px 0;color:#31584d">2025 年 10 月起累計 265 例本土併發重症、其中 28 例死亡；重症以 65 歲以上長者及具慢性病史者為多，89.1% 未接種本季新冠疫苗。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">近 4 週本土變異株以 PQ.16.1.1 為主；全球陽性率呈上升趨勢，中國、美國、英國持續上升。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">全國庫存約 16.5 萬劑，7/30 已撥配 8 萬 550 劑，預計 8/6 再配送約 4.5 萬劑。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">出現喉嚨痛、咳嗽、鼻塞、流鼻水、發燒、疲倦、頭痛及肌肉痠痛等症狀，可先用家用快篩後就醫，或至診所由醫師使用醫用快篩。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：總院-流感暨流行性呼吸道病原（167642）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：病毒類呼吸道感染症感染管制措施</a>
+      <a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><h2 style="font-size:24px;color:#143c30;margin:28px 0 12px">疫苗政策</h2><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-07-28</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">肺炎鏈球菌疫苗｜8/10 起一劑搞定，符合資格帶健保卡去打</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">今年 1/15 起以 PCV20 取代舊制；8/10 起增列 PCV21 供選擇，兩款新疫苗一劑即可完成新制保護。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong>65 歲以上長者、55 至 64 歲原住民、19 至 64 歲 IPD 高風險者。</p>
+          <ul style="line-height:1.8;color:#31584d"><li>8/10 起符合資格者可至合約院所接種 1 劑 PCV20 或 PCV21。</li><li>從未打過肺鏈疫苗者可直接接種；打過者依銜接規則接種。</li><li>帶健保卡；原住民帶身分註記戶籍證明；高風險者備診斷佐證資料。</li></ul><p style="line-height:1.8;margin:8px 0;color:#31584d">從未接種 13、15、20、21 或 23 價疫苗者，可直接接種 1 劑。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">僅接種 23 價且間隔滿 1 年，或僅接種 13/15 價且符合間隔規則者，可接種新制疫苗。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">曾為 19 至 64 歲高風險並完整接種 13 或 15 價及 23 價各 1 劑者，滿 65 歲且距前劑滿 5 年後再接種 1 劑。</p><p style="line-height:1.8;margin:8px 0;color:#31584d">已完成 13 或 15 價加 23 價各 1 劑、20 價或 21 價者，已完整保護，無需再打。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：肺炎鏈球菌高風險族群照護課程（待確認）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：KM系統感染管制手冊目錄（待確認）</a>
+      <a href="https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><h2 style="font-size:24px;color:#143c30;margin:28px 0 12px">院內同仁專區</h2><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-08-05</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">KM 與 TMS 連結</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">KM 系統《感染管制手冊—病媒蚊傳染病感染管制措施》；TMS 課程：總院-登革熱暨常見病媒蚊傳染病（179101）、總院-登革熱診斷與治療（154594）。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong></p>
+          <p style="line-height:1.8;margin:8px 0;color:#31584d">以下為院內感染管制作業與教育訓練連結，一般民眾可略過。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：總院-登革熱暨常見病媒蚊傳染病（179101）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：感染管制手冊—病媒蚊傳染病感染管制措施</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><div style="background:#fff;border:1px solid #d9e8dd;border-radius:8px;padding:18px;margin:12px 0">
+          <div style="color:#7b6b2d;font-weight:700">發佈 2026-08-05</div><h3 style="font-size:21px;margin:10px 0;color:#143c30">KM 與 TMS 連結</h3>
+          <p style="font-size:16px;line-height:1.8;font-weight:700;color:#143c30">KM 系統《病毒類呼吸道感染症感染管制措施》、《病人之床位安排原則》；TMS 課程：總院-流感暨流行性呼吸道病原（167642）。</p>
+          <p style="line-height:1.8;color:#31584d"><strong>哪些人要注意：</strong></p>
+          <p style="line-height:1.8;margin:8px 0;color:#31584d">以下為院內感染管制作業與教育訓練連結，一般民眾可略過。</p>
+          <p style="line-height:2"><div class="resource-row">
+      <a href="https://edu.ntuh.gov.tw/index/login?next=%2F" target="_blank" rel="noopener">課程：總院-流感暨流行性呼吸道病原（167642）</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">KM：病毒類呼吸道感染症感染管制措施</a>
+      <a href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531" target="_blank" rel="noopener">CDC 原文</a>
+    </div></p>
+        </div><p style="text-align:center;line-height:2;color:#48645b;margin-top:28px">資料來源：衛生福利部疾病管制署<br>～臺大醫院感染管制中心關心您～</p>
+</td></tr></table></td></tr></table></body></html>
