@@ -112,7 +112,7 @@
             "education": {
               "id": "edu-登革熱",
               "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+              "url": "https://edu.ntuh.gov.tw/course/179101",
               "matched": "topic",
               "topic": "登革熱"
             },
@@ -127,7 +127,7 @@
           "education_course": {
             "id": "edu-登革熱",
             "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-            "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+            "url": "https://edu.ntuh.gov.tw/course/179101",
             "matched": "topic",
             "topic": "登革熱"
           },
@@ -165,7 +165,7 @@
             "education": {
               "id": "edu-日本腦炎",
               "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+              "url": "https://edu.ntuh.gov.tw/course/179101",
               "matched": "fallback",
               "topic": "日本腦炎"
             },
@@ -180,7 +180,7 @@
           "education_course": {
             "id": "edu-日本腦炎",
             "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-            "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+            "url": "https://edu.ntuh.gov.tw/course/179101",
             "matched": "fallback",
             "topic": "日本腦炎"
           },
@@ -226,7 +226,7 @@
             "education": {
               "id": "edu-新冠 COVID-19",
               "name": "總院-流感暨流行性呼吸道病原（167642）",
-              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+              "url": "https://edu.ntuh.gov.tw/course/167642",
               "matched": "topic",
               "topic": "新冠 COVID-19"
             },
@@ -241,7 +241,7 @@
           "education_course": {
             "id": "edu-新冠 COVID-19",
             "name": "總院-流感暨流行性呼吸道病原（167642）",
-            "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+            "url": "https://edu.ntuh.gov.tw/course/167642",
             "matched": "topic",
             "topic": "新冠 COVID-19"
           },
@@ -339,7 +339,7 @@
             "education": {
               "id": "edu-dengue-179101",
               "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+              "url": "https://edu.ntuh.gov.tw/course/179101",
               "matched": "topic",
               "topic": "登革熱"
             },
@@ -369,7 +369,7 @@
             "education": {
               "id": "edu-resp-167642",
               "name": "總院-流感暨流行性呼吸道病原（167642）",
-              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
+              "url": "https://edu.ntuh.gov.tw/course/167642",
               "matched": "topic",
               "topic": "新冠"
             },
