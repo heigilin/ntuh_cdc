@@ -661,12 +661,35 @@
     }
     .card h3 { margin:0 0 10px; }
     .card p { color:#3f5748; line-height:1.75; }
+    .action-list {
+      margin:10px 0 0;
+      padding:12px 14px 12px 34px;
+      color:#31584d;
+      background:rgba(238,249,244,.72);
+      border:1px solid rgba(217,232,221,.9);
+      border-radius:10px;
+      line-height:1.7;
+    }
+    .action-list li + li { margin-top:6px; }
     .more {
       display:grid;
       grid-template-rows:0fr;
       transition:grid-template-rows .18s ease-out;
     }
     .more > div { overflow:hidden; }
+    .more h4 {
+      margin:18px 0 6px;
+      color:#184939;
+      font-size:18px;
+      line-height:1.35;
+    }
+    .more ul {
+      margin:6px 0 0;
+      padding-left:24px;
+      line-height:1.75;
+      color:#3f5748;
+    }
+    .more li + li { margin-top:6px; }
     .card.open .more { grid-template-rows:1fr; }
     .read {
       min-height:38px;
@@ -1309,11 +1332,23 @@
             <div class="card-title-row"><span class="disease-title">新冠肺炎</span><span class="date-tag">2026-08-04</span></div>
             <h3>疫情上升且處流行期</h3>
             <p>第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。醫療照護機構、人潮擁擠室內場所建議自主佩戴口罩。</p>
+            <p><strong>哪些人要注意：</strong>所有人，尤其65歲以上、慢性病等重症高風險者。</p>
+            <ul class="action-list">
+              <li>尚未接種本季疫苗者儘快接種，擴大接種措施延長至9/28。</li>
+              <li>出入醫療機構、大眾運輸、擁擠室內場所時，自主佩戴口罩並落實手部衛生。</li>
+              <li>有症狀可先快篩並儘速就醫，高風險者及早就醫以利評估抗病毒藥物。</li>
+            </ul>
             <div class="more"><div>
-              <p><strong>哪些人要注意：</strong>所有人，尤其65歲以上、慢性病等重症高風險者。</p>
+              <h4>國內疫情數據</h4>
               <p>2025年10月起累計265例本土併發重症、其中28例死亡；重症以65歲以上長者及具慢性病史者為多，89.1%未接種本季新冠疫苗。</p>
-              <p>近4週本土變異株以PQ.16.1.1為主，全球陽性率呈上升趨勢。尚未接種本季疫苗者請把握擴大接種期間，接種措施延長至9/28。</p>
-              <p>出現喉嚨痛、咳嗽、鼻塞、流鼻水、發燒、疲倦、頭痛及肌肉痠痛等症狀，可先用家用快篩後就醫；高風險者及早就醫以利評估抗病毒藥物。</p>
+              <h4>全球趨勢</h4>
+              <p>近4週本土變異株以PQ.16.1.1為主，全球陽性率呈上升趨勢；中國、美國、英國持續上升，香港、日本、泰國單週下降。流行變異株以NB.1.8.1、XFG、JN.1為主。</p>
+              <h4>疫苗配送</h4>
+              <p>全國庫存約16.5萬劑，7/30已撥配8萬550劑，預計8/6再配送約4.5萬劑。尚未接種本季疫苗者請把握擴大接種期間。</p>
+              <h4>就醫管道</h4>
+              <p>出現喉嚨痛、咳嗽、鼻塞、流鼻水、發燒、疲倦、頭痛及肌肉痠痛等症狀，可先用家用快篩自我篩檢後儘快就醫，或直接至診所由醫師使用醫用快篩；假日亦可至輕急症中心就醫評估。</p>
+              <h4>查詢</h4>
+              <p>接種院所及公費藥劑資訊可查疾管署官網「流感新冠疫苗及流感藥劑地圖」。</p>
             </div></div>
             <button class="read" type="button">展開更多內容</button>
             <div class="resource-row"><a data-resource="education" data-topic="新冠肺炎" href="https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0">課程：總院-流感暨流行性呼吸道病原（167642）</a><a data-resource="km" data-topic="新冠肺炎" href="https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684">KM：病毒類呼吸道感染症感染管制措施</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9">CDC 原文</a></div>
@@ -1322,11 +1357,27 @@
             <div class="card-title-row"><span class="disease-title">肺炎鏈球菌</span><span class="date-tag">2026-07-28</span></div>
             <h3>成人公費疫苗升級</h3>
             <p>2026-08-10起成人公費肺炎鏈球菌疫苗增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。</p>
+            <p><strong>哪些人要注意：</strong>65歲以上長者、55至64歲原住民、19至64歲IPD高風險者。</p>
+            <ul class="action-list">
+              <li>8/10起符合資格者可至約2,800家合約院所接種1劑PCV20或PCV21。</li>
+              <li>從未打過肺鏈疫苗者可直接接種；打過者依銜接規則接種。</li>
+              <li>請帶健保卡；原住民帶身分註記戶籍證明，高風險者備診斷佐證資料。</li>
+            </ul>
             <div class="more"><div>
-              <p><strong>哪些人要注意：</strong>65歲以上長者、55至64歲原住民、19至64歲IPD高風險者。</p>
-              <p>8/10起符合資格者可至合約院所接種1劑PCV20或PCV21。從未接種肺鏈疫苗者可直接接種；曾接種者依銜接規則判斷。</p>
-              <p>僅接種23價且間隔滿1年，或僅接種13/15價且符合間隔規則者，可接種新制疫苗。已完成13或15價加23價各1劑、20價或21價者，已完整保護，無需再打。</p>
+              <h4>政策重點</h4>
+              <p>今年1/15起以PCV20取代舊制（PCV13加PPV23）；8/10起增列PCV21供選擇，兩款新疫苗全面取代舊型，接種1劑即完成新制保護。ACIP評估兩款疫苗無優劣之分，併同提供；23價疫苗將回收、不再提供接種。</p>
+              <h4>銜接接種規則（8/10起）</h4>
+              <ul>
+                <li>從未接種13、15、20、21或23價疫苗者，可直接接種1劑。</li>
+                <li>僅接種23價且間隔滿1年者，可接種。</li>
+                <li>僅接種13或15價且間隔滿1年者可接種；高風險對象、65歲以上機構住民或洗腎者間隔滿8週即可接種。</li>
+                <li>曾為19至64歲高風險並完整接種13或15價及23價各1劑者，滿65歲且距前劑滿5年後再接種1劑。</li>
+                <li>已完成13或15價加23價各1劑，或已接種20價、21價者，已完整保護，無需再打。</li>
+              </ul>
+              <h4>IPD高風險對象</h4>
               <p>IPD高風險對象包含脾臟功能缺損、免疫功能不全、人工耳植入、腦脊髓液滲漏、近一年接受免疫抑制劑或放射治療的惡性腫瘤者及器官移植者。</p>
+              <h4>其他提醒</h4>
+              <p>肺鏈疫苗可與流感、新冠疫苗同時接種於不同部位，無須間隔。除接種外仍請加強個人衛生、避免出入空氣不流通場所，有疑似症狀儘速就醫。</p>
             </div></div>
             <button class="read" type="button">展開更多內容</button>
             <div class="resource-row"><a data-resource="education" data-topic="肺炎鏈球菌" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：肺炎鏈球菌（待確認）</a><a data-resource="km" data-topic="肺炎鏈球菌" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：肺炎鏈球菌（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9">CDC 原文</a></div>
@@ -1344,12 +1395,25 @@
             <div class="card-title-row"><span class="disease-title">登革熱</span><span class="date-tag">2026-08-04</span></div>
             <h3>境外移入與群聚風險</h3>
             <p>7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有疑似症狀，應主動告知旅遊史並就醫。</p>
+            <p><strong>哪些人要注意：</strong>近期出國者，尤其前往東南亞、南亞；返國14天內出現疑似症狀者。</p>
+            <ul class="action-list">
+              <li>出國穿淺色長袖長褲，使用含DEET、Picaridin或IR-3535的防蚊液。</li>
+              <li>返國14天內若發燒、頭痛、後眼窩痛、肌肉關節痛，速就醫並主動告知旅遊史。</li>
+              <li>居家落實「巡、倒、清、刷」清除積水容器，降雨後再巡檢一次。</li>
+            </ul>
             <div class="more"><div>
-              <p><strong>哪些人要注意：</strong>近期出國者，尤其前往東南亞、南亞；返國14天內出現疑似症狀者。</p>
-              <p>東南亞、南亞登革熱疫情持續上升，暑假旅遊旺季加上降雨後積水，境外感染與社區病媒風險同步增加。</p>
+              <h4>疫情背景</h4>
+              <p>東南亞、南亞登革熱疫情持續上升，境外感染風險提高。暑假旅遊旺季，加上氣象預測聖嬰現象未來數月可能增強，有利登革熱傳播，境外移入風險加大。</p>
+              <h4>入境時提醒</h4>
               <p>返國入境如有發燒、頭痛、後眼窩痛、肌肉關節痛等疑似症狀，請主動告知機場檢疫人員；返國後14天內不適，速就醫並告知旅遊史。</p>
-              <p>清除盆栽底盤、廢棄輪胎、塑膠袋等可能積水容器；保留的儲水容器須定期刷洗器壁以去除蟲卵並倒置收納，降雨後再次巡檢。</p>
-              <p>給醫療人員：落實詢問TOCC，適時使用登革熱NS1快篩輔助診斷並及早通報。</p>
+              <h4>孳生源管理</h4>
+              <ul>
+                <li>清除盆栽底盤、廢棄輪胎、塑膠袋等可能積水容器；大型容器可聯繫清潔隊協助處理。</li>
+                <li>保留的儲水容器須定期刷洗器壁以去除蟲卵並倒置收納，降雨過後再次巡檢。</li>
+                <li>學校暑假持續留意校園積水，特別提醒長時間未使用的馬桶、水箱等易孳生孑孓，務必定期巡檢。</li>
+              </ul>
+              <h4>給醫療人員</h4>
+              <p>落實詢問TOCC（旅遊史、職業史、接觸史、群聚史），適時使用登革熱NS1快篩輔助診斷並及早通報，以利衛生單位採取防治工作。</p>
             </div></div>
             <button class="read" type="button">展開更多內容</button>
             <div class="resource-row"><a data-resource="education" data-topic="登革熱" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：登革熱（待確認）</a><a data-resource="km" data-topic="登革熱" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：登革熱（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9">CDC 原文</a></div>
@@ -1358,11 +1422,22 @@
             <div class="card-title-row"><span class="disease-title">日本腦炎</span><span class="date-tag">2026-07-28</span></div>
             <h3>今年首例死亡病例</h3>
             <p>國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。</p>
+            <p><strong>哪些人要注意：</strong>住家或活動地鄰近水稻田、豬舍、鴿舍者；家有適齡幼兒者。</p>
+            <ul class="action-list">
+              <li>避免清晨、傍晚在豬舍等高風險場所活動；必要時穿淺色長袖並塗防蚊液。</li>
+              <li>適齡幼兒按時接種：滿15個月第1劑、間隔12個月第2劑。</li>
+              <li>高風險環境成人可至旅遊醫學門診評估自費接種。</li>
+            </ul>
             <div class="more"><div>
-              <p><strong>哪些人要注意：</strong>住家或活動地鄰近水稻田、豬舍、鴿舍者；家有適齡幼兒者。</p>
+              <h4>疫情</h4>
+              <p>桃園市新增2例，其中1例為2026年首例日本腦炎死亡病例；病例住家附近有水稻田、溪流、豬舍及鴿舍等高風險場域。</p>
+              <h4>流行季與風險族群</h4>
               <p>臺灣每年5至10月為流行季，6至7月為高峰。確定病例以40歲以上成人較多，但各年齡層都有感染風險。</p>
+              <h4>症狀</h4>
               <p>大部分感染者無明顯症狀；有症狀者可出現頭痛、發燒，嚴重可能意識改變、全身無力、昏迷或死亡。</p>
+              <h4>病媒蚊</h4>
               <p>病媒蚊以三斑家蚊、環紋家蚊及白頭家蚊為主，常孳生於水稻田、池塘、灌溉溝渠及溪流。清晨、傍晚避免在豬舍等高風險場所活動。</p>
+              <h4>預防接種</h4>
               <p>幼兒常規時程為出生滿15個月第1劑、間隔12個月第2劑；高風險環境成人可至旅遊醫學門診評估自費接種。</p>
             </div></div>
             <button class="read" type="button">展開更多內容</button>
@@ -1381,10 +1456,18 @@
             <div class="card-title-row"><span class="disease-title">傷寒</span><span class="date-tag">2026-08-06</span></div>
             <h3>今年首例本土病例</h3>
             <p>國內公布2026年首例本土傷寒確定病例，個案已出院返家休養；接觸者採檢目前陰性。醫療院所發現疑似個案需於24小時內通報。</p>
+            <p><strong>哪些人要注意：</strong>近期有腹瀉、發燒或飲食暴露風險者；照護、供膳與食品處理相關同仁也需提高警覺。</p>
+            <ul class="action-list">
+              <li>飲用水應煮沸或使用瓶裝水，食品充分加熱。</li>
+              <li>烹調過程避免生熟食交叉污染，照護或處理排泄物後務必落實手部衛生。</li>
+              <li>醫療院所若發現疑似個案，需於24小時內通報並配合接觸者調查。</li>
+            </ul>
             <div class="more"><div>
-              <p><strong>哪些人要注意：</strong>近期有腹瀉、發燒或飲食暴露風險者；照護、供膳與食品處理相關同仁也需提高警覺。</p>
+              <h4>疫情概況</h4>
               <p>今年累計4例傷寒確定病例，包含1例本土與3例境外移入。傷寒主要經受污染食品或飲水傳播，症狀包含持續性發燒、頭痛、倦怠、腹痛、腹瀉等。</p>
+              <h4>飲食與手部衛生</h4>
               <p>飲用水應煮沸或使用瓶裝水，食品充分加熱，烹調過程避免生熟食交叉污染。照護或處理排泄物後務必落實手部衛生。</p>
+              <h4>通報與監測</h4>
               <p>醫療院所若發現疑似個案，需於24小時內通報，並配合衛生單位完成接觸者調查與健康監測。</p>
             </div></div>
             <button class="read" type="button">展開更多內容</button>
