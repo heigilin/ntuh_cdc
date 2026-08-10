@@ -112,7 +112,7 @@
             "education": {
               "id": "edu-登革熱",
               "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
               "matched": "topic",
               "topic": "登革熱"
             },
@@ -127,7 +127,7 @@
           "education_course": {
             "id": "edu-登革熱",
             "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
             "matched": "topic",
             "topic": "登革熱"
           },
@@ -164,8 +164,8 @@
           "suggested_links": {
             "education": {
               "id": "edu-日本腦炎",
-              "name": "臺大醫院教育訓練管理系統（待確認）",
-              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
               "matched": "fallback",
               "topic": "日本腦炎"
             },
@@ -179,8 +179,8 @@
           },
           "education_course": {
             "id": "edu-日本腦炎",
-            "name": "臺大醫院教育訓練管理系統（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+            "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+            "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
             "matched": "fallback",
             "topic": "日本腦炎"
           },
@@ -339,7 +339,7 @@
             "education": {
               "id": "edu-dengue-179101",
               "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
-              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+              "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=179101&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
               "matched": "topic",
               "topic": "登革熱"
             },
