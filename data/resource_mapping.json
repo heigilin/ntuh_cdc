@@ -79,7 +79,7 @@
         {
           "id": "km-enteric",
           "name": "腸道與食媒傳染病感染管制文件（待確認）",
-          "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
           "keywords": ["傷寒", "沙門氏菌", "腸道", "食媒", "飲食衛生"],
           "enabled": true
         }
@@ -101,8 +101,8 @@
       "km": [
         {
           "id": "km-dengue",
-          "name": "登革熱與病媒蚊防治文件（待確認）",
-          "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+          "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
           "keywords": ["登革熱", "病媒蚊", "孳生源", "防蚊"],
           "enabled": true
         }

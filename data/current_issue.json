@@ -119,7 +119,7 @@
             "km": {
               "id": "km-登革熱",
               "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
               "matched": "topic",
               "topic": "登革熱"
             }
@@ -134,7 +134,7 @@
           "km_document": {
             "id": "km-登革熱",
             "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
             "matched": "topic",
             "topic": "登革熱"
           },
@@ -171,8 +171,8 @@
             },
             "km": {
               "id": "km-日本腦炎",
-              "name": "KM系統感染管制手冊目錄（待確認）",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
               "matched": "fallback",
               "topic": "日本腦炎"
             }
@@ -186,8 +186,8 @@
           },
           "km_document": {
             "id": "km-日本腦炎",
-            "name": "KM系統感染管制手冊目錄（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+            "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
             "matched": "fallback",
             "topic": "日本腦炎"
           },
@@ -333,7 +333,7 @@
           "details": [
             "以下為院內感染管制作業與教育訓練連結，一般民眾可略過。"
           ],
-          "source_url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+          "source_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
           "severity_basis": "院內感染管制作業與教育訓練。",
           "suggested_links": {
             "education": {
@@ -346,7 +346,7 @@
             "km": {
               "id": "km-vectorborne",
               "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
               "matched": "topic",
               "topic": "病媒蚊"
             }
