@@ -236,7 +236,7 @@
                 "education": {
                   "id": "edu-新冠 COVID-19",
                   "name": "總院-流感暨流行性呼吸道病原（167642）",
-                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
                   "matched": "topic",
                   "topic": "新冠 COVID-19"
                 },
@@ -353,7 +353,7 @@
                 "education": {
                   "id": "edu-resp-167642",
                   "name": "總院-流感暨流行性呼吸道病原（167642）",
-                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
+                  "url": "https://edu.ntuh.gov.tw/course/latest?programId=0&defaultOrder=startDate&inSign=ing&applyExternalCredit=0&search=167642&division=0&category=0&property=all&courseDuration_start=&courseDuration_end=&includeAllCertification=0",
                   "matched": "topic",
                   "topic": "新冠"
                 },
