@@ -1,16 +1,19 @@
 from pathlib import Path
 import argparse
+import json
 
 
-DEFAULT_SUBJECT = "【疫情訊息】本週重點與教育訓練連結"
+DEFAULT_SUBJECT = "疫情訊息-待審核草稿"
 DEFAULT_TO = "inq36@ntuh.gov.tw"
 CID_TRAIN = "email-train-preview@ntuh-cdc"
 
 
-def build_mail_html(base_dir: Path) -> str:
-    html_path = base_dir / "email-preview.html"
+def build_mail_html(base_dir: Path, html_path: Path, use_cid_image: bool) -> str:
+    if not html_path.is_absolute():
+        html_path = base_dir / html_path
     html = html_path.read_text(encoding="utf-8")
-    html = html.replace('src="assets/email-train-preview.jpg"', f'src="cid:{CID_TRAIN}"')
+    if use_cid_image:
+        html = html.replace('src="assets/email-train-preview.jpg"', f'src="cid:{CID_TRAIN}"')
     return html
 
 
@@ -28,16 +31,31 @@ def attach_inline_image(mail, image_path: Path, content_id: str) -> None:
     )
 
 
+def load_default_subject(base_dir: Path) -> str:
+    issue_path = base_dir / "data" / "current_issue.json"
+    if not issue_path.exists():
+        return DEFAULT_SUBJECT
+    try:
+        issue = json.loads(issue_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return DEFAULT_SUBJECT
+    return issue.get("subject") or DEFAULT_SUBJECT
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Open an Outlook preview with CID-embedded email assets.")
     parser.add_argument("--to", default=DEFAULT_TO)
     parser.add_argument("--subject", default=DEFAULT_SUBJECT)
+    parser.add_argument("--html", default="output/正式寄信用-email-hosted.html")
+    parser.add_argument("--cid-image", action="store_true", help="Embed assets/email-train-preview.jpg as an inline CID image.")
     parser.add_argument("--send", action="store_true", help="Send immediately. Default opens an Outlook preview.")
     args = parser.parse_args()
 
     base_dir = Path(__file__).resolve().parents[1]
+    if args.subject == DEFAULT_SUBJECT:
+        args.subject = load_default_subject(base_dir)
     image_path = base_dir / "assets" / "email-train-preview.jpg"
-    if not image_path.exists():
+    if args.cid_image and not image_path.exists():
         raise FileNotFoundError(image_path)
 
     try:
@@ -51,8 +69,9 @@ def main() -> None:
     mail = outlook.CreateItem(0)
     mail.Subject = args.subject
     mail.To = args.to
-    mail.HTMLBody = build_mail_html(base_dir)
-    attach_inline_image(mail, image_path, CID_TRAIN)
+    mail.HTMLBody = build_mail_html(base_dir, Path(args.html), args.cid_image)
+    if args.cid_image:
+        attach_inline_image(mail, image_path, CID_TRAIN)
 
     if args.send:
         mail.Send()
