@@ -17,6 +17,7 @@ def build_hosted_email(
     output_path: Path,
     web_url: str | None = None,
     assets_url: str | None = None,
+    image_url: str | None = None,
 ) -> None:
     base_url = normalize_base_url(base_url)
     web_url = (web_url or urljoin(base_url, "web-preview.html")).strip()
@@ -30,6 +31,12 @@ def build_hosted_email(
     }
     for old, new in replacements.items():
         html = html.replace(old, new)
+
+    if image_url:
+        html = html.replace(
+            f'src="{escape(assets_url, quote=True)}email-train-preview.jpg"',
+            f'src="{escape(image_url.strip(), quote=True)}"',
+        )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(html, encoding="utf-8")
@@ -53,6 +60,10 @@ def main() -> None:
         help="Optional full assets/ folder URL. Defaults to BASE_URL/assets/.",
     )
     parser.add_argument(
+        "--image-url",
+        help="Optional full image URL for assets/email-train-preview.jpg.",
+    )
+    parser.add_argument(
         "--output",
         default="output/email-hosted.html",
         help="Output HTML path. Default: output/email-hosted.html",
@@ -61,7 +72,14 @@ def main() -> None:
 
     base_dir = Path(__file__).resolve().parents[1]
     output_path = (base_dir / args.output).resolve()
-    build_hosted_email(base_dir, args.base_url, output_path, args.web_url, args.assets_url)
+    build_hosted_email(
+        base_dir,
+        args.base_url,
+        output_path,
+        args.web_url,
+        args.assets_url,
+        args.image_url,
+    )
     print(f"Built hosted email: {output_path}")
 
 
