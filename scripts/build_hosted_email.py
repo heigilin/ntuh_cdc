@@ -22,15 +22,30 @@ def build_hosted_email(
     base_url = normalize_base_url(base_url)
     web_url = (web_url or urljoin(base_url, "web-preview.html")).strip()
     assets_url = normalize_base_url(assets_url or urljoin(base_url, "assets/"))
+    # SharePoint/OneDrive file viewer URLs keep fragments on the viewer shell,
+    # so disease anchors cannot reliably reach the HTML document inside it.
+    supports_anchors = not ("/my?" in web_url or "viewid=" in web_url)
     html = (base_dir / "email-preview.html").read_text(encoding="utf-8")
 
     replacements = {
         'href="web-preview.html"': f'href="{escape(web_url, quote=True)}"',
-        'href="web-preview.html#': f'href="{escape(web_url, quote=True)}#',
         'src="assets/': f'src="{escape(assets_url, quote=True)}',
     }
     for old, new in replacements.items():
         html = html.replace(old, new)
+
+    if supports_anchors:
+        html = html.replace('href="web-preview.html#', f'href="{escape(web_url, quote=True)}#')
+    else:
+        disease_anchors = [
+            "#disease-covid",
+            "#disease-pneumococcus",
+            "#disease-dengue",
+            "#disease-je",
+            "#disease-typhoid",
+        ]
+        for anchor in disease_anchors:
+            html = html.replace(f'href="web-preview.html{anchor}"', f'href="{escape(web_url, quote=True)}"')
 
     if image_url:
         html = html.replace(
