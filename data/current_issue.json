@@ -233,7 +233,7 @@
             "km": {
               "id": "km-新冠 COVID-19",
               "name": "病毒類呼吸道感染症感染管制措施",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684",
               "matched": "topic",
               "topic": "新冠 COVID-19"
             }
@@ -248,7 +248,7 @@
           "km_document": {
             "id": "km-新冠 COVID-19",
             "name": "病毒類呼吸道感染症感染管制措施",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+            "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684",
             "matched": "topic",
             "topic": "新冠 COVID-19"
           },
@@ -376,7 +376,7 @@
             "km": {
               "id": "km-respiratory-virus",
               "name": "病毒類呼吸道感染症感染管制措施",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684",
               "matched": "topic",
               "topic": "新冠"
             }
