@@ -1305,7 +1305,7 @@
           <p>優先呈現流行期、重症與死亡風險，以及醫療照護場域防護建議。</p>
         </div>
         <div class="cards">
-          <article class="card">
+          <article class="card" id="disease-covid">
             <div class="card-title-row"><span class="disease-title">新冠肺炎</span><span class="date-tag">2026-08-04</span></div>
             <h3>疫情上升且處流行期</h3>
             <p>第30週門急診就診18,990人次，較前週上升74.8%；7/28-8/3新增62例本土重症及3例死亡。醫療照護機構、人潮擁擠室內場所建議自主佩戴口罩。</p>
@@ -1318,7 +1318,7 @@
             <button class="read" type="button">展開更多內容</button>
             <div class="resource-row"><a data-resource="education" data-topic="新冠肺炎" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：新冠肺炎（待確認）</a><a data-resource="km" data-topic="新冠肺炎" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：新冠肺炎（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/lFK7neXKyk54GdPYg_hNDg?typeid=9">CDC 原文</a></div>
           </article>
-          <article class="card">
+          <article class="card" id="disease-pneumococcus">
             <div class="card-title-row"><span class="disease-title">肺炎鏈球菌</span><span class="date-tag">2026-07-28</span></div>
             <h3>成人公費疫苗升級</h3>
             <p>2026-08-10起成人公費肺炎鏈球菌疫苗增加PCV21，與PCV20併行提供，符合資格者接種1劑即可完成新制保護。</p>
@@ -1340,7 +1340,7 @@
           <p>整合旅遊史詢問、環境孳生源管理與高風險時段防蚊。</p>
         </div>
         <div class="cards">
-          <article class="card">
+          <article class="card" id="disease-dengue">
             <div class="card-title-row"><span class="disease-title">登革熱</span><span class="date-tag">2026-08-04</span></div>
             <h3>境外移入與群聚風險</h3>
             <p>7/28-8/3新增8例登革熱境外移入病例，其中3例為柬埔寨境外群聚。返國後14天內如有疑似症狀，應主動告知旅遊史並就醫。</p>
@@ -1354,7 +1354,7 @@
             <button class="read" type="button">展開更多內容</button>
             <div class="resource-row"><a data-resource="education" data-topic="登革熱" href="https://edu.ntuh.gov.tw/index/login?next=%2F">課程：登革熱（待確認）</a><a data-resource="km" data-topic="登革熱" href="https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531">KM：登革熱（待確認）</a><a href="https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9">CDC 原文</a></div>
           </article>
-          <article class="card">
+          <article class="card" id="disease-je">
             <div class="card-title-row"><span class="disease-title">日本腦炎</span><span class="date-tag">2026-07-28</span></div>
             <h3>今年首例死亡病例</h3>
             <p>國內新增2例日本腦炎病例，其中1例為今年首例死亡。5至10月為流行季，住家或活動地鄰近水稻田、豬舍等高風險環境者應加強防蚊。</p>
@@ -1377,7 +1377,7 @@
           <p>以通報時效、飲食安全與手部衛生為核心提醒。</p>
         </div>
         <div class="cards">
-          <article class="card">
+          <article class="card" id="disease-typhoid">
             <div class="card-title-row"><span class="disease-title">傷寒</span><span class="date-tag">2026-08-06</span></div>
             <h3>今年首例本土病例</h3>
             <p>國內公布2026年首例本土傷寒確定病例，個案已出院返家休養；接觸者採檢目前陰性。醫療院所發現疑似個案需於24小時內通報。</p>
@@ -1430,6 +1430,18 @@
         button.textContent = open ? "收合內容" : "展開更多內容";
       });
     });
+
+    function openHashCard() {
+      if (!location.hash) return;
+      const card = document.querySelector(location.hash);
+      if (!card?.classList.contains("card")) return;
+      card.classList.add("open");
+      const button = card.querySelector(".read");
+      if (button) button.textContent = "收合內容";
+      setTimeout(() => card.scrollIntoView({ behavior:"smooth", block:"center" }), 80);
+    }
+    window.addEventListener("hashchange", openHashCard);
+    openHashCard();
 
     for (let i = 0; i < 26; i += 1) {
       const particle = document.createElement("span");
