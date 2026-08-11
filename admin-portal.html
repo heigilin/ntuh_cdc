@@ -104,8 +104,29 @@
 
     .shell {
       display: grid;
-      grid-template-columns: 290px minmax(0, 1fr) 390px;
+      grid-template-columns: 300px minmax(720px, 1fr) 430px;
       min-height: 0;
+    }
+
+    .shell.preview-wide {
+      grid-template-columns: 280px minmax(0, 1fr);
+    }
+
+    .shell.preview-wide .editor {
+      display: none;
+    }
+
+    .shell.editor-collapsed {
+      grid-template-columns: 300px minmax(0, 1fr) 56px;
+    }
+
+    .shell.editor-collapsed .editor {
+      padding: 14px 8px;
+      overflow: hidden;
+    }
+
+    .shell.editor-collapsed .editor > *:not(.editor-toggle-strip) {
+      display: none;
     }
 
     aside, .preview, .editor {
@@ -128,6 +149,25 @@
       border-left: 1px solid var(--line);
       background: rgba(255, 253, 246, .84);
       overflow: auto;
+    }
+
+    .editor-toggle-strip {
+      display: none;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      min-height: 180px;
+      width: 40px;
+      padding: 10px 0;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .shell.editor-collapsed .editor-toggle-strip {
+      display: inline-grid;
+      place-items: center;
     }
 
     .section-title {
@@ -258,7 +298,7 @@
     }
 
     .frame-wrap {
-      min-height: 620px;
+      min-height: calc(100vh - 270px);
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: hidden;
@@ -268,7 +308,7 @@
     iframe {
       width: 100%;
       height: 100%;
-      min-height: 620px;
+      min-height: calc(100vh - 270px);
       border: 0;
       background: white;
     }
@@ -446,13 +486,22 @@
 
     @media (max-width: 1180px) {
       .shell {
-        grid-template-columns: 250px minmax(0, 1fr);
+        grid-template-columns: 260px minmax(0, 1fr);
       }
 
       .editor {
         grid-column: 1 / -1;
         border-left: 0;
         border-top: 1px solid var(--line);
+      }
+
+      .shell.preview-wide,
+      .shell.editor-collapsed {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .shell.editor-collapsed .editor {
+        display: none;
       }
     }
 
@@ -471,6 +520,11 @@
       }
 
       .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .shell.preview-wide,
+      .shell.editor-collapsed {
         grid-template-columns: 1fr;
       }
 
@@ -544,6 +598,8 @@
         <div class="tabs">
           <button class="tab active" data-preview="web" type="button">網頁版預覽</button>
           <button class="tab" data-preview="email" type="button">信件版預覽</button>
+          <button class="secondary" id="widePreviewToggle" type="button">全幅預覽</button>
+          <button class="secondary" id="editorCollapseToggle" type="button">收起編輯欄</button>
         </div>
         <div class="frame-wrap">
           <iframe id="previewFrame" title="疫情週報預覽"></iframe>
@@ -551,6 +607,7 @@
       </main>
 
       <section class="editor">
+        <button class="editor-toggle-strip" id="editorRestore" type="button">顯示編輯欄</button>
         <div class="section-title">
           <h2>內容與連結編輯</h2>
           <span class="ghost" id="selectedLabel">尚未選取</span>
@@ -599,11 +656,24 @@
       resources: [],
       users: [],
       editingUserId: '',
+      widePreview: localStorage.getItem('cdc_admin_wide_preview') === 'true',
+      editorCollapsed: localStorage.getItem('cdc_admin_editor_collapsed') === 'true',
       user: JSON.parse(localStorage.getItem('cdc_admin_user') || 'null'),
       passcode: sessionStorage.getItem('cdc_admin_passcode') || ''
     };
 
     const $ = (selector) => document.querySelector(selector);
+
+    function applyLayoutMode() {
+      const shell = $('.shell');
+      shell.classList.toggle('preview-wide', state.widePreview);
+      shell.classList.toggle('editor-collapsed', !state.widePreview && state.editorCollapsed);
+      $('#widePreviewToggle').textContent = state.widePreview ? '返回編輯版面' : '全幅預覽';
+      $('#editorCollapseToggle').textContent = state.editorCollapsed ? '顯示編輯欄' : '收起編輯欄';
+      $('#editorCollapseToggle').disabled = state.widePreview;
+      localStorage.setItem('cdc_admin_wide_preview', String(state.widePreview));
+      localStorage.setItem('cdc_admin_editor_collapsed', String(state.editorCollapsed));
+    }
 
     function escapeHtml(value) {
       return String(value ?? '').replace(/[&<>"']/g, (char) => ({
@@ -1164,6 +1234,21 @@
     $('#releaseLock').addEventListener('click', () => releaseLock().catch((error) => { $('#saveStatus').textContent = `釋放失敗：${error.message}`; }));
     $('#saveDraft').addEventListener('click', saveDraft);
     $('#saveDraftTop').addEventListener('click', saveDraft);
+    $('#widePreviewToggle').addEventListener('click', () => {
+      state.widePreview = !state.widePreview;
+      if (state.widePreview) state.editorCollapsed = false;
+      applyLayoutMode();
+    });
+    $('#editorCollapseToggle').addEventListener('click', () => {
+      state.editorCollapsed = !state.editorCollapsed;
+      state.widePreview = false;
+      applyLayoutMode();
+    });
+    $('#editorRestore').addEventListener('click', () => {
+      state.editorCollapsed = false;
+      state.widePreview = false;
+      applyLayoutMode();
+    });
     $('#subjectInput').addEventListener('input', (event) => { if (state.report) state.report.subject = event.target.value; });
     $('#reviewerInput').addEventListener('input', (event) => { if (state.report) state.report.reviewer = event.target.value; });
     $('#importGenerated').addEventListener('click', async () => {
@@ -1178,6 +1263,7 @@
       }
     });
 
+    applyLayoutMode();
     renderSession();
     if (state.user) loadUsers();
     loadReports().catch((error) => {
