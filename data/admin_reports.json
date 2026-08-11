@@ -280,20 +280,8 @@
               ],
               "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
               "suggested_links": {
-                "education": {
-                  "id": "edu-肺炎鏈球菌疫苗",
-                  "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
-                  "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-                  "matched": "fallback",
-                  "topic": "肺炎鏈球菌疫苗"
-                },
-                "km": {
-                  "id": "km-肺炎鏈球菌疫苗",
-                  "name": "KM系統感染管制手冊目錄（待確認）",
-                  "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-                  "matched": "fallback",
-                  "topic": "肺炎鏈球菌疫苗"
-                }
+                "education": null,
+                "km": null
               },
               "link_override": {},
               "severity_basis": "高齡與免疫風險族群重症預防政策更新。"

@@ -337,16 +337,20 @@ def render_simple_email(issue: dict) -> str:
     for section, items in issue["sections"].items():
         blocks.append(f"<h2>{escape(section)}</h2>")
         for item in items:
-            education_course = item.get("education_course") or fallback_edu_course()
-            km_document = item.get("km_document") or fallback_km_document()
-            education_label = topic_resource_label("課程", education_course, item, "待確認")
-            km_label = topic_resource_label("KM", km_document, item, "待確認")
+            education_course = item.get("education_course") or {}
+            km_document = item.get("km_document") or {}
+            links = []
+            if education_course.get("url"):
+                education_label = topic_resource_label("課程", education_course, item, "")
+                links.append(f"<a href='{escape(education_course['url'])}'>{escape(education_label)}</a>")
+            if km_document.get("url"):
+                km_label = topic_resource_label("KM", km_document, item, "")
+                links.append(f"<a href='{escape(km_document['url'])}'>{escape(km_label)}</a>")
+            links.append(f"<a href='{escape(item['url'])}'>CDC 原文</a>")
             blocks.append(
                 f"<article><h3>{escape(item['title'])}</h3>"
                 f"<p>{escape(item['summary'])}</p>"
-                f"<p><a href='{escape(education_course['url'])}'>{escape(education_label)}</a> "
-                f"<a href='{escape(km_document['url'])}'>{escape(km_label)}</a> "
-                f"<a href='{escape(item['url'])}'>CDC 原文</a></p></article>"
+                f"<p>{' '.join(links)}</p></article>"
             )
     return (
         "<!doctype html><html lang='zh-Hant'><meta charset='utf-8'>"
@@ -369,18 +373,22 @@ def render_simple_web(issue: dict) -> str:
     for section, items in issue["sections"].items():
         blocks.append(f"<section class='section'><h2>{escape(section_names.get(section, section))}</h2>")
         for item in items:
-            education_course = item.get("education_course") or fallback_edu_course()
-            km_document = item.get("km_document") or fallback_km_document()
-            education_label = topic_resource_label("課程", education_course, item, "待確認")
-            km_label = topic_resource_label("KM", km_document, item, "待確認")
+            education_course = item.get("education_course") or {}
+            km_document = item.get("km_document") or {}
+            links = []
+            if education_course.get("url"):
+                education_label = topic_resource_label("課程", education_course, item, "")
+                links.append(f"<a href='{escape(education_course['url'])}'>{escape(education_label)}</a>")
+            if km_document.get("url"):
+                km_label = topic_resource_label("KM", km_document, item, "")
+                links.append(f"<a href='{escape(km_document['url'])}'>{escape(km_label)}</a>")
+            links.append(f"<a href='{escape(item['url'])}'>CDC 原文</a>")
             blocks.append(
                 f"<article class='card'><p class='date'>{escape(item['date'])}</p>"
                 f"<h3>{escape(item['title'])}</h3>"
                 f"<p>{escape(item['summary'])}</p>"
                 f"<details><summary>展開更多內容</summary><p>{escape(item['summary'])}</p></details>"
-                f"<p class='links'><a href='{escape(education_course['url'])}'>{escape(education_label)}</a> "
-                f"<a href='{escape(km_document['url'])}'>{escape(km_label)}</a> "
-                f"<a href='{escape(item['url'])}'>CDC 原文</a></p></article>"
+                f"<p class='links'>{' '.join(links)}</p></article>"
             )
         blocks.append("</section>")
     return (

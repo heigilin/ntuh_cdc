@@ -63,11 +63,9 @@ def score_resource(text: str, topic_name: str, resource: dict[str, Any]) -> int:
 
 
 def choose_resource(kind: str, text: str, topic: dict[str, Any], mapping: dict[str, Any]) -> dict[str, Any]:
-    fallback = dict(mapping["fallbacks"][kind])
-    fallback.update({"matched": "fallback", "topic": topic.get("topic", "")})
     candidates = topic.get(kind, [])
     if not candidates:
-        return fallback
+        return {}
     ranked = sorted(
         candidates,
         key=lambda item: score_resource(text, str(topic.get("topic", "")), item),
@@ -75,7 +73,7 @@ def choose_resource(kind: str, text: str, topic: dict[str, Any], mapping: dict[s
     )
     best = ranked[0]
     if score_resource(text, str(topic.get("topic", "")), best) <= 0:
-        return fallback
+        return {}
     result = dict(best)
     result.update({"matched": "topic", "topic": topic.get("topic", "")})
     return result

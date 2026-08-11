@@ -19,15 +19,8 @@
     "rewrite": "個人發言一律轉為機關客觀敘述"
   },
   "resources": {
-    "education": {
-      "label": "臺大醫院教育訓練管理系統",
-      "url": "https://edu.ntuh.gov.tw/index/login?next=%2F"
-    },
-    "km": {
-      "label": "KM系統感染管制手冊目錄",
-      "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-      "path": "知識館 / 醫療支援單位 / 感染管制中心 / 感染管制手冊"
-    }
+    "education": null,
+    "km": null
   },
   "sections": [
     {
@@ -285,35 +278,11 @@
           "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/vwMq9VkXIaV7FHyJgpk-5w?typeid=9",
           "severity_basis": "高齡與免疫風險族群重症預防政策更新。",
           "suggested_links": {
-            "education": {
-              "id": "edu-肺炎鏈球菌疫苗",
-              "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
-              "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-              "matched": "fallback",
-              "topic": "肺炎鏈球菌疫苗"
-            },
-            "km": {
-              "id": "km-肺炎鏈球菌疫苗",
-              "name": "KM系統感染管制手冊目錄（待確認）",
-              "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-              "matched": "fallback",
-              "topic": "肺炎鏈球菌疫苗"
-            }
+            "education": null,
+            "km": null
           },
-          "education_course": {
-            "id": "edu-肺炎鏈球菌疫苗",
-            "name": "肺炎鏈球菌高風險族群照護課程（待確認）",
-            "url": "https://edu.ntuh.gov.tw/index/login?next=%2F",
-            "matched": "fallback",
-            "topic": "肺炎鏈球菌疫苗"
-          },
-          "km_document": {
-            "id": "km-肺炎鏈球菌疫苗",
-            "name": "KM系統感染管制手冊目錄（待確認）",
-            "url": "https://km.ntuh.gov.tw/km/listfolders.aspx?uid=531",
-            "matched": "fallback",
-            "topic": "肺炎鏈球菌疫苗"
-          },
+          "education_course": null,
+          "km_document": null,
           "link_override": {}
         }
       ]
