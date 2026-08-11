@@ -5,6 +5,8 @@ __pycache__/
 
 # Local-only administrator credentials. Commit admin_users.example.json instead.
 data/admin_users.json
+data/.secrets.json
+.env
 
 # Runtime drafts may contain internal review notes. Commit only if the repo is private
 # and you intentionally want to version drafts.
