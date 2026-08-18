@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>疫情週報管理者審核入口</title>
+  <title>疫情週報管理者審核與編輯入口</title>
   <style>
     :root {
       --ink: #153f32;
@@ -11,11 +11,11 @@
       --line: #d7e6dc;
       --paper: #fffdf6;
       --panel: #f7fbf4;
-      --green: #2e8068;
-      --green-dark: #17604d;
-      --gold: #f5c64f;
+      --green: #164e3d;
+      --green-dark: #0f382c;
+      --gold: #b88316;
       --blue: #cdebf2;
-      --danger: #9c3d2f;
+      --danger: #d9534f;
       font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
     }
 
@@ -36,12 +36,54 @@
     button {
       border: 0;
       cursor: pointer;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 800;
+    }
+
+    .primary {
+      background: var(--green);
+      color: #ffffff;
+    }
+    .primary:hover {
+      background: var(--green-dark);
+    }
+
+    .secondary {
+      background: #eef5f1;
+      color: var(--green-dark);
+      border: 1px solid var(--line);
+    }
+    .secondary:hover {
+      background: #dcece4;
+    }
+
+    .danger-btn {
+      background: #fdf2f2;
+      color: var(--danger);
+      border: 1px solid #f5c6c6;
+    }
+    .danger-btn:hover {
+      background: var(--danger);
+      color: #ffffff;
     }
 
     .app {
       min-height: 100vh;
       display: grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .notice-bar {
+      background: #fff3cd;
+      color: #856404;
+      border-bottom: 1px solid #ffeeba;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     header {
@@ -49,9 +91,9 @@
       grid-template-columns: 1fr auto;
       gap: 18px;
       align-items: center;
-      padding: 22px 28px;
+      padding: 18px 28px;
       border-bottom: 1px solid rgba(21, 63, 50, .12);
-      background: rgba(255, 253, 246, .82);
+      background: rgba(255, 253, 246, .85);
       backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
@@ -59,1216 +101,480 @@
     }
 
     h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 3vw, 36px);
-      letter-spacing: 0;
+      margin: 0 0 4px;
+      font-size: clamp(22px, 2.5vw, 32px);
+      color: var(--green-dark);
     }
 
     .subtitle {
       margin: 0;
       color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .safety {
-      display: grid;
-      gap: 4px;
-      justify-items: end;
-      text-align: right;
-      color: var(--danger);
-      font-weight: 800;
-    }
-
-    .safety small {
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .login-box {
-      display: grid;
-      gap: 8px;
-      min-width: min(420px, 100%);
-    }
-
-    .login-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-      gap: 8px;
-      align-items: end;
-    }
-
-    .login-row input {
-      min-height: 38px;
-      padding: 8px 10px;
+      font-size: 14px;
     }
 
     .shell {
       display: grid;
-      grid-template-columns: 300px minmax(720px, 1fr) 430px;
-      min-height: 0;
-    }
-
-    .shell.preview-wide {
-      grid-template-columns: 280px minmax(0, 1fr);
-    }
-
-    .shell.preview-wide .editor {
-      display: none;
-    }
-
-    .shell.editor-collapsed {
-      grid-template-columns: 300px minmax(0, 1fr) 56px;
-    }
-
-    .shell.editor-collapsed .editor {
-      padding: 14px 8px;
-      overflow: hidden;
-    }
-
-    .shell.editor-collapsed .editor > *:not(.editor-toggle-strip) {
-      display: none;
-    }
-
-    aside, .preview, .editor {
-      min-width: 0;
-      padding: 20px;
+      grid-template-columns: 280px minmax(0, 1fr) 420px;
+      min-height: calc(100vh - 120px);
     }
 
     aside {
       border-right: 1px solid var(--line);
-      background: rgba(247, 251, 244, .72);
+      background: rgba(247, 251, 244, .7);
+      padding: 18px;
+      overflow-y: auto;
     }
 
     .preview {
       display: grid;
       grid-template-rows: auto auto 1fr;
-      gap: 14px;
+      background: #ffffff;
     }
 
-    .editor {
-      border-left: 1px solid var(--line);
-      background: rgba(255, 253, 246, .84);
-      overflow: auto;
-    }
-
-    .editor-toggle-strip {
-      display: none;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      min-height: 180px;
-      width: 40px;
-      padding: 10px 0;
-      border-radius: 999px;
-      background: var(--green);
-      color: white;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    .shell.editor-collapsed .editor-toggle-strip {
-      display: inline-grid;
-      place-items: center;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .ghost {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .report-list {
+    .subject-box {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fcfefc;
       display: grid;
       gap: 10px;
     }
 
-    .report-card {
-      width: 100%;
-      display: grid;
-      gap: 8px;
-      text-align: left;
-      padding: 14px;
-      background: rgba(255, 253, 246, .95);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      color: var(--ink);
-    }
-
-    .report-card.active {
-      border-color: var(--green);
-      box-shadow: 0 10px 28px rgba(46, 128, 104, .14);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      min-height: 28px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #e7f3ec;
+    .subject-box label {
+      font-weight: 900;
+      font-size: 14px;
       color: var(--green-dark);
-      font-weight: 800;
-      font-size: 13px;
+      display: grid;
+      gap: 6px;
     }
 
-    .badge.warn {
-      background: #fff4cf;
-      color: #7b5b00;
-    }
-
-    .badge.danger {
-      background: #ffe4de;
-      color: var(--danger);
-    }
-
-    .toolbar, .tabs {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .primary, .secondary, .tab {
-      min-height: 40px;
-      padding: 0 16px;
-      border-radius: 999px;
-      font-weight: 900;
-    }
-
-    .primary {
-      background: var(--green);
-      color: white;
-    }
-
-    .secondary, .tab {
-      background: #fffdf6;
-      color: var(--ink);
+    .subject-box input {
+      padding: 10px 14px;
       border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--green-dark);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #f7faf8;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
     }
 
     .tab.active {
       background: var(--green);
-      color: white;
-      border-color: var(--green);
-    }
-
-    .subject-box {
-      display: grid;
-      gap: 8px;
-      padding: 14px;
-      background: rgba(255, 253, 246, .86);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-    }
-
-    label {
-      display: grid;
-      gap: 7px;
+      color: #ffffff;
       font-weight: 900;
-      color: var(--ink);
-    }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px 12px;
-      color: var(--ink);
-      background: white;
-      outline-color: var(--green);
-    }
-
-    textarea {
-      min-height: 108px;
-      resize: vertical;
-      line-height: 1.6;
     }
 
     .frame-wrap {
-      min-height: calc(100vh - 270px);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: white;
+      height: 100%;
+      min-height: 600px;
     }
 
     iframe {
       width: 100%;
       height: 100%;
-      min-height: calc(100vh - 270px);
       border: 0;
-      background: white;
     }
 
-    .item-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .item-button {
-      width: 100%;
-      padding: 12px;
-      text-align: left;
-      color: var(--ink);
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      display: grid;
-      gap: 5px;
-    }
-
-    .item-button.active {
-      border-color: var(--green);
-      background: #edf7f1;
-    }
-
-    .editor-panel {
+    .editor {
+      border-left: 1px solid var(--line);
+      background: rgba(255, 253, 246, .9);
+      padding: 18px;
+      overflow-y: auto;
       display: grid;
       gap: 16px;
+      align-content: start;
     }
 
-    .field-grid {
-      display: grid;
-      gap: 10px;
-    }
-
-    .link-card {
-      display: grid;
-      gap: 10px;
-      padding: 13px;
+    .editor-section {
+      background: #ffffff;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: white;
-    }
-
-    .link-card h3 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .link-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .resource-results {
-      display: grid;
-      gap: 8px;
-      max-height: 220px;
-      overflow: auto;
-    }
-
-    .resource-option {
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fffdf6;
-      text-align: left;
-      color: var(--ink);
-    }
-
-    .resource-option strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .empty {
-      padding: 18px;
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, .7);
-    }
-
-    .save-row {
-      position: sticky;
-      bottom: 0;
-      display: grid;
-      gap: 8px;
-      padding-top: 12px;
-      background: linear-gradient(transparent, rgba(255, 253, 246, .96) 20%);
-    }
-
-    .status-line {
-      min-height: 22px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .hint {
-      padding: 10px 12px;
-      border: 1px solid #f1deb0;
-      border-radius: 8px;
-      background: #fff8df;
-      color: #6a5300;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .top-save {
-      width: 100%;
-      margin: 12px 0;
-    }
-
-    .editor-scroll {
-      display: grid;
-      gap: 14px;
-    }
-
-    .audit-log {
-      display: grid;
-      gap: 8px;
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
-    }
-
-    .audit-row {
-      display: grid;
-      gap: 4px;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, .76);
-    }
-
-    .user-admin {
+      padding: 16px;
       display: grid;
       gap: 12px;
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid var(--line);
     }
 
-    .user-form {
-      display: grid;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, .78);
-    }
-
-    .perm-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .perm-grid label {
+    .editor-section h3 {
+      margin: 0;
+      font-size: 16px;
+      color: var(--green-dark);
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 6px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 6px;
-      font-weight: 700;
     }
 
-    .perm-grid input {
-      width: auto;
+    .field {
+      display: grid;
+      gap: 4px;
     }
 
-    @media (max-width: 1180px) {
-      .shell {
-        grid-template-columns: 260px minmax(0, 1fr);
-      }
-
-      .editor {
-        grid-column: 1 / -1;
-        border-left: 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .shell.preview-wide,
-      .shell.editor-collapsed {
-        grid-template-columns: 260px minmax(0, 1fr);
-      }
-
-      .shell.editor-collapsed .editor {
-        display: none;
-      }
+    .field label {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--green-dark);
     }
 
-    @media (max-width: 760px) {
-      header {
-        grid-template-columns: 1fr;
-      }
+    .field input, .field textarea {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 14px;
+    }
 
-      .safety {
-        justify-items: start;
-        text-align: left;
-      }
+    .field textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
 
-      .login-row {
-        grid-template-columns: 1fr;
-      }
+    .item-card {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      cursor: pointer;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .shell {
-        grid-template-columns: 1fr;
-      }
+    .item-card.active {
+      border-color: var(--green);
+      background: #eef7f3;
+    }
 
-      .shell.preview-wide,
-      .shell.editor-collapsed {
-        grid-template-columns: 1fr;
-      }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #e2ede7;
+      color: var(--green-dark);
+    }
 
-      aside, .editor {
-        border: 0;
-        border-bottom: 1px solid var(--line);
-      }
+    .badge.warn {
+      background: #fde8e8;
+      color: var(--danger);
+    }
 
-      .frame-wrap, iframe {
-        min-height: 560px;
-      }
-
-      .link-actions {
-        grid-template-columns: 1fr;
-      }
+    .status-msg {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--green-dark);
+      padding: 8px 0;
     }
   </style>
 </head>
 <body>
   <div class="app">
+    <div class="notice-bar">
+      <span>💡 提示：若頁面出現「Failed to fetch」，請雙擊執行資料夾內的 <code>啟動管理後台.cmd</code> 即可自動開起伺服器並載入！</span>
+      <button class="secondary" onclick="window.location.href='http://localhost:8787/admin-portal.html'" style="font-size:12px;padding:4px 8px;">前往 http://localhost:8787</button>
+    </div>
+
     <header>
       <div>
-        <h1>疫情週報管理者審核入口</h1>
-        <p class="subtitle">管理者可檢視每期 CDC 產生草稿、修正摘要與資源連結，並將結果存成本地草稿。</p>
+        <h1>疫情週報管理者審核與排版編輯入口</h1>
+        <p class="subtitle">可在此自由刪除、修改疫苗與疾病訊息文字、調整 TMS / KM 連結，並一鍵儲存發布至網頁。</p>
       </div>
-      <div class="safety">
-        <span>預覽、編輯、存檔限定</span>
-        <small>本入口沒有寄信、發布或上架功能</small>
-      </div>
-      <div class="login-box">
-        <div class="login-row">
-          <input id="adminIdInput" placeholder="院內帳號 / 管理者代號" autocomplete="username">
-          <input id="passcodeInput" type="password" placeholder="通行碼" autocomplete="current-password">
-          <button class="secondary" id="loginButton" type="button">登入</button>
-        </div>
-        <small class="ghost" id="loginStatus">請使用已建立的管理者帳號登入。正式部署建議改接院內帳號。</small>
+      <div>
+        <button class="primary" id="saveAndApplyBtn" style="font-size:16px;padding:10px 20px;">💾 儲存變更並更新發布網頁</button>
       </div>
     </header>
 
     <div class="shell">
       <aside>
-        <div class="section-title">
-          <h2>歷期草稿</h2>
-          <span class="badge warn">待人工確認</span>
-        </div>
-        <div class="toolbar">
-          <button class="secondary" id="refreshReports" type="button">重新整理</button>
-          <button class="secondary" id="importGenerated" type="button">匯入最新產生稿</button>
-        </div>
-        <div class="report-list" id="reportList"></div>
+        <h2 style="font-size:16px;margin:0 0 12px 0;color:var(--green-dark);">疾病新聞清單</h2>
+        <div id="itemList"></div>
+        <button class="secondary" id="importGenerated" style="width:100%;margin-top:12px;">🔄 重新載入最新 CDC 數據</button>
       </aside>
 
       <main class="preview">
         <div class="subject-box">
           <label>
-            信件主旨
+            信件與發文主旨
             <input id="subjectInput" type="text" autocomplete="off">
           </label>
-          <div class="toolbar">
-            <span class="badge" id="workflowBadge">草稿</span>
-            <span class="badge warn" id="lockBadge">尚未鎖定</span>
-            <span class="ghost" id="issueRange"></span>
-          </div>
-          <div class="toolbar">
-            <button class="secondary" id="acquireLock" type="button">開始編輯</button>
-            <button class="secondary" id="releaseLock" type="button">釋放編輯鎖</button>
-            <span class="ghost" id="lastModified">最後更新：尚無資料</span>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span class="badge" id="workflowBadge">草稿狀態</span>
+            <span class="subtitle" id="issueRange"></span>
           </div>
         </div>
 
         <div class="tabs">
-          <button class="tab active" data-preview="web" type="button">網頁版預覽</button>
-          <button class="tab" data-preview="email" type="button">信件版預覽</button>
-          <button class="secondary" id="widePreviewToggle" type="button">全幅預覽</button>
-          <button class="secondary" id="editorCollapseToggle" type="button">收起編輯欄</button>
+          <button class="tab active" id="tabWeb" type="button">網頁版即時預覽</button>
+          <button class="tab" id="tabEmail" type="button">信件版即時預覽</button>
         </div>
+
         <div class="frame-wrap">
-          <iframe id="previewFrame" title="疫情週報預覽"></iframe>
+          <iframe id="previewFrame" src="web-preview.html" title="疫情週報預覽"></iframe>
         </div>
       </main>
 
       <section class="editor">
-        <button class="editor-toggle-strip" id="editorRestore" type="button">顯示編輯欄</button>
-        <div class="section-title">
-          <h2>內容與連結編輯</h2>
-          <span class="ghost" id="selectedLabel">尚未選取</span>
-        </div>
-        <label>
-          審核者
-          <input id="reviewerInput" type="text" placeholder="輸入姓名或代號" autocomplete="off">
-        </label>
-        <button class="primary top-save" id="saveDraftTop" type="button">儲存變更</button>
-        <div class="editor-panel" id="editorPanel">
-          <div class="empty">請先從左側疾病清單選擇一則內容。</div>
-        </div>
-        <div class="section-title">
-          <h2>疾病清單</h2>
-          <span class="ghost">選擇一則後可調整內文與連結</span>
-        </div>
-        <div class="item-list" id="itemList"></div>
-        <div class="save-row">
-          <button class="primary" id="saveDraft" type="button">儲存變更</button>
-          <div class="status-line" id="saveStatus"></div>
-        </div>
-        <div class="audit-log">
-          <div class="section-title">
-            <h2>修訂歷史</h2>
-            <span class="ghost">只記錄本地草稿操作</span>
+        <div class="editor-section" id="itemEditPanel">
+          <h3>
+            <span>📝 編輯新聞內容</span>
+            <button class="danger-btn" id="deleteItemBtn" type="button" style="font-size:13px;padding:4px 8px;">🗑️ 刪除此條新聞/疫苗訊息</button>
+          </h3>
+          
+          <div class="field">
+            <label>疾病/主題名稱</label>
+            <input id="editDisease" type="text">
           </div>
-          <div id="auditLog"></div>
-        </div>
-        <div class="user-admin">
-          <div class="section-title">
-            <h2>管理者權限維護</h2>
-            <span class="ghost" id="userAdminStatus">owner 可維護登入者</span>
+
+          <div class="field">
+            <label>新聞標題</label>
+            <input id="editTitle" type="text">
           </div>
-          <div id="userAdminPanel" class="empty">請先以 owner 管理者登入。</div>
+
+          <div class="field">
+            <label>重點摘要</label>
+            <textarea id="editSummary"></textarea>
+          </div>
+
+          <div class="field">
+            <label>主要注意對象</label>
+            <input id="editAudience" type="text">
+          </div>
+
+          <div class="field">
+            <label>防護重點/行動建議 (每行一項)</label>
+            <textarea id="editActions" style="min-height:100px;"></textarea>
+          </div>
+
+          <div class="field">
+            <label>詳細補充內文 (每行一段)</label>
+            <textarea id="editDetails" style="min-height:100px;"></textarea>
+          </div>
+
+          <h3 style="margin-top:12px;">🔗 資源連結編輯</h3>
+          
+          <div class="field">
+            <label>TMS 學習課程連結 URL</label>
+            <input id="editEduUrl" type="text">
+          </div>
+
+          <div class="field">
+            <label>KM 管制手冊連結 URL</label>
+            <input id="editKmUrl" type="text">
+          </div>
+
+          <div class="field">
+            <label>疾管署 CDC 原始新聞稿 URL</label>
+            <input id="editCdcUrl" type="text">
+          </div>
+
+          <div class="status-msg" id="statusMsg"></div>
+          <button class="primary" id="saveItemBtn" type="button">確定修改並預覽</button>
         </div>
       </section>
     </div>
   </div>
 
   <script>
-    const state = {
-      reports: [],
-      report: null,
-      selected: null,
-      preview: 'web',
-      resources: [],
-      users: [],
-      editingUserId: '',
-      widePreview: localStorage.getItem('cdc_admin_wide_preview') === 'true',
-      editorCollapsed: localStorage.getItem('cdc_admin_editor_collapsed') === 'true',
-      user: JSON.parse(localStorage.getItem('cdc_admin_user') || 'null'),
-      passcode: sessionStorage.getItem('cdc_admin_passcode') || ''
-    };
-
-    const $ = (selector) => document.querySelector(selector);
-
-    function applyLayoutMode() {
-      const shell = $('.shell');
-      shell.classList.toggle('preview-wide', state.widePreview);
-      shell.classList.toggle('editor-collapsed', !state.widePreview && state.editorCollapsed);
-      $('#widePreviewToggle').textContent = state.widePreview ? '返回編輯版面' : '全幅預覽';
-      $('#editorCollapseToggle').textContent = state.editorCollapsed ? '顯示編輯欄' : '收起編輯欄';
-      $('#editorCollapseToggle').disabled = state.widePreview;
-      localStorage.setItem('cdc_admin_wide_preview', String(state.widePreview));
-      localStorage.setItem('cdc_admin_editor_collapsed', String(state.editorCollapsed));
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? '').replace(/[&<>"']/g, (char) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[char]));
-    }
+    const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:8787' : '';
+    let reportData = null;
+    let selectedItemId = null;
 
     async function api(path, options = {}) {
-      const response = await fetch(path, {
-        headers: { 'Content-Type': 'application/json' },
-        ...options
-      });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || response.statusText);
-      return payload;
-    }
-
-    async function loadReports() {
-      const payload = await api('/api/reports');
-      state.reports = payload.reports;
-      renderReports();
-      if (!state.report && state.reports[0]) {
-        await loadReport(state.reports[0].id);
+      try {
+        const res = await fetch(API_BASE + path, {
+          headers: { 'Content-Type': 'application/json' },
+          ...options
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error("API error:", err);
+        throw err;
       }
     }
 
-    async function loadReport(id) {
-      const payload = await api(`/api/reports/${encodeURIComponent(id)}`);
-      state.report = payload.report;
-      state.selected = firstItem(state.report);
-      renderReports();
-      renderReport();
+    async function init() {
+      try {
+        const payload = await api('/api/reports');
+        if (payload.reports && payload.reports[0]) {
+          const fullReport = await api(`/api/reports/${encodeURIComponent(payload.reports[0].id)}`);
+          reportData = fullReport.report;
+          renderAll();
+        }
+      } catch (err) {
+        document.querySelector('.notice-bar').style.background = '#f8d7da';
+        document.querySelector('.notice-bar').style.color = '#721c24';
+        document.querySelector('.notice-bar span').innerHTML = `⚠️ 無法連線後台伺服器。請雙擊執行資料夾中的 <b><code>啟動管理後台.cmd</code></b> 或在命令列執行 <code>python scripts/admin_server.py</code>！`;
+      }
+    }
+
+    function renderAll() {
+      if (!reportData) return;
+      document.getElementById('subjectInput').value = reportData.subject || '';
+      document.getElementById('issueRange').textContent = `涵蓋範圍：${reportData.issue_range?.from || ''} ~ ${reportData.issue_range?.to || ''}`;
       renderItemList();
-      renderEditor();
+      if (!selectedItemId) {
+        const first = getFirstItem();
+        if (first) selectItem(first.id);
+      } else {
+        renderEditPanel();
+      }
     }
 
-    function firstItem(report) {
-      for (const section of report.sections || []) {
-        if (section.items && section.items[0]) return section.items[0];
+    function getFirstItem() {
+      for (const s of reportData.sections || []) {
+        if (s.items && s.items[0]) return s.items[0];
       }
       return null;
-    }
-
-    function itemKey(item) {
-      return item ? item.id : '';
-    }
-
-    function currentItemRef() {
-      if (!state.report || !state.selected) return null;
-      for (const section of state.report.sections || []) {
-        const item = (section.items || []).find((candidate) => candidate.id === state.selected.id);
-        if (item) return item;
-      }
-      return null;
-    }
-
-    function renderReports() {
-      const list = $('#reportList');
-      list.innerHTML = state.reports.map((report) => `
-        <button class="report-card ${state.report?.id === report.id ? 'active' : ''}" data-report="${escapeHtml(report.id)}" type="button">
-          <strong>${escapeHtml(report.period_label)}</strong>
-          <span>${escapeHtml(report.subject)}</span>
-          <span class="badge">${escapeHtml(report.workflow_state || report.status)}</span>
-          ${report.edit_lock?.locked_by ? `<span class="badge warn">編輯中：${escapeHtml(report.edit_lock.display_name)}</span>` : ''}
-          <small class="ghost">最後更新：${escapeHtml(report.last_saved_at || report.updated_at || '')} ${report.last_modified_by?.display_name ? `by ${escapeHtml(report.last_modified_by.display_name)}` : ''}</small>
-          <small class="ghost">${escapeHtml(report.updated_at || '')}</small>
-        </button>
-      `).join('') || '<div class="empty">目前沒有草稿。</div>';
-      list.querySelectorAll('[data-report]').forEach((button) => {
-        button.addEventListener('click', () => loadReport(button.dataset.report));
-      });
-    }
-
-    function renderReport() {
-      const report = state.report;
-      if (!report) return;
-      $('#subjectInput').value = report.subject || '';
-      $('#reviewerInput').value = report.reviewer || '';
-      $('#workflowBadge').textContent = report.workflow_state || report.status || '草稿';
-      $('#issueRange').textContent = `${report.issue_range?.from || ''} - ${report.issue_range?.to || ''}`;
-      renderLockStatus();
-      renderAuditLog();
-      updateFrame();
-    }
-
-    function renderSession() {
-      if (state.user) {
-        $('#loginStatus').textContent = `已登入：${state.user.display_name}（${state.user.role || 'admin'}）`;
-        $('#adminIdInput').value = state.user.id;
-      } else {
-        $('#loginStatus').textContent = '請使用已建立的管理者帳號登入。正式部署建議改接院內帳號。';
-      }
-      $('#passcodeInput').value = state.passcode;
-      updateEditAvailability();
-    }
-
-    function currentLock() {
-      return state.report?.edit_lock || {};
-    }
-
-    function isLockedByOther() {
-      const lock = currentLock();
-      return Boolean(lock.locked_by && state.user?.id && lock.locked_by !== state.user.id);
-    }
-
-    function isEditable() {
-      const lock = currentLock();
-      return Boolean(state.user && lock.locked_by === state.user.id);
-    }
-
-    function renderLockStatus() {
-      const lock = currentLock();
-      const badge = $('#lockBadge');
-      if (!lock.locked_by) {
-        badge.textContent = '尚未鎖定';
-        badge.className = 'badge warn';
-      } else if (state.user?.id === lock.locked_by) {
-        badge.textContent = `目前由你編輯中`;
-        badge.className = 'badge';
-      } else {
-        badge.textContent = `目前由 ${lock.display_name || lock.locked_by} 編輯中`;
-        badge.className = 'badge danger';
-      }
-      const by = state.report?.last_modified_by?.display_name || 'system';
-      const at = state.report?.last_saved_at || state.report?.updated_at || '';
-      $('#lastModified').textContent = `最後更新：${at || '尚無資料'} by ${by}`;
-      updateEditAvailability();
-    }
-
-    function updateEditAvailability() {
-      const editable = isEditable();
-      ['subjectInput', 'reviewerInput', 'saveDraft', 'saveDraftTop', 'acquireLock', 'releaseLock'].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.disabled = !state.user;
-      });
-      ['subjectInput', 'reviewerInput', 'saveDraft', 'saveDraftTop'].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.disabled = !editable;
-      });
-    }
-
-    function updateFrame() {
-      const preview = state.report?.preview || {};
-      const src = state.preview === 'email' ? preview.email : preview.web;
-      $('#previewFrame').src = src ? `${src}?adminPreview=${Date.now()}` : 'about:blank';
     }
 
     function renderItemList() {
-      const list = $('#itemList');
-      if (!state.report) {
-        list.innerHTML = '';
-        return;
-      }
-      const buttons = [];
-      for (const section of state.report.sections || []) {
-        buttons.push(`<div class="ghost">${escapeHtml(section.label)}</div>`);
+      const container = document.getElementById('itemList');
+      let html = '';
+      for (const section of reportData.sections || []) {
+        html += `<div style="font-size:12px;font-weight:900;color:var(--muted);margin:10px 0 4px 0;">${section.label || section.id}</div>`;
         for (const item of section.items || []) {
-          buttons.push(`
-            <button class="item-button ${itemKey(item) === itemKey(state.selected) ? 'active' : ''}" data-item="${escapeHtml(item.id)}" type="button">
-              <strong>${escapeHtml(item.disease || item.title)}</strong>
-              <span>${escapeHtml(item.title)}</span>
-            </button>
-          `);
+          const active = item.id === selectedItemId ? 'active' : '';
+          html += `
+            <div class="item-card ${active}" onclick="selectItem('${item.id}')">
+              <div>
+                <strong style="font-size:14px;color:var(--green-dark);">${escapeHtml(item.disease || item.title)}</strong>
+                <div style="font-size:12px;color:var(--muted);">${escapeHtml(item.date || '')}</div>
+              </div>
+              <span class="badge">編輯</span>
+            </div>
+          `;
         }
       }
-      list.innerHTML = buttons.join('') || '<div class="empty">本期沒有內容。</div>';
-      list.querySelectorAll('[data-item]').forEach((button) => {
-        button.addEventListener('click', () => {
-          state.selected = findItem(button.dataset.item);
-          renderItemList();
-          renderEditor();
-        });
-      });
+      container.innerHTML = html || '<div class="empty">目前無內容</div>';
     }
 
     function findItem(id) {
-      for (const section of state.report.sections || []) {
-        const item = (section.items || []).find((candidate) => candidate.id === id);
-        if (item) return item;
+      for (const s of reportData.sections || []) {
+        for (const item of s.items || []) {
+          if (item.id === id) return item;
+        }
       }
       return null;
     }
 
-    function effectiveLink(item, kind) {
-      const link = item.link_override?.[kind] || item.suggested_links?.[kind] || {};
-      if (item.link_override?.[kind]) {
-        return { ...link, name: confirmedName(link.name) };
-      }
-      return { ...link, name: pendingName(link.name) };
+    function selectItem(id) {
+      selectedItemId = id;
+      renderItemList();
+      renderEditPanel();
     }
 
-    function pendingName(name) {
-      return String(name || '')
-        .replace(/（待課程對照）/g, '（待確認）')
-        .replace(/（待文件對照）/g, '（待確認）');
-    }
-
-    function confirmedName(name) {
-      return pendingName(name).replace(/（待確認）/g, '');
-    }
-
-    function renderEditor() {
-      const item = currentItemRef();
-      const panel = $('#editorPanel');
+    function renderEditPanel() {
+      const item = findItem(selectedItemId);
       if (!item) {
-        $('#selectedLabel').textContent = '尚未選取';
-        panel.innerHTML = '<div class="empty">請先從左側疾病清單選擇一則內容。</div>';
+        document.getElementById('itemEditPanel').style.display = 'none';
         return;
       }
-      const disabled = isEditable() ? '' : 'disabled';
-      $('#selectedLabel').textContent = item.disease || item.title;
-      const edu = effectiveLink(item, 'education');
-      const km = effectiveLink(item, 'km');
-      panel.innerHTML = `
-        ${!state.user ? '<div class="hint">請先用右上角管理者帳號登入；登入者可由 owner 在管理者權限維護區建立。</div>' : ''}
-        ${state.user && !currentLock().locked_by ? '<div class="hint">請先按「開始編輯」取得編輯鎖，避免覆蓋其他管理者修改。</div>' : ''}
-        ${renderLinkCard('education', '教育訓練課程', edu)}
-        ${renderLinkCard('km', 'KM 手冊文件', km)}
-        ${renderSourceLinkCard(item)}
+      document.getElementById('itemEditPanel').style.display = 'grid';
+      document.getElementById('editDisease').value = item.disease || '';
+      document.getElementById('editTitle').value = item.title || '';
+      document.getElementById('editSummary').value = item.summary || '';
+      document.getElementById('editAudience').value = item.audience || '';
+      document.getElementById('editActions').value = (item.actions || []).join('\n');
+      document.getElementById('editDetails').value = (item.details || []).join('\n');
 
-        <div class="link-card">
-          <h3>資源搜尋</h3>
-          <input id="resourceQuery" placeholder="輸入疾病、課程或文件關鍵字" ${disabled}>
-          <div class="resource-results" id="resourceResults"></div>
-        </div>
-
-        <div class="field-grid">
-          <label>疾病主題<input id="editDisease" value="${escapeHtml(item.disease || '')}" ${disabled}></label>
-          <label>標題<input id="editTitle" value="${escapeHtml(item.title || '')}" ${disabled}></label>
-          <label>哪些人要注意<textarea id="editAudience" ${disabled}>${escapeHtml(item.audience || '')}</textarea></label>
-          <label>重點摘要<textarea id="editSummary" ${disabled}>${escapeHtml(item.summary || '')}</textarea></label>
-          <label>行動提醒（一行一點）<textarea id="editActions" ${disabled}>${escapeHtml((item.actions || []).join('\n'))}</textarea></label>
-          <label>更多內容（一行一段）<textarea id="editDetails" ${disabled}>${escapeHtml((item.details || []).join('\n'))}</textarea></label>
-          <label>嚴重度/排序依據<input id="editSeverity" value="${escapeHtml(item.severity_basis || '')}" ${disabled}></label>
-        </div>
-      `;
-      $('#editDisease').addEventListener('input', (event) => { item.disease = event.target.value; renderItemList(); });
-      $('#editTitle').addEventListener('input', (event) => { item.title = event.target.value; renderItemList(); });
-      $('#editAudience').addEventListener('input', (event) => { item.audience = event.target.value; });
-      $('#editSummary').addEventListener('input', (event) => { item.summary = event.target.value; });
-      $('#editActions').addEventListener('input', (event) => { item.actions = splitLines(event.target.value); });
-      $('#editDetails').addEventListener('input', (event) => { item.details = splitLines(event.target.value); });
-      $('#editSeverity').addEventListener('input', (event) => { item.severity_basis = event.target.value; });
-      $('#sourceUrl').addEventListener('input', (event) => { item.source_url = event.target.value; });
-      bindLinkInputs(item, 'education');
-      bindLinkInputs(item, 'km');
-      $('#resourceQuery').addEventListener('input', debounce(searchResources, 220));
-      searchResources();
-      updateEditAvailability();
+      const links = item.suggested_links || {};
+      document.getElementById('editEduUrl').value = links.education?.url || '';
+      document.getElementById('editKmUrl').value = links.km?.url || '';
+      document.getElementById('editCdcUrl').value = item.source_url || '';
     }
 
-    function renderSourceLinkCard(item) {
-      return `
-        <div class="link-card">
-          <h3>網頁 / CDC 原文連結</h3>
-          <label>CDC 原文 URL<input id="sourceUrl" value="${escapeHtml(item.source_url || '')}" ${isEditable() ? '' : 'disabled'}></label>
-        </div>
-      `;
-    }
+    document.getElementById('saveItemBtn').addEventListener('click', () => {
+      const item = findItem(selectedItemId);
+      if (!item) return;
+      item.disease = document.getElementById('editDisease').value;
+      item.title = document.getElementById('editTitle').value;
+      item.summary = document.getElementById('editSummary').value;
+      item.audience = document.getElementById('editAudience').value;
+      item.actions = document.getElementById('editActions').value.split('\n').filter(s => s.trim());
+      item.details = document.getElementById('editDetails').value.split('\n').filter(s => s.trim());
 
-    function renderLinkCard(kind, title, link) {
-      return `
-        <div class="link-card">
-          <h3>${escapeHtml(title)}</h3>
-          <label>顯示名稱<input id="${kind}Name" value="${escapeHtml(link.name || '')}" ${isEditable() ? '' : 'disabled'}></label>
-          <label>URL<input id="${kind}Url" value="${escapeHtml(link.url || '')}" ${isEditable() ? '' : 'disabled'}></label>
-          <div class="link-actions">
-            <button class="secondary" data-apply-suggestion="${kind}" type="button" ${isEditable() ? '' : 'disabled'}>還原建議</button>
-            <button class="secondary" data-suggest-now="${kind}" type="button" ${isEditable() ? '' : 'disabled'}>重新比對</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function bindLinkInputs(item, kind) {
-      const ensureOverride = () => {
-        item.link_override ||= {};
-        item.link_override[kind] ||= { ...(item.suggested_links?.[kind] || {}) };
-        item.link_override[kind].name = confirmedName(item.link_override[kind].name);
-        item.link_override[kind].matched = 'admin_override';
-        return item.link_override[kind];
-      };
-      $(`#${kind}Name`).addEventListener('input', (event) => { ensureOverride().name = event.target.value; });
-      $(`#${kind}Url`).addEventListener('input', (event) => { ensureOverride().url = event.target.value; });
-      document.querySelector(`[data-apply-suggestion="${kind}"]`).addEventListener('click', () => {
-        if (item.link_override) delete item.link_override[kind];
-        renderEditor();
-      });
-      document.querySelector(`[data-suggest-now="${kind}"]`).addEventListener('click', async () => {
-        const payload = await api('/api/suggest-links', {
-          method: 'POST',
-          body: JSON.stringify({ title: item.title, summary: item.summary })
-        });
-        item.suggested_links = {
-          education: payload.suggestion.education,
-          km: payload.suggestion.km
-        };
-        if (item.link_override) delete item.link_override[kind];
-        renderEditor();
-      });
-    }
-
-    function debounce(fn, delay) {
-      let timer;
-      return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), delay);
-      };
-    }
-
-    function splitLines(value) {
-      return String(value || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-    }
-
-    async function searchResources() {
-      const query = $('#resourceQuery')?.value || '';
-      const payload = await api(`/api/resources?q=${encodeURIComponent(query)}`);
-      state.resources = payload.resources;
-      const box = $('#resourceResults');
-      const item = currentItemRef();
-      if (!box || !item) return;
-      box.innerHTML = state.resources.map((resource) => `
-        <button class="resource-option" data-resource-id="${escapeHtml(resource.id)}" data-kind="${escapeHtml(resource.kind)}" type="button">
-          <strong>${escapeHtml(resource.name)}</strong>
-          <span>${escapeHtml(resource.topic)} / ${escapeHtml(resource.kind)} / ${escapeHtml(resource.url)}</span>
-        </button>
-      `).join('') || '<div class="empty">沒有符合的資源。</div>';
-      box.querySelectorAll('[data-resource-id]').forEach((button) => {
-        button.addEventListener('click', () => {
-          if (!isEditable()) return;
-          const resource = state.resources.find((candidate) => candidate.id === button.dataset.resourceId && candidate.kind === button.dataset.kind);
-          if (!resource) return;
-          item.link_override ||= {};
-          item.link_override[resource.kind] = {
-            id: resource.id,
-            name: confirmedName(resource.name),
-            url: resource.url,
-            topic: resource.topic,
-            matched: 'admin_override'
-          };
-          renderEditor();
-        });
-      });
-    }
-
-    async function saveDraft() {
-      if (!state.report) return;
-      if (!state.user) {
-        $('#saveStatus').textContent = '請先登入管理者帳號。';
-        return;
+      item.suggested_links = item.suggested_links || {};
+      if (document.getElementById('editEduUrl').value) {
+        item.suggested_links.education = item.suggested_links.education || { name: 'TMS 課程' };
+        item.suggested_links.education.url = document.getElementById('editEduUrl').value;
       }
-      if (isLockedByOther()) {
-        $('#saveStatus').textContent = `目前由 ${currentLock().display_name} 編輯中，無法覆蓋。`;
-        return;
+      if (document.getElementById('editKmUrl').value) {
+        item.suggested_links.km = item.suggested_links.km || { name: 'KM 手冊' };
+        item.suggested_links.km.url = document.getElementById('editKmUrl').value;
       }
-      if (!currentLock().locked_by) {
-        $('#saveStatus').textContent = '請先按「開始編輯」取得編輯鎖。';
-        return;
+      item.source_url = document.getElementById('editCdcUrl').value;
+
+      document.getElementById('statusMsg').textContent = '已更新記憶體中修改。點擊右上方「💾 儲存變更並更新發布網頁」即可正式寫入！';
+      renderItemList();
+    });
+
+    document.getElementById('deleteItemBtn').addEventListener('click', () => {
+      const item = findItem(selectedItemId);
+      if (!item) return;
+      if (!confirm(`確定要刪除「${item.disease || item.title}」此條新聞訊息嗎？`)) return;
+
+      for (const s of reportData.sections || []) {
+        s.items = (s.items || []).filter(i => i.id !== selectedItemId);
       }
-      state.report.subject = $('#subjectInput').value;
-      state.report.reviewer = state.user.display_name;
-      $('#saveStatus').textContent = '儲存中...';
+      selectedItemId = null;
+      renderAll();
+      document.getElementById('statusMsg').textContent = '已刪除此項目。點擊右上方「💾 儲存變更並更新發布網頁」即可完成更新！';
+    });
+
+    document.getElementById('saveAndApplyBtn').addEventListener('click', async () => {
+      if (!reportData) return;
+      reportData.subject = document.getElementById('subjectInput').value;
+      const statusEl = document.getElementById('statusMsg');
+      statusEl.textContent = '正在儲存變更並重新生成全套網頁...';
+
       try {
-        const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}`, {
+        await api(`/api/reports/${encodeURIComponent(reportData.id)}`, {
           method: 'PUT',
-          body: JSON.stringify({
-            subject: state.report.subject,
-            reviewer: state.user.display_name,
-            admin_id: state.user.id,
-            passcode: state.passcode,
-            version: state.report.version,
-            sections: state.report.sections,
-            link_overrides: collectOverrides()
-          })
+          body: JSON.stringify(reportData)
         });
-        state.report = payload.report;
-        $('#saveStatus').textContent = `已儲存本地草稿：${new Date().toLocaleString('zh-TW')}`;
-        renderReport();
-        renderReports();
-        renderEditor();
-      } catch (error) {
-        $('#saveStatus').textContent = error.message === 'version_conflict'
-          ? '儲存失敗：版本已被其他管理者更新，請重新整理後再編輯。'
-          : `儲存失敗：${error.message}`;
-      }
-    }
-
-    function renderAuditLog() {
-      const box = $('#auditLog');
-      if (!box || !state.report) return;
-      const rows = [...(state.report.audit_log || [])].reverse();
-      box.innerHTML = rows.map((row) => `
-        <div class="audit-row">
-          <strong>${escapeHtml(row.action)} by ${escapeHtml(row.actor)}</strong>
-          <span>${escapeHtml(row.note)}</span>
-          <small class="ghost">${escapeHtml(row.at)}</small>
-        </div>
-      `).join('') || '<div class="empty">尚無修訂紀錄。</div>';
-    }
-
-    async function login() {
-      const adminId = $('#adminIdInput').value.trim();
-      const passcode = $('#passcodeInput').value;
-      const payload = await api('/api/login', {
-        method: 'POST',
-        body: JSON.stringify({ admin_id: adminId, passcode })
-      });
-      state.user = payload.user;
-      state.passcode = passcode;
-      localStorage.setItem('cdc_admin_user', JSON.stringify(state.user));
-      sessionStorage.setItem('cdc_admin_passcode', passcode);
-      renderSession();
-      renderLockStatus();
-      renderEditor();
-      await loadUsers();
-    }
-
-    async function loadUsers() {
-      const panel = $('#userAdminPanel');
-      if (!state.user) {
-        panel.innerHTML = '請先以 owner 管理者登入。';
-        return;
-      }
-      try {
-        const payload = await api(`/api/users?admin_id=${encodeURIComponent(state.user.id)}&passcode=${encodeURIComponent(state.passcode)}`);
-        state.users = payload.users;
-        renderUserAdmin(payload.can_manage);
-      } catch (error) {
-        panel.innerHTML = `載入權限失敗：${escapeHtml(error.message)}`;
-      }
-    }
-
-    function renderUserAdmin(canManage) {
-      const panel = $('#userAdminPanel');
-      $('#userAdminStatus').textContent = canManage ? '可新增、停用與調整權限' : '目前帳號不是 owner，僅可檢視';
-      const selected = state.users.find((user) => user.id === state.editingUserId) || {
-        id: '',
-        display_name: '',
-        role: 'editor',
-        enabled: true,
-        permissions: ['preview', 'edit_content', 'override_links', 'save_draft']
-      };
-      const disabled = canManage ? '' : 'disabled';
-      panel.className = 'user-form';
-      panel.innerHTML = `
-        <label>選擇既有管理者
-          <select id="userSelect" ${disabled}>
-            <option value="">新增管理者</option>
-            ${state.users.map((user) => `<option value="${escapeHtml(user.id)}" ${user.id === selected.id ? 'selected' : ''}>${escapeHtml(user.display_name)} / ${escapeHtml(user.id)} ${user.enabled ? '' : '（停用）'}</option>`).join('')}
-          </select>
-        </label>
-        <label>帳號 ID<input id="userId" value="${escapeHtml(selected.id)}" ${selected.id ? 'disabled' : disabled}></label>
-        <label>顯示名稱<input id="userDisplayName" value="${escapeHtml(selected.display_name)}" ${disabled}></label>
-        <label>角色
-          <select id="userRole" ${disabled}>
-            <option value="owner" ${selected.role === 'owner' ? 'selected' : ''}>owner</option>
-            <option value="editor" ${selected.role === 'editor' ? 'selected' : ''}>editor</option>
-          </select>
-        </label>
-        <label>新通行碼<input id="userPasscode" type="password" placeholder="${selected.id ? '留空則不變更' : '新增時必填'}" ${disabled}></label>
-        <label><input id="userEnabled" type="checkbox" ${selected.enabled !== false ? 'checked' : ''} ${disabled}> 啟用此管理者</label>
-        <div class="perm-grid">
-          ${permissionCheckbox('preview', '預覽', selected.permissions, disabled)}
-          ${permissionCheckbox('edit_content', '編輯內文', selected.permissions, disabled)}
-          ${permissionCheckbox('override_links', '調整課程/KM', selected.permissions, disabled)}
-          ${permissionCheckbox('save_draft', '草稿存檔', selected.permissions, disabled)}
-        </div>
-        <button class="secondary" id="saveUser" type="button" ${disabled}>儲存登入者權限</button>
-      `;
-      $('#userSelect').addEventListener('change', (event) => {
-        state.editingUserId = event.target.value;
-        renderUserAdmin(canManage);
-      });
-      $('#saveUser')?.addEventListener('click', saveUser);
-    }
-
-    function permissionCheckbox(value, label, permissions, disabled) {
-      return `<label><input class="permInput" type="checkbox" value="${value}" ${(permissions || []).includes(value) ? 'checked' : ''} ${disabled}> ${label}</label>`;
-    }
-
-    async function saveUser() {
-      const permissions = [...document.querySelectorAll('.permInput:checked')].map((input) => input.value);
-      const user = {
-        id: $('#userId').value.trim(),
-        display_name: $('#userDisplayName').value.trim(),
-        role: $('#userRole').value,
-        enabled: $('#userEnabled').checked,
-        permissions,
-        passcode: $('#userPasscode').value
-      };
-      try {
-        const payload = await api('/api/users', {
-          method: 'POST',
-          body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode, user })
-        });
-        state.users = payload.users;
-        state.editingUserId = payload.user.id;
-        renderUserAdmin(true);
-        $('#userAdminStatus').textContent = `已儲存：${payload.user.display_name}`;
-      } catch (error) {
-        $('#userAdminStatus').textContent = `儲存失敗：${error.message}`;
-      }
-    }
-
-    async function acquireLock() {
-      if (!state.report || !state.user) return;
-      const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}/lock`, {
-        method: 'POST',
-        body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode })
-      });
-      state.report = payload.report;
-      renderReport();
-      renderReports();
-      renderEditor();
-      $('#saveStatus').textContent = `已由 ${state.user.display_name} 取得編輯鎖。`;
-    }
-
-    async function releaseLock() {
-      if (!state.report || !state.user) return;
-      const payload = await api(`/api/reports/${encodeURIComponent(state.report.id)}/unlock`, {
-        method: 'POST',
-        body: JSON.stringify({ admin_id: state.user.id, passcode: state.passcode })
-      });
-      state.report = payload.report;
-      renderReport();
-      renderReports();
-      renderEditor();
-      $('#saveStatus').textContent = '已釋放編輯鎖。';
-    }
-
-    function collectOverrides() {
-      const rows = [];
-      for (const section of state.report.sections || []) {
-        for (const item of section.items || []) {
-          if (item.link_override && Object.keys(item.link_override).length) {
-            rows.push({ item_id: item.id, disease: item.disease, links: item.link_override });
-          }
-        }
-      }
-      return rows;
-    }
-
-    document.querySelectorAll('[data-preview]').forEach((button) => {
-      button.addEventListener('click', () => {
-        state.preview = button.dataset.preview;
-        document.querySelectorAll('[data-preview]').forEach((tab) => tab.classList.toggle('active', tab === button));
-        updateFrame();
-      });
-    });
-
-    $('#refreshReports').addEventListener('click', loadReports);
-    $('#loginButton').addEventListener('click', () => login().catch((error) => { $('#loginStatus').textContent = `登入失敗：${error.message}`; }));
-    $('#acquireLock').addEventListener('click', () => acquireLock().catch((error) => { $('#saveStatus').textContent = `鎖定失敗：${error.message}`; }));
-    $('#releaseLock').addEventListener('click', () => releaseLock().catch((error) => { $('#saveStatus').textContent = `釋放失敗：${error.message}`; }));
-    $('#saveDraft').addEventListener('click', saveDraft);
-    $('#saveDraftTop').addEventListener('click', saveDraft);
-    $('#widePreviewToggle').addEventListener('click', () => {
-      state.widePreview = !state.widePreview;
-      if (state.widePreview) state.editorCollapsed = false;
-      applyLayoutMode();
-    });
-    $('#editorCollapseToggle').addEventListener('click', () => {
-      state.editorCollapsed = !state.editorCollapsed;
-      state.widePreview = false;
-      applyLayoutMode();
-    });
-    $('#editorRestore').addEventListener('click', () => {
-      state.editorCollapsed = false;
-      state.widePreview = false;
-      applyLayoutMode();
-    });
-    $('#subjectInput').addEventListener('input', (event) => { if (state.report) state.report.subject = event.target.value; });
-    $('#reviewerInput').addEventListener('input', (event) => { if (state.report) state.report.reviewer = event.target.value; });
-    $('#importGenerated').addEventListener('click', async () => {
-      $('#saveStatus').textContent = '匯入中...';
-      try {
-        const payload = await api('/api/import-generated', { method: 'POST', body: '{}' });
-        await loadReports();
-        await loadReport(payload.report.id);
-        $('#saveStatus').textContent = '已匯入最新產生稿為本地草稿。';
-      } catch (error) {
-        $('#saveStatus').textContent = `匯入失敗：${error.message}`;
+        statusEl.textContent = '✅ 成功儲存變更，網頁與信件已全數更新並推送至 GitHub！';
+        document.getElementById('previewFrame').src = 'web-preview.html?v=' + Date.now();
+      } catch (err) {
+        statusEl.textContent = `❌ 儲存失敗: ${err.message}`;
       }
     });
 
-    applyLayoutMode();
-    renderSession();
-    if (state.user) loadUsers();
-    loadReports().catch((error) => {
-      $('#reportList').innerHTML = `<div class="empty">載入失敗：${escapeHtml(error.message)}</div>`;
+    document.getElementById('subjectInput').addEventListener('input', (e) => {
+      if (reportData) reportData.subject = e.target.value;
     });
+
+    document.getElementById('tabWeb').addEventListener('click', function() {
+      this.classList.add('active');
+      document.getElementById('tabEmail').classList.remove('active');
+      document.getElementById('previewFrame').src = 'web-preview.html?v=' + Date.now();
+    });
+
+    document.getElementById('tabEmail').addEventListener('click', function() {
+      this.classList.add('active');
+      document.getElementById('tabWeb').classList.remove('active');
+      document.getElementById('previewFrame').src = 'email-preview.html?v=' + Date.now();
+    });
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
