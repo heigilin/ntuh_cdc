@@ -2,12 +2,14 @@
 """
 CDC Weekly Digest Scheduled Auto-Send Script.
 Runs on 1st and 3rd Monday of each month.
+Automatically updates GitHub Pages and sends emails.
 """
 
 import sys
 import json
 import smtplib
 import argparse
+import subprocess
 import datetime as dt
 import email.message
 from pathlib import Path
@@ -18,7 +20,6 @@ DATA_DIR = BASE_DIR / "data"
 SECRETS_PATH = DATA_DIR / ".secrets.json"
 
 sys.path.insert(0, str(BASE_DIR / "scripts"))
-import build_all_outputs
 
 def is_first_or_third_monday(today: dt.date) -> bool:
     if today.weekday() != 0:  # 0 is Monday
@@ -40,6 +41,16 @@ def send_email(subject: str, html_body: str, sender: str, app_password: str, rec
         server.login(sender, app_password)
         server.send_message(msg)
     print(f"[{dt.datetime.now().isoformat()}] SUCCESS: Weekly digest email sent successfully to {recipients}!")
+
+def push_to_github():
+    print(f"[{dt.datetime.now().isoformat()}] Pushing latest web-preview.html and issue data to GitHub Pages...")
+    try:
+        subprocess.run(["git", "add", "web-preview.html", "data/current_issue.json", "email-preview.html", "scripts/"], check=True, cwd=BASE_DIR)
+        subprocess.run(["git", "commit", "-m", f"Auto-update CDC Weekly Digest for {dt.date.today().isoformat()}"], check=False, cwd=BASE_DIR)
+        subprocess.run(["git", "push", "origin", "main"], check=True, cwd=BASE_DIR)
+        print(f"[{dt.datetime.now().isoformat()}] SUCCESS: GitHub Pages deployed!")
+    except Exception as e:
+        print(f"Warning: Git push to GitHub Pages encountered an issue: {e}")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -68,22 +79,21 @@ def main():
         print("Error: app_password missing in secrets file.")
         return 1
 
-    # 1. Update outputs
+    # 1. Update outputs & Push to GitHub Pages
     print(f"[{today.isoformat()}] Building latest weekly digest outputs...")
-    build_all_outputs
-    import subprocess
     subprocess.run([sys.executable, str(BASE_DIR / "scripts" / "build_all_outputs.py")], check=True)
+    push_to_github()
 
     current_issue_path = DATA_DIR / "current_issue.json"
     issue_data = json.loads(current_issue_path.read_text(encoding="utf-8")) if current_issue_path.exists() else {}
-    subject = issue_data.get("subject", "疫情訊息- 新冠疫情流行期；登革熱境外移入；日本腦炎首例死亡；傷寒本土病例；肺鏈疫苗8/10升級")
+    subject = issue_data.get("subject", "疫情訊息- 【8/18最新期】流感疫情緩升；新冠疫苗8/13全數撥配；登革熱境外防蚊")
 
     paste_html_path = OUTPUT_DIR / "paste-email.html"
     if not paste_html_path.exists():
         paste_html_path = BASE_DIR / "email-preview.html"
     html_body = paste_html_path.read_text(encoding="utf-8")
 
-    # 2. Send email
+    # 2. Send emails
     send_email(subject, html_body, sender, app_password, recipients)
     intranet_html_path = OUTPUT_DIR / "intranet-post-draft.html"
     intranet_txt_path = OUTPUT_DIR / "intranet-post-draft.txt"

@@ -14,7 +14,7 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 ISSUE_DATE = "2026-08-18"
 ISSUE_RANGE = "2026-08-03 - 2026-08-18"
 SUBJECT = "疫情訊息- 【8/18最新期】流感疫情緩升；新冠疫苗8/13全數撥配；登革熱境外防蚊"
-WEB_FULL_URI = "file:///Y:/IFC_V/50300/%E6%95%99%E5%AD%B8%E8%B3%87%E6%96%99/%E7%96%AB%E6%83%85%E8%A8%8A%E6%81%AF/web-preview.html"
+GITHUB_PAGES_URL = "https://heigilin.github.io/ntuh_cdc/web-preview.html"
 
 # 1. New Issue Data
 issue_data = {
@@ -193,7 +193,7 @@ issue_data = {
 (DATA_DIR / "current_issue.json").write_text(json.dumps(issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
 print("Saved 2026-08-18 issue data to current_issue.json.")
 
-# 2. Build email-preview.html (Absolute URI to Y: drive for 100% valid web button)
+# 2. Build email-preview.html (GitHub Pages link for 100% working web button across all email clients)
 email_html = f"""<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -246,11 +246,11 @@ email_html = f"""<!doctype html>
             <td style="padding:24px 28px;font-family:'Microsoft JhengHei',Arial,sans-serif;color:#112e24;">
               <p style="font-size:16px;line-height:1.8;color:#0f382c;margin:0 0 16px 0;font-weight:800;">同仁好：本期為您整理 8/03 至 8/18 疾管署最新發布動態。流感疫情呈緩升趨勢，本季新冠疫苗已全數撥配到位，請留意院內防護與通報重點。</p>
 
-              <!-- Web preview button: Point directly to Y: drive web-preview.html URI -->
+              <!-- Web preview button: Point directly to GitHub Pages URL -->
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 20px 0;">
                 <tr>
                   <td bgcolor="#0f382c" style="background-color:#0f382c;border-radius:8px;padding:12px 16px;text-align:center;">
-                    <a href="{WEB_FULL_URI}" target="_blank" rel="noopener" style="display:block;color:#ffffff;text-decoration:none;font-size:16px;line-height:1.45;font-weight:900;">開啟網頁互動版 (切換分頁/詳細內容)</a>
+                    <a href="{GITHUB_PAGES_URL}" target="_blank" rel="noopener" style="display:block;color:#ffffff;text-decoration:none;font-size:16px;line-height:1.45;font-weight:900;">開啟網頁互動版 (切換分頁/詳細內容)</a>
                   </td>
                 </tr>
               </table>
@@ -340,9 +340,10 @@ email_html = f"""<!doctype html>
 """
 
 (BASE_DIR / "email-preview.html").write_text(email_html, encoding="utf-8")
-print("Saved email-preview.html with full URI web button.")
+print("Saved email-preview.html with GitHub Pages web button.")
 
-# Update web-preview.html and build all outputs
+# Update web-preview.html
 subprocess.run(["python", str(BASE_DIR / "scripts" / "update_web_preview.py")], check=True)
+# Build all outputs
 subprocess.run(["python", str(BASE_DIR / "scripts" / "build_all_outputs.py")], check=True)
 print("Finished building all outputs!")
