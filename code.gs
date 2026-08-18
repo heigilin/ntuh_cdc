@@ -3,8 +3,9 @@
  * 
  * 整合功能：
  * 1. 加入好友自動發送招呼語 + 身分選擇引導 (Quick Reply 快速回應按鈕)
- * 2. 智慧分流回應（員工模式 / 民眾模式 / 清消 / TOCC / 探病 / 疫苗 / 問卷）
- * 3. 每一則回應末端均自動附上最新疫情訊息週報網頁連結
+ * 2. 處理常見提問「你可以問什麼」、「你能做什麼」專用友善回答
+ * 3. 智慧分流回應（員工模式 / 民眾模式 / 清消 / TOCC / 探病 / 疫苗 / 問卷）
+ * 4. 每一則回應末端均自動附上最新疫情訊息週報網頁連結 (簡化版)
  */
 
 // 請將您的 LINE Channel Access Token 貼在下方
@@ -89,8 +90,13 @@ function sendFollowGreeting(replyToken) {
 function handleTextMessage(replyToken, text) {
   let replyText = '';
 
+  // 0. 常見熱門發問：你可以問什麼 / 你能做什麼 / 幫助 / 說明 / 功能
+  if (text.includes('可以問什麼') || text.includes('能做什麼') || text.includes('你可以問') || text.includes('你能做') || text.includes('幫助') || text.includes('功能') || text === '說明') {
+    replyText = '您好！我是「台大感管LINE起來」AI 助手 🤖\n我能為您解答感染管制政策、傳染病防護、隔離解隔、清消規範與衛教查詢！\n\n📌 常見熱門問題範例：\n\n🏥 1. 隔離與解隔規定\n• 「VRE 解隔要採哪裡？要停什麼藥？」\n• 「以前有 CRE 紀錄，這次住院可以解隔嗎？」\n• 「MDRO 病人可以去做 CT 或心導管檢查嗎？」\n\n🧼 2. 環境清消與防護裝備\n• 「漂白水清消濃度要泡多少？」\n• 「進出呼吸道照護區要戴什麼口罩？」\n\n📋 3. 法定傳染病與通報\n• 「登革熱 通報流程？」\n• 「流感 採檢送驗注意事項？」\n\n👨‍👩‍👧 4. 民眾與家屬衛教\n• 「探病與陪病時間規定？」\n• 「流感疫苗與新冠疫苗去哪裡打？」\n\n💡 提問小撇步：您可以直接用完整對話發問，或輸入關鍵字組合（例如：VRE 解隔、登革熱 通報）。\n\n🔒 資安提醒：嚴禁於對話框內輸入任何病人姓名、病歷號、床號或具可識別性之醫療個資。\n\n' + WEEKLY_DIGEST_URL;
+  }
+
   // 1. 選擇身分：員工
-  if (text.includes('員工') || text === '1') {
+  else if (text.includes('員工') || text === '1') {
     replyText = '收到！已為您啟用 【院內同仁感管助手模式】 🏥\n\n您可以直接打字發問（如：流感要隔離幾天？），或輸入以下關鍵字快速查詢：\n• 隔離 ➔ 查看各類傳染病隔離防護措施\n• 清消 ➔ 查看環境與設備清消規範\n• TOCC ➔ 檢視感管通報與篩檢重點\n\n' + WEEKLY_DIGEST_URL;
   }
   
@@ -126,7 +132,7 @@ function handleTextMessage(replyToken, text) {
 
   // 8. 預設預備回應 (Fallback)
   else {
-    replyText = '您好！「台大感管LINE起來」機器人為您服務。\n您可以直接詢問感管、防護、探病等相關問題，或輸入熱門關鍵字（清消、TOCC、探病、疫苗）。\n\n' + WEEKLY_DIGEST_URL;
+    replyText = '您好！我是「台大感管LINE起來」AI 助手 🤖\n您可以直接發問感管、清消、隔離、通報、探病等問題，或輸入「你可以問什麼」查看熱門問題範例！\n\n' + WEEKLY_DIGEST_URL;
   }
 
   const message = {
