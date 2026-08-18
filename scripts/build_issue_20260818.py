@@ -1,10 +1,206 @@
-<!doctype html>
+#!/usr/bin/env python3
+import json
+import base64
+import io
+import subprocess
+from pathlib import Path
+from PIL import Image
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+OUTPUT_DIR = BASE_DIR / "output"
+DATA_DIR = BASE_DIR / "data"
+
+OUTPUT_DIR.mkdir(exist_ok=True)
+ISSUE_DATE = "2026-08-18"
+ISSUE_RANGE = "2026-08-03 - 2026-08-18"
+SUBJECT = "疫情訊息- 【8/18最新期】流感疫情緩升；新冠疫苗8/13全數撥配；登革熱境外防蚊"
+WEB_FULL_URI = "file:///Y:/IFC_V/50300/%E6%95%99%E5%AD%B8%E8%B3%87%E6%96%99/%E7%96%AB%E6%83%85%E8%A8%8A%E6%81%AF/web-preview.html"
+
+# 1. New Issue Data
+issue_data = {
+  "generated_at": "2026-08-18T08:40:00+08:00",
+  "issue_range": {
+    "from": "2026-08-03",
+    "to": "2026-08-18"
+  },
+  "display_date": "2026-08-18",
+  "organization": "臺大醫院 感染管制中心",
+  "title": "疫情訊息",
+  "issue_badge": "【2026年8月第3週 · 最新期】",
+  "tags": [
+    "流感",
+    "新冠疫苗",
+    "登革熱"
+  ],
+  "subject": SUBJECT,
+  "source_policy": {
+    "source": "衛生福利部疾病管制署新聞稿",
+    "excluded": "澄清專區，以及疫苗或藥物之澄清新聞、排除事件",
+    "rewrite": "個人發言一律轉為機關客觀敘述"
+  },
+  "sections": [
+    {
+      "id": "highlights",
+      "label": "本期焦點與最新動向",
+      "priority": 0,
+      "items": [
+        {
+          "id": "focus-flu",
+          "section": "highlights",
+          "disease": "流感疫情呈緩升趨勢",
+          "title": "以 A 型流感為主，幼童與長者就診率升，加強呼吸道防護。",
+          "date": "2026-08-11",
+          "summary": "7月上旬起門急診就診人次持續上升，人口密集機構群聚增加，請落實手部衛生與咳嗽禮節。",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/BKmpR5jsioonmVADsZ-4tQ?typeid=9",
+          "severity_basis": "門急診就診人次與人口密集機構群聚通報緩升。"
+        },
+        {
+          "id": "focus-covid-vax",
+          "section": "highlights",
+          "disease": "本季新冠疫苗 8/13 全數撥配",
+          "title": "各縣市合約院所皆可接種，高風險族群請儘速打滿防護。",
+          "date": "2026-08-11",
+          "summary": "疫情持續升溫，本季疫苗已於8/13撥配到位，65歲以上及慢性病高風險者優先接種。",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/rKEajQHrBk-SYtJSD4SB5w?typeid=9",
+          "severity_basis": "重症預防疫苗撥配政策最新動向。"
+        },
+        {
+          "id": "focus-dengue",
+          "section": "highlights",
+          "disease": "登革熱境外移入持續新增",
+          "title": "暑假出國防蚊，返國 14 天內有不適症狀速就醫。",
+          "date": "2026-08-04",
+          "summary": "東南亞疫情上升，降雨後積水增加病媒蚊孳生風險，落實巡倒清刷。",
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "severity_basis": "境外移入持續增加，病媒風險高。"
+        }
+      ]
+    },
+    {
+      "id": "respiratory",
+      "label": "呼吸道傳染病與疫苗撥配",
+      "priority": 1,
+      "items": [
+        {
+          "id": "resp-flu",
+          "section": "respiratory",
+          "disease": "流感",
+          "title": "流感｜國內流感疫情呈緩升趨勢，以 A 型流感為主",
+          "date": "2026-08-11",
+          "is_new": True,
+          "audience": "幼童、65 歲以上長者及人口密集機構照護人員。",
+          "actions": [
+            "出入醫療照護機構或擁擠場所佩戴口罩，勤洗手。",
+            "出現發燒、咳嗽等呼吸道症狀時儘量在家休息，避免外出。",
+            "醫療院所及密集機構加強上呼吸道群聚監測與 TOCC 詢問。"
+          ],
+          "summary": "國內流感疫情自 7 月上旬起逐漸升溫，近 4 週門急診就診人次持續呈上升趨勢，幼童與長者就診率最高；社區病毒監測以 A 型 H1N1 為主。",
+          "details": [
+            "群聚疫情方面，近期上呼吸道感染群聚通報數同步增加，流感陽性群聚檢出以 A 型為主，主要集中於人口密集機構。",
+            "請同仁照護長者與高風險個案時落實飛沫與接觸防護措施。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/BKmpR5jsioonmVADsZ-4tQ?typeid=9",
+          "severity_basis": "流感門急診上升且密集機構群聚增加。",
+          "suggested_links": {
+            "education": {
+              "name": "總院-流感暨流行性呼吸道病原（167642）",
+              "url": "https://edu.ntuh.gov.tw/course/167642"
+            },
+            "km": {
+              "name": "病毒類呼吸道感染症感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684"
+            }
+          }
+        },
+        {
+          "id": "resp-covid-vax",
+          "section": "respiratory",
+          "disease": "新冠 COVID-19 疫苗撥配",
+          "title": "新冠 COVID-19 疫苗｜8/13 起全數撥配到位，符合資格者儘速接種",
+          "date": "2026-08-11",
+          "is_new": True,
+          "audience": "尚未接種本季新冠疫苗者，尤其長者與慢性病高風險族群。",
+          "actions": [
+            "本季新冠疫苗已於 8/13 全數配送至各縣市合約院所，請符合資格者儘速接種。",
+            "有發燒或呼吸道症狀者請先快篩並自主佩戴口罩。",
+            "高風險對象若快篩陽性應儘速就醫評估開立抗病毒藥劑。"
+          ],
+          "summary": "國內新冠疫情持續升溫且處流行期；為提升保護力，疾管署已於 8/13 將本季新冠疫苗全數撥配至各縣市供民眾接種。",
+          "details": [
+            "重症個案仍以 65 歲以上長者及慢性病史者為主，絕大多數未接種本季疫苗。",
+            "相關接種院所及公費藥劑合約資訊可查疾管署「流感新冠疫苗及流感藥劑地圖」。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/rKEajQHrBk-SYtJSD4SB5w?typeid=9",
+          "severity_basis": "新冠流行期重症預防疫苗撥配到位。",
+          "suggested_links": {
+            "education": {
+              "name": "總院-流感暨流行性呼吸道病原（167642）",
+              "url": "https://edu.ntuh.gov.tw/course/167642"
+            },
+            "km": {
+              "name": "病毒類呼吸道感染症感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "vectorborne",
+      "label": "病媒蚊傳染病",
+      "priority": 2,
+      "items": [
+        {
+          "id": "vector-dengue",
+          "section": "vectorborne",
+          "disease": "登革熱",
+          "title": "登革熱｜出國防蚊，返國 14 天內有症狀速就醫",
+          "date": "2026-08-04",
+          "is_new": False,
+          "audience": "近期出國旅遊或出差者，尤其前往東南亞、南亞地區。",
+          "actions": [
+            "出國穿淺色長袖長褲，使用衛福部核可之防蚊液。",
+            "返國 14 天內若發燒、頭痛、後眼窩痛或肌肉關節痛，速就醫並告知 TOCC。",
+            "落實巡、倒、清、刷，清除積水容器。"
+          ],
+          "summary": "東南亞登革熱疫情持續上升，境外移入風險高。聖嬰現象有利傳播，落實積水容器清理與出國防蚊。",
+          "details": [
+            "入境時如有疑似症狀請主動告知檢疫人員。",
+            "醫療人員落實詢問 TOCC，適時使用 NS1 快篩輔助通報。"
+          ],
+          "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/Stt8v-QIBqLbCLHgyWPaAg?typeid=9",
+          "severity_basis": "境外移入持續新增。",
+          "suggested_links": {
+            "education": {
+              "name": "總院-登革熱暨常見病媒蚊傳染病（179101）",
+              "url": "https://edu.ntuh.gov.tw/course/179101"
+            },
+            "km": {
+              "name": "感染管制手冊—病媒蚊傳染病感染管制措施",
+              "url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "signature": [
+    "資料來源：衛生福利部疾病管制署",
+    "～臺大醫院感染管制中心關心您～"
+  ]
+}
+
+(DATA_DIR / "current_issue.json").write_text(json.dumps(issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
+print("Saved 2026-08-18 issue data to current_issue.json.")
+
+# 2. Build email-preview.html (Absolute URI to Y: drive for 100% valid web button)
+email_html = f"""<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="IE=edge">
-  <title>疫情訊息- 【8/18最新期】流感疫情緩升；新冠疫苗8/13全數撥配；登革熱境外防蚊</title>
+  <title>{SUBJECT}</title>
 </head>
 <body style="margin:0;padding:0;background-color:#eef4f1;font-family:'Microsoft JhengHei',Arial,sans-serif;color:#112e24;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
   <span style="display:none!important;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">【8/18最新期】流感疫情緩升、新冠疫苗8/13撥配與登革熱防護重點提醒。</span>
@@ -54,7 +250,7 @@
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 20px 0;">
                 <tr>
                   <td bgcolor="#0f382c" style="background-color:#0f382c;border-radius:8px;padding:12px 16px;text-align:center;">
-                    <a href="file:///Y:/IFC_V/50300/%E6%95%99%E5%AD%B8%E8%B3%87%E6%96%99/%E7%96%AB%E6%83%85%E8%A8%8A%E6%81%AF/web-preview.html" target="_blank" rel="noopener" style="display:block;color:#ffffff;text-decoration:none;font-size:16px;line-height:1.45;font-weight:900;">開啟網頁互動版 (切換分頁/詳細內容)</a>
+                    <a href="{WEB_FULL_URI}" target="_blank" rel="noopener" style="display:block;color:#ffffff;text-decoration:none;font-size:16px;line-height:1.45;font-weight:900;">開啟網頁互動版 (切換分頁/詳細內容)</a>
                   </td>
                 </tr>
               </table>
@@ -141,3 +337,12 @@
   </table>
 </body>
 </html>
+"""
+
+(BASE_DIR / "email-preview.html").write_text(email_html, encoding="utf-8")
+print("Saved email-preview.html with full URI web button.")
+
+# Update web-preview.html and build all outputs
+subprocess.run(["python", str(BASE_DIR / "scripts" / "update_web_preview.py")], check=True)
+subprocess.run(["python", str(BASE_DIR / "scripts" / "build_all_outputs.py")], check=True)
+print("Finished building all outputs!")
