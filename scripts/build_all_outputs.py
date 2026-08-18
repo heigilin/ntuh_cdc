@@ -14,7 +14,7 @@ DATA_DIR = BASE_DIR / "data"
 
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-# 1. Read current_issue.json dynamically without overwriting with hardcoded old date/subject
+# 1. Read current_issue.json dynamically
 current_issue_path = DATA_DIR / "current_issue.json"
 if current_issue_path.exists():
     issue_data = json.loads(current_issue_path.read_text(encoding="utf-8"))
@@ -27,15 +27,16 @@ if current_issue_path.exists():
     (issue_dir / "issue.json").write_text(json.dumps(issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Synced current_issue.json for date {issue_date}.")
 
-# 2. Update web-preview-updated.html, web.generated.html, and archive web.html
+# 2. Update web-preview-updated.html, index.html, web.generated.html, and archive web.html
 web_preview_path = BASE_DIR / "web-preview.html"
 if web_preview_path.exists():
     web_content = web_preview_path.read_text(encoding="utf-8")
+    (BASE_DIR / "index.html").write_text(web_content, encoding="utf-8")
     (OUTPUT_DIR / "web-preview-updated.html").write_text(web_content, encoding="utf-8")
     (OUTPUT_DIR / "web.generated.html").write_text(web_content, encoding="utf-8")
     if 'issue_dir' in locals():
         (issue_dir / "web.html").write_text(web_content, encoding="utf-8")
-    print("Updated web-preview-updated.html, web.generated.html, and archive web.html.")
+    print("Updated index.html, web-preview-updated.html, web.generated.html, and archive web.html.")
 
 # 3. Build email-hosted.html & paste-email.html
 email_preview_path = BASE_DIR / "email-preview.html"
@@ -45,7 +46,6 @@ if email_preview_path.exists():
     if 'issue_dir' in locals():
         (issue_dir / "email.html").write_text(email_content, encoding="utf-8")
     
-    # We use web-preview.html relative link so local web preview opens the updated file!
     (OUTPUT_DIR / "email-hosted.html").write_text(email_content, encoding="utf-8")
     (OUTPUT_DIR / "正式寄信用-email-hosted.html").write_text(email_content, encoding="utf-8")
     (OUTPUT_DIR / "paste-email.html").write_text(email_content, encoding="utf-8")

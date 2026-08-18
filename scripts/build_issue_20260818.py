@@ -14,7 +14,8 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 ISSUE_DATE = "2026-08-18"
 ISSUE_RANGE = "2026-08-03 - 2026-08-18"
 SUBJECT = "疫情訊息- 【8/18最新期】流感疫情緩升；新冠疫苗8/13全數撥配；登革熱境外防蚊"
-GITHUB_PAGES_URL = "https://heigilin.github.io/ntuh_cdc/web-preview.html"
+# Add cache-busting timestamp so browser ALWAYS loads newest GitHub Pages content
+GITHUB_PAGES_URL = "https://heigilin.github.io/ntuh_cdc/web-preview.html?v=20260818"
 
 # 1. New Issue Data
 issue_data = {
@@ -41,7 +42,7 @@ issue_data = {
   "sections": [
     {
       "id": "highlights",
-      "label": "本期焦點與最新動向",
+      "label": "本期焦點與最新動態",
       "priority": 0,
       "items": [
         {
@@ -159,7 +160,7 @@ issue_data = {
           "is_new": False,
           "audience": "近期出國旅遊或出差者，尤其前往東南亞、南亞地區。",
           "actions": [
-            "出國穿淺色長袖長褲，使用衛福部核可之防蚊液。",
+            "出國穿淺色長袖長褲，使用衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛衛文防蚊液。",
             "返國 14 天內若發燒、頭痛、後眼窩痛或肌肉關節痛，速就醫並告知 TOCC。",
             "落實巡、倒、清、刷，清除積水容器。"
           ],
@@ -190,10 +191,13 @@ issue_data = {
   ]
 }
 
+# Clean actions text typo
+issue_data["sections"][1]["items"][0]["actions"][0] = "出國穿淺色長袖長褲，使用衛福部核可之防蚊液。"
+
 (DATA_DIR / "current_issue.json").write_text(json.dumps(issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
 print("Saved 2026-08-18 issue data to current_issue.json.")
 
-# 2. Build email-preview.html (GitHub Pages link for 100% working web button across all email clients)
+# 2. Build email-preview.html (Cache-Busted GitHub Pages link)
 email_html = f"""<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -246,7 +250,7 @@ email_html = f"""<!doctype html>
             <td style="padding:24px 28px;font-family:'Microsoft JhengHei',Arial,sans-serif;color:#112e24;">
               <p style="font-size:16px;line-height:1.8;color:#0f382c;margin:0 0 16px 0;font-weight:800;">同仁好：本期為您整理 8/03 至 8/18 疾管署最新發布動態。流感疫情呈緩升趨勢，本季新冠疫苗已全數撥配到位，請留意院內防護與通報重點。</p>
 
-              <!-- Web preview button: Point directly to GitHub Pages URL -->
+              <!-- Web preview button: Point directly to Cache-Busted GitHub Pages URL -->
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 20px 0;">
                 <tr>
                   <td bgcolor="#0f382c" style="background-color:#0f382c;border-radius:8px;padding:12px 16px;text-align:center;">
@@ -340,10 +344,9 @@ email_html = f"""<!doctype html>
 """
 
 (BASE_DIR / "email-preview.html").write_text(email_html, encoding="utf-8")
-print("Saved email-preview.html with GitHub Pages web button.")
+print("Saved email-preview.html with cache-busted GitHub Pages link.")
 
-# Update web-preview.html
+# Update web-preview.html and build all outputs
 subprocess.run(["python", str(BASE_DIR / "scripts" / "update_web_preview.py")], check=True)
-# Build all outputs
 subprocess.run(["python", str(BASE_DIR / "scripts" / "build_all_outputs.py")], check=True)
 print("Finished building all outputs!")
