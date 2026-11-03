@@ -30,7 +30,7 @@ issues_summary = [
         "date_range": "2026/08/24 - 2026/09/07",
         "title": "流感就診人次緩升；本季新冠疫苗全數撥配；登革熱境外防蚊",
         "highlight": "國內流感就診人次緩升，長者及幼童注意；新冠疫苗撥配到位；境外移入登革熱防護。",
-        "url": "output/issues/cdc-weekly-2026-09-07/web.html"
+        "url": "history/issue-2026-09-07.html"
     },
     {
         "id": "issue-20260818",
@@ -38,7 +38,7 @@ issues_summary = [
         "date_range": "2026/08/03 - 2026/08/18",
         "title": "流感疫情初升；新冠疫苗8/13配送；首例本土傷寒個案",
         "highlight": "7月上旬起流感上升；新冠合約院所開打；傷寒生食感染防範。",
-        "url": "output/issues/cdc-weekly-2026-08-18/web.html"
+        "url": "history/issue-2026-08-18.html"
     }
 ]
 
@@ -412,11 +412,11 @@ web_html = f"""<!doctype html>
       <div class="switcher-badge">🌟 本期最新</div>
       <div class="switcher-title">{issues_summary[0]['title']}</div>
     </div>
-    <a class="switcher-card" href="output/issues/cdc-weekly-2026-09-07/web.html">
+    <a class="switcher-card" href="history/issue-2026-09-07.html">
       <div class="switcher-badge" style="color:#666;">📂 上期回顧（9/07期）</div>
       <div class="switcher-title">{issues_summary[1]['title']}</div>
     </a>
-    <a class="switcher-card" href="output/issues/cdc-weekly-2026-08-18/web.html">
+    <a class="switcher-card" href="history/issue-2026-08-18.html">
       <div class="switcher-badge" style="color:#666;">📂 前期回顧（8/18期）</div>
       <div class="switcher-title">{issues_summary[2]['title']}</div>
     </a>
