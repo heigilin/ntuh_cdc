@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""
+Build latest issue from user provided email content (2026-11-03 / 2026-10-20),
+maintaining 3 latest issues switcher and full archival.
+"""
+import json
+import subprocess
+import datetime as dt
+from pathlib import Path
+
+BASE_DIR = Path("Y:/IFC_V/50300/教學資料/院內發疫情訊息專用")
+DATA_DIR = BASE_DIR / "data"
+OUTPUT_DIR = BASE_DIR / "output"
+ISSUES_DIR = OUTPUT_DIR / "issues"
+
+DATA_DIR.mkdir(exist_ok=True)
+OUTPUT_DIR.mkdir(exist_ok=True)
+ISSUES_DIR.mkdir(exist_ok=True)
+
+# 1. 整理最新期資料 (2026-11-03 最新期)
+ISSUE_DATE = "2026-11-03"
+ISSUE_BADGE = "【2026年11月 · 最新期】"
+ISSUE_RANGE = "2026/09/09 - 2026/10/20 （最新公告動態）"
+SUBJECT = "疫情訊息- 【最新期】流感與新冠流行防範；腸病毒重症警訊；M痘與登革熱本土群聚"
+GITHUB_PAGES_URL = f"https://heigilin.github.io/ntuh_cdc/web-preview.html?v={ISSUE_DATE.replace('-', '')}"
+
+latest_issue_data = {
+    "generated_at": dt.datetime.now().isoformat(),
+    "display_date": ISSUE_DATE,
+    "issue_badge": ISSUE_BADGE,
+    "issue_range": {"from": "2026-09-09", "to": "2026-10-20"},
+    "organization": "臺大醫院 感染管制中心",
+    "title": "疫情訊息週報",
+    "subject": SUBJECT,
+    "summary": "流感及新冠疫情持續流行；腸病毒仍處高點且有重症死亡；M痘Ib型持續傳播；登革熱本土增至13例並現群聚；國際伊波拉、鼠疫、白喉警訊。",
+    "highlights": [
+        "流感重症累計逾 1,800 例、死亡 378 例，H1N1 占九成；公費抗病毒藥免快篩即可開立。",
+        "腸病毒以克沙奇 A6 及 D68 型為主，累計 7 例重症含 1 例死亡，酒精無效請用含氯漂白水清消。",
+        "M痘境外移入 10 例、Ib 型家戶傳播風險高，符合公費條件請儘速完成 2 劑疫苗。",
+        "登革熱本土病例增至 13 例（高雄 10、彰化 2、屏東 1），臨床落實 TOCC 詢問與 NS1 快篩。",
+        "國際登革熱（美/加勒比海）、伊波拉（中東非致死率48%）、鼠疫、白喉與日本流感上升。"
+    ],
+    "domestic": [
+        {
+            "id": "mpox",
+            "category": "special",
+            "name": "M痘 (Mpox)",
+            "date": "2026-09-09",
+            "status": "國內累計30例確定病例(20本土、10境外，以泰國6例最多)；全球19萬例、529死。Ib型跨國傳播持續且較易家戶傳播。",
+            "symptoms": "潛伏期長達21天，症狀為發燒、淋巴結腫大、皮疹、水泡。幼童、孕婦及慢性病者易重症。",
+            "transmission": "主要經密切接觸、體液或病灶傳播。具風險性行為者、未接種疫苗者為高風險。",
+            "action": "符合公費資格儘速打滿2劑(保護力9成)；未符合可自費。出現皮疹水泡發燒戴口罩就醫並告知接觸史。",
+            "km_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684"
+        },
+        {
+            "id": "enterovirus",
+            "category": "foodborne",
+            "name": "腸病毒感染",
+            "date": "2026-09-15",
+            "status": "第36週門急診達10,203人次(升18.1%)；以克沙奇A6為主，次為D68及A16。累計7例重症(含1例死亡)。",
+            "symptoms": "重症前兆：嗜睡、意識不清、肌抽躍(無故驚嚇)、呼吸急促、心跳加快，出現應立即送大醫院！",
+            "transmission": "糞口及飛沫傳播，5歲以下嬰幼兒為重症高危險群。",
+            "action": "肥皂勤洗手！環境清潔消毒【酒精對腸病毒效果有限】，請務必使用含氯漂白水消毒。",
+            "km_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=99110",
+            "km_name": "院內腸病毒感染管制措施 (KM:99110)"
+        },
+        {
+            "id": "flu",
+            "category": "respiratory",
+            "name": "流感 (Influenza)",
+            "date": "2026-10-06",
+            "status": "第39週門急診達139,060人次；新增219例重症及44例死亡，H1N1占90.7%。重症以65歲以上及慢性病為主，67.2%未打疫苗。",
+            "symptoms": "危險徵兆：呼吸急促、發紺、血痰、胸痛、意識改變、低血壓。",
+            "transmission": "飛沫與接觸傳播，長者、幼兒、慢性病及孕婦為高危險群。",
+            "action": "公費流感疫苗已開打，請高風險對象儘速接種！公費抗病毒藥劑擴大開立，符合條件者【免快篩即可開立】。",
+            "km_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684",
+            "km_name": "院內病毒類呼吸道感染症措施 (KM:55684)"
+        },
+        {
+            "id": "covid",
+            "category": "respiratory",
+            "name": "新冠肺炎 (COVID-19)",
+            "date": "2026-10-06",
+            "status": "第39週門急診7,836人次，新增37例重症及16例死亡。重症以長者及慢性病為主(83.9%未打疫苗)。變異株以PQ.16.1.1及NB.1.8.1為主。",
+            "symptoms": "發燒、咳嗽、呼吸困難、胸痛、意識改變等危險徵兆。",
+            "transmission": "飛沫與空氣傳播。",
+            "action": "儘速接種本季新冠疫苗，落實呼吸道禮節與勤洗手，有症狀自主佩戴口罩。",
+            "km_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=55684",
+            "km_name": "院內病毒類呼吸道感染症措施 (KM:55684)"
+        },
+        {
+            "id": "dengue",
+            "category": "vectorborne",
+            "name": "登革熱 (Dengue)",
+            "date": "2026-10-08",
+            "status": "全國累計188例(13本土、175境外)；本土分布高雄10例、彰化2例、屏東1例，已現本土群聚！境外以越、印、菲為主。",
+            "symptoms": "發燒、頭痛、後眼窩痛、肌肉關節痛、出疹；重症可致出血或休克。",
+            "transmission": "埃及斑蚊、白線斑蚊叮咬傳播。",
+            "action": "落實病房與環境「巡、倒、清、刷」清除積水；臨床醫師落實詢問TOCC，高度懷疑善用【NS1快篩(醫令碼12185C)】輔助通報並開立防蚊隔離(ANN00049)。",
+            "km_url": "https://km.ntuh.gov.tw/km/readdocument.aspx?documentId=84658",
+            "km_name": "院內蟲媒傳染病感染管制措施 (KM:84658)"
+        },
+        {
+            "id": "typhoid",
+            "category": "foodborne",
+            "name": "傷寒 (Typhoid Fever)",
+            "date": "2026-10-06",
+            "status": "今年累計6例(1本土、5境外)。個案為30多歲女性，食用生魚片、生蠔後感染確定。",
+            "symptoms": "潛伏期3-60天(常8-14天)，持續發燒、頭痛、倦怠、腹痛、腹瀉、相對性緩脈、紅疹。",
+            "transmission": "經受污染之食物或飲水糞口傳染。",
+            "action": "飲食澈底煮熟、飲水煮沸，避免生食生蠔水產。臨床醫師發現疑似個案需【24小時內通報】。",
+            "km_url": "https://www.cdc.gov.tw/Bulletin/Detail/VkWKnzSuPKHiKFvrJ-xo0A?typeId=9"
+        }
+    ],
+    "international": [
+        {"area": "孟加拉、古巴、美國", "disease": "登革熱", "date": "2026-10-13", "desc": "孟加拉累計9.9萬例、303死；古巴1.1萬例；美國佛州境外262例。多型共流行，重複感染重症風險高。"},
+        {"area": "剛果民主共和國、肯亞", "disease": "伊波拉病毒感染", "date": "2026-10-16", "desc": "DRC累計9,144例確診、4,410死(致死率高達48%)；肯亞現境外移入及二次感染，WHO高度警戒監測。"},
+        {"area": "俄羅斯", "disease": "鼠疫", "date": "2026-10-12", "desc": "伊爾庫茨克州疑似實驗室感染事件，WHO確認無病例、接觸者陰性，風險暫評為低。"},
+        {"area": "安哥拉、泰國等", "disease": "M痘 (Mpox)", "date": "2026-10-16", "desc": "全球累計18.9萬例、536死。非洲及東南亞近期上升，馬達加斯加、安哥拉、泰國、中國病例多。"},
+        {"area": "奈及利亞、美國", "disease": "白喉 (Diphtheria)", "date": "2026-10-15", "desc": "奈及利亞累計2.6萬例疑似、700死；美國出現旅遊個案。WHO評估非洲中等風險。"},
+        {"area": "日本", "disease": "流感併發重症", "date": "2026-10-15", "desc": "第40週定點醫療機構平均11.35例、住院999例(主要為70歲以上長者)，全日47都道府縣疫情持續上升。"}
+    ]
+}
+
+# 儲存 current_issue.json
+(DATA_DIR / "current_issue.json").write_text(json.dumps(latest_issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"Updated {DATA_DIR / 'current_issue.json'}")
+
+# 2. 封存最新期至 output/issues/cdc-weekly-2026-11-03/
+target_issue_dir = ISSUES_DIR / f"cdc-weekly-{ISSUE_DATE}"
+target_issue_dir.mkdir(exist_ok=True)
+(target_issue_dir / "issue.json").write_text(json.dumps(latest_issue_data, ensure_ascii=False, indent=2), encoding="utf-8")
+print(f"Archived issue to {target_issue_dir}")
