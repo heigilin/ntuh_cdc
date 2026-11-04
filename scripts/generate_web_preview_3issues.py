@@ -19,26 +19,26 @@ GITHUB_PAGES_URL = f"https://heigilin.github.io/ntuh_cdc/web-preview.html?v={cur
 issues_summary = [
     {
         "id": "current",
-        "badge": "【本期最新 · 2026年11月】",
+        "badge": "【本期最新 · 2026年11月第1期】",
+        "date_range": "2026/10/20 - 2026/10/27",
+        "title": "流感公費藥劑延長至11/15；M痘Ib型單月新高；伊波拉跨國擴散",
+        "highlight": "流感免快篩開立公費藥；M痘公費2劑達9成保護力；腸病毒北部女童重症出院；伊波拉剛果致死率48.6%列三級警告。"
+    },
+    {
+        "id": "issue-20261103",
+        "badge": "【上期回顧 · 2026年10月號】",
         "date_range": "2026/09/09 - 2026/10/20",
-        "title": "流感重症 H1N1 九成；腸病毒重症死亡；M痘 Ib 型境外；登革熱本土群聚",
-        "highlight": "流感公費藥劑免快篩開立；腸病毒酒精無效需用漂白水；M痘公費2劑達9成；登革熱NS1快篩通報。"
+        "title": "流感H1N1占九成；腸病毒重症死亡；M痘Ib型境外；登革熱本土群聚",
+        "highlight": "流感重症逾1800例死亡378例；克沙奇A6及D68型；M痘公費疫苗接種；登革熱高彰屏群聚NS1快篩。",
+        "url": "history/issue-2026-11-03.html"
     },
     {
         "id": "issue-20260907",
-        "badge": "【上期回顧 · 2026年9月第1週】",
+        "badge": "【前期回顧 · 2026年9月第1週】",
         "date_range": "2026/08/24 - 2026/09/07",
         "title": "流感就診人次緩升；本季新冠疫苗全數撥配；登革熱境外防蚊",
         "highlight": "國內流感就診人次緩升，長者及幼童注意；新冠疫苗撥配到位；境外移入登革熱防護。",
         "url": "history/issue-2026-09-07.html"
-    },
-    {
-        "id": "issue-20260818",
-        "badge": "【前期回顧 · 2026年8月第3週】",
-        "date_range": "2026/08/03 - 2026/08/18",
-        "title": "流感疫情初升；新冠疫苗8/13配送；首例本土傷寒個案",
-        "highlight": "7月上旬起流感上升；新冠合約院所開打；傷寒生食感染防範。",
-        "url": "history/issue-2026-08-18.html"
     }
 ]
 
@@ -409,15 +409,15 @@ web_html = f"""<!doctype html>
   <!-- 最新 3 期快速切換導覽器 -->
   <section class="issues-switcher-bar" aria-label="最新三期疫情訊息切換">
     <div class="switcher-card active">
-      <div class="switcher-badge">🌟 本期最新</div>
+      <div class="switcher-badge">🌟 本期最新（11/04版）</div>
       <div class="switcher-title">{issues_summary[0]['title']}</div>
     </div>
-    <a class="switcher-card" href="history/issue-2026-09-07.html">
-      <div class="switcher-badge" style="color:#666;">📂 上期回顧（9/07期）</div>
+    <a class="switcher-card" href="history/issue-2026-11-03.html">
+      <div class="switcher-badge" style="color:#666;">📂 上期回顧（10月號）</div>
       <div class="switcher-title">{issues_summary[1]['title']}</div>
     </a>
-    <a class="switcher-card" href="history/issue-2026-08-18.html">
-      <div class="switcher-badge" style="color:#666;">📂 前期回顧（8/18期）</div>
+    <a class="switcher-card" href="history/issue-2026-09-07.html">
+      <div class="switcher-badge" style="color:#666;">📂 前期回顧（9/07期）</div>
       <div class="switcher-title">{issues_summary[2]['title']}</div>
     </a>
   </section>
@@ -498,10 +498,11 @@ email_html = f"""<!doctype html>
 
         <h2 style="color:#0f382c;border-left:5px solid #0f382c;padding-left:10px;font-size:18px;margin-top:24px;">🇹🇼 國內重點疫情提要</h2>
         <div style="background:#f8faf9;border:1px solid #d4e7df;padding:14px;border-radius:8px;line-height:1.8;font-size:14px;">
-          <p><strong>1. 流感：</strong>重症增至 1,800 例、死亡 378 例，H1N1 占九成。公費抗病毒藥延長且免快篩開立。</p>
-          <p><strong>2. 腸病毒：</strong>克沙奇 A6、D68 型為主，累計 7 例重症含 1 死。酒精無效，請用漂白水消毒。</p>
-          <p><strong>3. M痘：</strong>國內累計 30 例(20本土、10境外)，Ib型家戶傳播力強，符合公費條件請完成2劑。</p>
-          <p><strong>4. 登革熱：</strong>本土增至 13 例(高10、彰2、屏1)現群聚！請善用 NS1 快篩(12185C)輔助通報。</p>
+          <p><strong>1. 流感：</strong>第42週就診逾10萬人次，A型H1N1占93.4%。公費抗病毒藥延長至11/15，符合條件免快篩開立。</p>
+          <p><strong>2. M痘：</strong>10月確診創新高，累計568例(Ib型30例)。呼籲高風險族群儘速完成2劑公費疫苗(保護力達9成)。</p>
+          <p><strong>3. 新冠肺炎：</strong>近7日新增25例重症及5例死亡，變異株以PQ.16.1.1為多，公費疫苗開打並提供健康幣獎勵。</p>
+          <p><strong>4. 腸病毒：</strong>北部女童重症(克沙奇A6型)已出院，今年累計8例重症(1死)。酒精無效，請用含氯漂白水消毒環境。</p>
+          <p><strong>5. 伊波拉：</strong>剛果民主共和國累計9,876例、致死率48.6%，肯亞奈及利亞現境外移入，維持三級警告(Warning)。</p>
         </div>
 
         <p style="text-align:center;color:#666;font-size:13px;margin-top:24px;border-top:1px solid #eee;padding-top:12px;">臺大醫院 感染管制中心（分機：262144）</p>
